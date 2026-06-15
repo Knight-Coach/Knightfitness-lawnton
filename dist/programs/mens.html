@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Men's Club | Knight Fitness Lawnton</title>
+  <meta name="description" content="Men's Club at Knight Fitness Lawnton — semi-private coaching for men who want a clear plan, expert coaching and a crew that holds each other accountable.">
+  <link rel="canonical" href="https://www.knightfitness.com.au/programs/mens">
+  <meta name="theme-color" content="#1A1A1A">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Knight Fitness Lawnton">
+  <meta property="og:locale" content="en_AU">
+  <meta property="og:title" content="Men's Club | Knight Fitness Lawnton">
+  <meta property="og:description" content="Men's Club at Knight Fitness Lawnton — semi-private coaching for men who want a clear plan, expert coaching and a crew that holds each other accountable.">
+  <meta property="og:url" content="https://www.knightfitness.com.au/programs/mens">
+  <meta property="og:image" content="https://www.knightfitness.com.au/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Men's Club | Knight Fitness Lawnton">
+  <meta name="twitter:description" content="Men's Club at Knight Fitness Lawnton — semi-private coaching for men who want a clear plan, expert coaching and a crew that holds each other accountable.">
+  <meta name="twitter:image" content="https://www.knightfitness.com.au/og-image.jpg">
+  <link rel="stylesheet" href="program.css">
+  <style>
+    .pp-lead-sub { font-size: 1.15rem; font-weight: 700; color: var(--kf-black); max-width: 800px; margin-bottom: 1rem; }
+    /* Dark stats band */
+    .pp-stats { background: var(--kf-black); color: white; padding: 3.5rem 2rem; }
+    .pp-stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
+    @media (max-width: 760px) { .pp-stats-inner { grid-template-columns: repeat(2, 1fr); gap: 2.25rem 1.5rem; } }
+    .pp-stat-num { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(2.4rem, 5vw, 3.4rem); line-height: 1; color: var(--kf-red); letter-spacing: 0.02em; }
+    .pp-stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-top: 0.5rem; font-weight: 600; line-height: 1.4; }
+    /* Pillars */
+    .pp-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.75rem; }
+    @media (max-width: 820px) { .pp-pillars { grid-template-columns: 1fr; } }
+    .pp-pillar { background: white; border: 1px solid #eee; border-radius: 0.85rem; padding: 1.75rem; border-top: 4px solid var(--kf-red); }
+    .pp-pillar h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.5rem; letter-spacing: 0.03em; color: var(--kf-black); margin-bottom: 0.6rem; }
+    .pp-pillar p { font-size: 0.95rem; line-height: 1.55; color: var(--kf-gray-dark); }
+    /* Checklist grid */
+    .pp-checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin-top: 1.5rem; }
+    @media (max-width: 700px) { .pp-checks { grid-template-columns: 1fr; } }
+    .pp-check { display: flex; gap: 0.85rem; align-items: flex-start; background: white; padding: 1rem 1.2rem; border-radius: 0.65rem; border: 1px solid #eee; }
+    .pp-check-ic { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--kf-red); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.78rem; margin-top: 0.05rem; }
+    .pp-check span { font-size: 0.98rem; line-height: 1.4; color: var(--kf-black); }
+    /* Qualify (image + checklist) layout */
+    .pp-qualify-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 2.75rem; align-items: center; margin-top: 2.25rem; text-align: left; }
+    .pp-qualify-img img { width: 100%; display: block; border-radius: 0.9rem; object-fit: cover; }
+    .pp-qualify-grid .pp-checks { grid-template-columns: 1fr; margin-top: 0; }
+    .pp-qualify-h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.9rem; letter-spacing: 0.03em; color: var(--kf-black); margin: 0 0 1.1rem; }
+    @media (max-width: 800px) { .pp-qualify-grid { grid-template-columns: 1fr; gap: 1.75rem; } }
+    /* Steps */
+    .pp-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.75rem; }
+    @media (max-width: 820px) { .pp-steps { grid-template-columns: 1fr; } }
+    .pp-step { background: white; border: 1px solid #eee; border-radius: 0.85rem; padding: 1.75rem; }
+    .pp-step-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--kf-red); line-height: 1; }
+    .pp-step h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.4rem; letter-spacing: 0.03em; margin: 0.4rem 0 0.6rem; color: var(--kf-black); }
+    .pp-step p { font-size: 0.92rem; line-height: 1.55; color: var(--kf-gray-dark); }
+    /* Timetable */
+    .pp-tt-wrap { overflow-x: auto; margin-top: 1.5rem; border-radius: 0.85rem; border: 1px solid #eee; }
+    .pp-tt { width: 100%; border-collapse: collapse; min-width: 560px; background: white; }
+    .pp-tt th { background: var(--kf-black); color: white; text-align: left; padding: 0.9rem 1rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .pp-tt td { padding: 0.85rem 1rem; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; color: var(--kf-black); }
+    .pp-tt tr:last-child td { border-bottom: none; }
+    .pp-tt td:first-child { font-weight: 700; font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 0.04em; color: var(--kf-red); }
+    .pp-tt-note { text-align: center; margin-top: 1.25rem; font-size: 0.9rem; }
+    .pp-tt-note a { color: var(--kf-red); font-weight: 700; text-decoration: none; }
+    .pp-tt-note a:hover { text-decoration: underline; }
+    /* Results gallery */
+    .pp-results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.85rem; margin-top: 1.75rem; }
+    @media (max-width: 820px) { .pp-results { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 520px) { .pp-results { grid-template-columns: repeat(2, 1fr); } }
+    .pp-result { position: relative; border-radius: 0.75rem; overflow: hidden; aspect-ratio: 3 / 4; background: var(--kf-gray); }
+    .pp-result img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pp-result-tag { position: absolute; left: 0.6rem; bottom: 0.6rem; background: rgba(0,0,0,0.78); color: white; padding: 0.35rem 0.6rem; border-radius: 0.4rem; font-weight: 800; font-size: 0.85rem; }
+    .pp-result-tag span { opacity: 0.8; font-weight: 400; }
+    /* FAQ */
+    .pp-faq { max-width: 820px; margin: 1.75rem auto 0; display: grid; gap: 0.75rem; }
+    .pp-faq details { background: white; border: 1px solid #eee; border-radius: 0.7rem; overflow: hidden; }
+    .pp-faq summary { list-style: none; cursor: pointer; padding: 1.1rem 1.35rem; font-weight: 700; font-size: 1rem; color: var(--kf-black); display: flex; gap: 0.75rem; }
+    .pp-faq summary::-webkit-details-marker { display: none; }
+    .pp-faq summary .n { color: var(--kf-red); font-weight: 900; }
+    .pp-faq details[open] summary { color: var(--kf-red); }
+    .pp-faq details p { padding: 0 1.35rem 1.25rem; margin: 0; color: var(--kf-gray-dark); line-height: 1.6; font-size: 0.95rem; }
+    /* "What you won't find here" culture band */
+    .pp-noband { background: var(--kf-black); color: #fff; padding: 4.5rem 2rem; text-align: center; }
+    .pp-noband-inner { max-width: 1000px; margin: 0 auto; }
+    .pp-noband .pp-eyebrow { color: var(--kf-red); }
+    .pp-noband h2 { color: #fff; }
+    .pp-noband-sub { color: rgba(255,255,255,0.72); max-width: 620px; margin: 0.75rem auto 0; line-height: 1.6; font-size: 1.02rem; }
+    .pp-nolist { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.85rem; margin-top: 2rem; }
+    .pp-no { display: inline-flex; align-items: center; gap: 0.55rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; padding: 0.65rem 1.3rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.05em; }
+    .pp-no svg { flex: none; color: var(--kf-red); }
+    .pp-noband h2 .red { color: var(--kf-red); }
+    .pp-noband-img { max-width: 900px; margin: 2.75rem auto 0; border-radius: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 16px 40px rgba(0,0,0,0.32); }
+    .pp-noband-img img { width: 100%; display: block; height: auto; }
+    /* Explainer video band */
+    .pp-explainer { background: var(--kf-black); padding: 4.5rem 2rem; text-align: center; }
+    .pp-explainer-inner { max-width: 1000px; margin: 0 auto; }
+    .pp-explainer-title { font-family: 'Bebas Neue', sans-serif; font-weight: 400; line-height: 1.0; letter-spacing: 0.02em; font-size: clamp(2.1rem, 5.5vw, 3.6rem); color: #fff; margin: 0 0 1.9rem; }
+    .pp-explainer-title span { display: block; }
+    .pp-explainer-title .red { color: var(--kf-red); }
+    .pp-explainer-video { max-width: 920px; margin: 0 auto; border-radius: 1rem; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 18px 50px rgba(0,0,0,0.42); }
+    .pp-explainer-video video { display: block; width: 100%; height: auto; background: #000; }
+    /* Feature photo band */
+    .pp-feature { position: relative; min-height: 440px; display: flex; align-items: center; background-size: cover; background-position: center; }
+    .pp-feature::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18,18,18,0.9) 0%, rgba(18,18,18,0.55) 55%, rgba(18,18,18,0.25) 100%); }
+    .pp-feature-content { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; width: 100%; }
+    .pp-feature-eyebrow { color: var(--kf-red); font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem; }
+    .pp-feature h2 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 0.98; letter-spacing: 0.02em; color: #fff; margin-bottom: 1.25rem; max-width: 760px; }
+    .pp-feature p { color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.6; max-width: 560px; }
+    @media (max-width: 700px) { .pp-feature { min-height: 380px; } .pp-feature::before { background: linear-gradient(180deg, rgba(18,18,18,0.6), rgba(18,18,18,0.85)); } }
+    /* Trust bar */
+    .pp-trustbar { background: white; border-bottom: 1px solid #eee; padding: 1.1rem 2rem; }
+    .pp-trustbar-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem 2.25rem; }
+    .pp-trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--kf-black); }
+    .pp-trust-item svg { color: var(--kf-red); flex: none; }
+    .pp-trust-stars { color: #FBBC05; letter-spacing: 0.08em; }
+    .pp-trust-sub { color: var(--kf-gray-dark); font-weight: 600; }
+    /* Hero video */
+    .pp-hero-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Video block */
+    .pp-video-wrap { max-width: 900px; margin: 1.75rem auto 0; }
+    .pp-video { position: relative; border-radius: 1rem; overflow: hidden; background: #000; aspect-ratio: 16 / 9; box-shadow: 0 20px 50px rgba(0,0,0,0.22); }
+    .pp-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pp-video-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.9rem; background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.45)); border: none; cursor: pointer; width: 100%; }
+    .pp-video-play { width: 84px; height: 84px; border-radius: 50%; background: var(--kf-red); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(227,30,36,0.5); transition: transform 0.2s; }
+    .pp-video-overlay:hover .pp-video-play { transform: scale(1.08); }
+    .pp-video-pill { background: rgba(0,0,0,0.65); color: white; font-weight: 700; font-size: 0.85rem; padding: 0.45rem 0.95rem; border-radius: 999px; letter-spacing: 0.04em; }
+    .pp-video.playing .pp-video-overlay { display: none; }
+    /* Crew banner photo */
+    .pp-crew-banner { max-width: 1100px; margin: 2.25rem auto 0; border-radius: 1rem; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.18); }
+    .pp-crew-banner img { width: 100%; display: block; }
+    /* Testimonial video wall (Vimeo lazy facades) */
+    .pp-vidwall { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 1000px; margin: 2.5rem auto 0; }
+    .pp-vidcard { position: relative; border-radius: 0.9rem; overflow: hidden; background: linear-gradient(135deg, #1a1a1a, #2a2a2a); aspect-ratio: 16 / 9; cursor: pointer; box-shadow: 0 14px 34px rgba(0,0,0,0.18); }
+    .pp-vidthumb { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .pp-vidcard:hover .pp-vidthumb { transform: scale(1.04); }
+    .pp-vidcard-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.5)); transition: background 0.3s ease; }
+    .pp-vidcard:hover .pp-vidcard-overlay { background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.6)); }
+    .pp-vidcard-play { width: 68px; height: 68px; border-radius: 50%; background: var(--kf-red); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(227,30,36,0.45); transition: transform 0.25s ease; }
+    .pp-vidcard:hover .pp-vidcard-play { transform: scale(1.08); }
+    .pp-vidcard-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.4rem 1.1rem 1rem; color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.03em; line-height: 1.1; text-align: left; background: linear-gradient(0deg, rgba(0,0,0,0.78), transparent); }
+    .pp-vidcard iframe { width: 100%; height: 100%; border: 0; display: block; }
+    @media (max-width: 700px) { .pp-vidwall { grid-template-columns: 1fr; gap: 1.1rem; } }
+    /* Pillar images */
+    .pp-pillar img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.6rem; margin-bottom: 1rem; display: block; }
+    /* Comparison table */
+    .pp-compare { background: var(--kf-black); padding: 4.5rem 2rem; }
+    .pp-compare-inner { max-width: 1000px; margin: 0 auto; }
+    .pp-compare h2 { color: #fff; text-align: center; }
+    .pp-compare-eye { text-align: center; }
+    .pp-compare-sub { color: rgba(255,255,255,0.74); text-align: center; max-width: 640px; margin: 0.7rem auto 2.25rem; line-height: 1.6; font-size: 1.02rem; }
+    .pp-compare-table { border-radius: 1rem; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: #1a1a1a; box-shadow: 0 14px 34px rgba(0,0,0,0.25); }
+    .pp-compare-row { display: grid; grid-template-columns: 2.1fr 1fr 1fr 1fr; }
+    .pp-compare-cell { padding: 1rem 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); font-size: 0.95rem; display: flex; align-items: center; justify-content: center; text-align: center; min-width: 0; }
+    .pp-compare-row:last-child .pp-compare-cell { border-bottom: none; }
+    .pp-compare-row.head .pp-compare-cell { font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.55); padding: 1.15rem 0.9rem; }
+    .pp-compare-cell.feat { justify-content: flex-start; text-align: left; color: #fff; font-weight: 600; padding-left: 1.25rem; }
+    .pp-compare-cell.mens, .pp-compare-cell.mens-head { background: rgba(227,30,36,0.06); }
+    .pp-compare-pill { display: inline-flex; align-items: center; justify-content: center; padding: 0.65rem 1.1rem; border: 2px solid var(--kf-red); border-radius: 0.7rem; color: #ff4147; font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 0.04em; background: rgba(227,30,36,0.08); }
+    .pp-c-yes { color: #35d86e; font-size: 1.35rem; font-weight: 900; line-height: 1; }
+    .pp-c-no { color: rgba(255,255,255,0.25); font-size: 1.35rem; font-weight: 900; line-height: 1; }
+    .pp-c-dash { color: rgba(255,255,255,0.6); font-size: 1.2rem; font-weight: 700; line-height: 1; }
+    .pp-compare-cta { text-align: center; margin-top: 2.25rem; }
+    .pp-compare-btn { display: inline-block; background: var(--kf-red); color: #fff; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.05em; padding: 1rem 2.1rem; border-radius: 0.8rem; box-shadow: 0 10px 30px rgba(227,30,36,0.25); transition: transform 0.2s ease, background 0.2s ease; }
+    .pp-compare-btn:hover { transform: translateY(-2px); background: #f5333a; }
+    .pp-compare-note { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 0.9rem; }
+    /* Embedded application form in CTA block */
+    .pp-cta-block h2 .red { color: var(--kf-red); }
+    .pp-cta-form { max-width: 600px; margin: 2rem auto 0; background: #fff; border-radius: 1rem; padding: 0.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.35); display: flex; justify-content: center; }
+    .pp-cta-form .ep-wrapper { width: 100%; display: flex; justify-content: center; }
+    .pp-cta-form iframe { width: 100%; max-width: 100%; min-height: 600px; border: none; border-radius: 0.7rem; display: block; margin: 0 auto; opacity: 0; transition: opacity 280ms ease, height 220ms ease; }
+    .pp-cta-form iframe.loaded { opacity: 1; }
+    @media (max-width: 600px) { .pp-compare { padding: 3rem 0.75rem; } .pp-compare-row { grid-template-columns: 1.5fr 0.85fr 0.85fr 0.95fr; } .pp-compare-cell { padding: 0.8rem 0.4rem; font-size: 0.8rem; } .pp-compare-cell.feat { font-size: 0.8rem; padding-left: 0.7rem; word-break: break-word; } .pp-compare-row.head .pp-compare-cell { font-size: 0.62rem; padding: 0.8rem 0.4rem; } .pp-compare-pill { font-size: 0.82rem; padding: 0.5rem 0.55rem; } .pp-c-yes, .pp-c-no { font-size: 1.1rem; } }
+
+    /* ===== UX OVERHAUL ===== */
+    /* Scroll reveal — SAFE: elements are visible by default; the fade-up only
+       exists while the keyframe is running, so content can never stay hidden. */
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes ppFadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+      .reveal.is-visible { animation: ppFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+      .reveal-stagger.is-visible > * { animation: ppFadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+      .reveal-stagger.is-visible > *:nth-child(2) { animation-delay: 0.07s; }
+      .reveal-stagger.is-visible > *:nth-child(3) { animation-delay: 0.14s; }
+      .reveal-stagger.is-visible > *:nth-child(4) { animation-delay: 0.21s; }
+      .reveal-stagger.is-visible > *:nth-child(5) { animation-delay: 0.28s; }
+      .reveal-stagger.is-visible > *:nth-child(6) { animation-delay: 0.35s; }
+    }
+    /* Eyebrow accent rule */
+    .pp-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; }
+    .pp-eyebrow::before { content: ''; width: 1.6rem; height: 2px; background: var(--kf-red); display: inline-block; }
+    .pp-compare-eye, .pp-noband .pp-eyebrow { justify-content: center; }
+    /* Results tile hover */
+    .pp-result { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease; }
+    .pp-result img { transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+    .pp-result:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.18); z-index: 1; }
+    .pp-result:hover img { transform: scale(1.06); }
+    /* Floating sticky Apply CTA */
+    .pp-sticky-cta { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 60; display: inline-flex; align-items: center; gap: 0.6rem; background: var(--kf-red); color: #fff; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 0.05em; padding: 0.95rem 1.6rem; border-radius: 999px; box-shadow: 0 12px 32px rgba(227,30,36,0.45); opacity: 0; visibility: hidden; transform: translateY(18px); transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s; }
+    .pp-sticky-cta.show { opacity: 1; visibility: visible; transform: none; }
+    .pp-sticky-cta:hover { background: var(--kf-red-dark); transform: translateY(-2px); }
+    .pp-sticky-cta svg { flex: none; }
+    @media (max-width: 600px) { .pp-sticky-cta { left: 1rem; right: 1rem; justify-content: center; bottom: 1rem; } }
+    /* Mid-page standout CTA band */
+    .pp-midcta { position: relative; background: var(--gradient-red); color: #fff; text-align: center; padding: 4rem 2rem; overflow: hidden; }
+    .pp-midcta::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12), transparent 55%); pointer-events: none; }
+    .pp-midcta-inner { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
+    .pp-midcta-eye { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 0.9rem; }
+    .pp-midcta h2 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1; letter-spacing: 0.02em; color: #fff; margin-bottom: 1.4rem; }
+    .pp-midcta-btn { display: inline-flex; align-items: center; gap: 0.6rem; background: #fff; color: var(--kf-red); text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.05em; padding: 1rem 2.4rem; border-radius: 0.7rem; box-shadow: 0 14px 34px rgba(0,0,0,0.28); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .pp-midcta-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 42px rgba(0,0,0,0.36); }
+    .pp-midcta-note { margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.85); }
+  </style>
+</head>
+<body>
+
+  <nav class="pp-nav">
+    <div class="pp-nav-inner">
+      <a href="../index.html"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69c9dd515ae6bce5b7332a5b.png" alt="Knight Fitness"></a>
+      <div style="display:flex; align-items:center; gap:1.5rem;">
+        <a class="pp-back" href="../index.html#programs">← All Programs</a>
+        <a class="pp-cta" href="../contact.html">Contact us</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="pp-hero">
+    <div class="pp-hero-bg">
+      <video autoplay muted loop playsinline preload="auto" poster="../assets/lov/mens/group-sm.jpg" aria-label="Men's Club training at Knight Fitness Lawnton">
+        <source src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69ae877214ebc321d568b0f9.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="pp-hero-content">
+      <div class="pp-hero-eyebrow">Men's Only · 30+ · Lawnton</div>
+      <h1>MEN'S CLUB</h1>
+      <div class="pp-hero-tag">Semi-Private Coaching</div>
+    </div>
+  </header>
+
+  <div class="pp-trustbar">
+    <div class="pp-trustbar-inner">
+      <div class="pp-trust-item"><span class="pp-trust-stars">★★★★★</span> 5.0 on Google <span class="pp-trust-sub">· 500+ reviews</span></div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>AUSactive Registered</div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="10"/></svg>First Aid &amp; CPR Certified</div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg>Fully Insured</div>
+    </div>
+  </div>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">The Program</div>
+    <h2>GET BACK IN SHAPE — AND LOOK AFTER YOUR NEXT 10–15 YEARS.</h2>
+    <p class="pp-lead-sub">We help busy men who haven't trained in a long time get back in shape — and start looking after their long-term health.</p>
+    <p>You've got a demanding job, zero energy left, no routine — and your body's starting to let you know about it. Men's Club is where blokes over 30 rebuild their fitness, confidence, and strength with proper coaching, real accountability, and a solid crew around them. No egos. No BS. Just results.</p>
+
+    <div class="pp-meta">
+      <div class="pp-meta-item">
+        <div class="pp-meta-label">Sessions</div>
+        <div class="pp-meta-value">3 / WEEK</div>
+        <div class="pp-meta-sub">Pick any times that suit</div>
+      </div>
+      <div class="pp-meta-item">
+        <div class="pp-meta-label">Session Length</div>
+        <div class="pp-meta-value">45 MIN</div>
+        <div class="pp-meta-sub">Men-only, coach-led</div>
+      </div>
+      <div class="pp-meta-item">
+        <div class="pp-meta-label">Membership</div>
+        <div class="pp-meta-value">CAPPED</div>
+        <div class="pp-meta-sub">250 members max</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-explainer">
+    <div class="pp-explainer-inner">
+      <h2 class="pp-explainer-title"><span>HOW BUSY MEN OVER 30</span><span class="red">GET BACK IN SHAPE</span></h2>
+      <div class="pp-explainer-video">
+        <video autoplay muted loop playsinline controls preload="auto" poster="../assets/lov/mens/group-sm.jpg" aria-label="How busy men over 30 get back in shape with Men's Club">
+          <source src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69ae311080d35963f56f8650.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-stats">
+    <div class="pp-stats-inner">
+      <div><div class="pp-stat-num" data-count="1000" data-suffix="+">1000+</div><div class="pp-stat-label">North Brisbane men transformed</div></div>
+      <div><div class="pp-stat-num" data-count="3000" data-suffix="+">3000+</div><div class="pp-stat-label">Kilos lost combined</div></div>
+      <div><div class="pp-stat-num" data-count="400" data-suffix="+">400+</div><div class="pp-stat-label">Five-star reviews</div></div>
+      <div><div class="pp-stat-num" data-count="9" data-suffix="+">9+</div><div class="pp-stat-label">Years coaching blokes</div></div>
+    </div>
+  </section>
+
+  <section class="pp-feature" style="background-image:url('../assets/lov/bootcamp/red-shirts-outside-sm.jpg')">
+    <div class="pp-feature-content">
+      <div class="pp-feature-eyebrow">No Egos · No BS</div>
+      <h2>TRAIN WITH BLOKES<br>WHO GET IT.</h2>
+      <p>Men over 30 rebuilding their strength, fitness and confidence together — with a coach in the room and a crew that holds each other to it.</p>
+    </div>
+  </section>
+
+  <section class="pp-section" style="padding-bottom:0;">
+    <div class="pp-eyebrow">Hear It From The Crew</div>
+    <h2>REAL MEMBERS. REAL STORIES.</h2>
+    <p style="color:var(--kf-gray-dark); max-width:700px;">Don't take our word for it — hear what training here has actually done for blokes like you.</p>
+    <div class="pp-video-wrap">
+      <div class="pp-video">
+        <video poster="../assets/lov/mens/group-sm.jpg" preload="metadata" playsinline aria-label="Men's Club member story">
+          <source src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/65cf02da8a5944501f2a6c14.mp4" type="video/mp4">
+        </video>
+        <button class="pp-video-overlay" aria-label="Play video: Men's Club member story">
+          <span class="pp-video-play"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span>
+          <span class="pp-video-pill">Watch the story</span>
+        </button>
+      </div>
+    </div>
+    <div class="pp-vidwall">
+      <div class="pp-vidcard" data-vimeo="286262435" role="button" tabindex="0" aria-label="Play member testimonial"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
+      <div class="pp-vidcard" data-vimeo="282760998" role="button" tabindex="0" aria-label="Play member testimonial"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
+      <div class="pp-vidcard" data-vimeo="261375552" role="button" tabindex="0" aria-label="Play member testimonial"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
+      <div class="pp-vidcard" data-vimeo="287349941" role="button" tabindex="0" aria-label="Play member testimonial"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">The Three Pillars</div>
+    <h2>HOW MEN'S CLUB WORKS.</h2>
+    <p class="pp-lead-sub">Three pillars that make the difference between another failed attempt and a genuine transformation.</p>
+    <div class="pp-pillars">
+      <div class="pp-pillar"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aea57480d35951e280561e.jpg" alt="Personal coaching at Men's Club Lawnton" loading="lazy"><h3>Personal Coaching</h3><p>One-on-one guidance tailored to your body, your goals, and your lifestyle. No cookie-cutter plans — just a coach who gives a damn.</p></div>
+      <div class="pp-pillar"><img src="../assets/lov/bootcamp/mens-club-group-sm.jpg" alt="Men's Club crew training together at Knight Fitness Lawnton" loading="lazy"><h3>Accountability</h3><p>We keep you honest. Weekly check-ins, progress tracking, and a coach in your corner making sure you never fall off the wagon.</p></div>
+      <div class="pp-pillar"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aea57480d359536b80561d.jpg" alt="Men's Club crew training together at Knight Fitness Lawnton" loading="lazy"><h3>Community &amp; Brotherhood</h3><p>Train alongside blokes who get it. The camaraderie, the banter, the brotherhood — this is what keeps you coming back.</p></div>
+    </div>
+  </section>
+
+  <section class="pp-compare">
+    <div class="pp-compare-inner">
+      <div class="pp-eyebrow pp-compare-eye">The Difference</div>
+      <h2>WHY MEN'S CLUB WINS.</h2>
+      <p class="pp-compare-sub">See how we stack up against the alternatives.</p>
+      <div class="pp-compare-table">
+        <div class="pp-compare-row head">
+          <div class="pp-compare-cell feat">Feature</div>
+          <div class="pp-compare-cell mens-head"><span class="pp-compare-pill">Men's Club</span></div>
+          <div class="pp-compare-cell">Home Workouts</div>
+          <div class="pp-compare-cell">Personal Trainer</div>
+        </div>
+        <div class="pp-compare-row"><div class="pp-compare-cell feat">Personalised Programming</div><div class="pp-compare-cell mens"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div><div class="pp-compare-cell"><span class="pp-c-yes">✓</span></div></div>
+        <div class="pp-compare-row"><div class="pp-compare-cell feat">Expert Coaching</div><div class="pp-compare-cell mens"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div><div class="pp-compare-cell"><span class="pp-c-yes">✓</span></div></div>
+        <div class="pp-compare-row"><div class="pp-compare-cell feat">Accountability &amp; Check-ins</div><div class="pp-compare-cell mens"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div><div class="pp-compare-cell"><span class="pp-c-dash">—</span></div></div>
+        <div class="pp-compare-row"><div class="pp-compare-cell feat">Community &amp; Brotherhood</div><div class="pp-compare-cell mens"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div></div>
+        <div class="pp-compare-row"><div class="pp-compare-cell feat">Affordable Pricing</div><div class="pp-compare-cell mens"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div></div>
+        <div class="pp-compare-row"><div class="pp-compare-cell feat">Flexible Schedule</div><div class="pp-compare-cell mens"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div></div>
+        <div class="pp-compare-row"><div class="pp-compare-cell feat">Proven Results</div><div class="pp-compare-cell mens"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div><div class="pp-compare-cell"><span class="pp-c-dash">—</span></div></div>
+        <div class="pp-compare-row"><div class="pp-compare-cell feat">Ongoing Support</div><div class="pp-compare-cell mens"><span class="pp-c-yes">✓</span></div><div class="pp-compare-cell"><span class="pp-c-no">×</span></div><div class="pp-compare-cell"><span class="pp-c-dash">—</span></div></div>
+      </div>
+      <div class="pp-compare-cta">
+        <a class="pp-compare-btn" href="../contact.html">Apply for Men's Club Now</a>
+        <p class="pp-compare-note">Limited spots available for our Lawnton expansion.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section alt">
+    <div class="pp-section-inner">
+      <div class="pp-eyebrow">Due to Insane Demand</div>
+      <h2>OUR MEN'S CLUB PROGRAM IS <span style="color: var(--kf-red);">EXPANDING IN LAWNTON</span></h2>
+      <div class="pp-qualify-grid">
+        <div class="pp-qualify-img"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aea57414ebc37d676e37d3.png" alt="Men's Club Lawnton crew" loading="lazy"></div>
+        <div>
+          <h3 class="pp-qualify-h3">Do You Qualify?</h3>
+          <div class="pp-checks">
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're a man over 30</span></div>
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You suck your belly in when you look in the mirror</span></div>
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're fed up of wearing trousers that don't fit</span></div>
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You've got a demanding job</span></div>
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're too busy to train and can't get a routine</span></div>
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're sick of being tired all the time</span></div>
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You get out of breath easily playing with the kids</span></div>
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're prepared to eat healthy</span></div>
+            <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're not already in great shape</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">How It Works</div>
+    <h2>THREE STEPS TO YOUR FIRST SESSION.</h2>
+    <div class="pp-steps">
+      <div class="pp-step"><div class="pp-step-num">01</div><h3>Get Started</h3><p>Get in touch in 15 seconds. We sit down, learn your goals and history, and map out what's actually realistic for your life — no pressure, no hard sell.</p></div>
+      <div class="pp-step"><div class="pp-step-num">02</div><h3>Train With The Crew</h3><p>Pick any 3 men's-only 45-minute sessions a week. Coach-led, small groups of like-minded blokes. Get strong, drop fat, have a laugh, leave better than you walked in.</p></div>
+      <div class="pp-step"><div class="pp-step-num">03</div><h3>Get Real Results</h3><p>A weekly 1-on-1 check-in with your coach keeps you honest. Belt sizes drop. Strength climbs. Energy comes back.</p></div>
+    </div>
+  </section>
+
+  <section class="pp-section alt">
+    <div class="pp-section-inner">
+      <div class="pp-eyebrow">What's Included</div>
+      <h2>EVERYTHING YOU NEED TO ACTUALLY CHANGE.</h2>
+      <div class="pp-checks">
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>3 men's-only 45-minute sessions per week</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Personal Trainer leading every session</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Flexible timetable — train around work and family</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Recovery &amp; lifestyle coaching (sleep, stress, mobility)</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Weekly 1-on-1 check-in with your coach</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Body composition tracking</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Private members' chat — coach reachable any time</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Capped at 250 members so you're never just a number</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">Weekly Timetable</div>
+    <h2>PICK ANY 3 SESSIONS A WEEK.</h2>
+    <div class="pp-tt-wrap">
+      <table class="pp-tt">
+        <thead>
+          <tr><th>Day</th><th>AM Sessions</th><th>PM Sessions</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mon</td><td>4:50 · 5:40 · 6:30</td><td>4:00 · 4:50 · 5:40 · 6:30</td></tr>
+          <tr><td>Tue</td><td>4:50 · 5:40 · 6:30</td><td>4:00 · 4:50 · 5:40 · 6:30</td></tr>
+          <tr><td>Wed</td><td>4:50 · 5:40 · 6:30</td><td>4:00 · 4:50 · 5:40 · 6:30</td></tr>
+          <tr><td>Thu</td><td>4:50 · 5:40 · 6:30</td><td>4:00 · 4:50 · 5:40 · 6:30</td></tr>
+          <tr><td>Fri</td><td>4:50 · 5:40 · 6:30</td><td>4:00 · 4:50 · 5:40</td></tr>
+          <tr><td>Sat</td><td>5:30 · 6:30 · 7:30 · 8:30 · 9:15</td><td>—</td></tr>
+          <tr><td>Sun</td><td>7:00</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pp-tt-note"><a href="../index.html#schedule">See the full weekly timetable →</a></p>
+  </section>
+
+  <section class="pp-section alt">
+    <div class="pp-section-inner">
+      <div class="pp-eyebrow">Real Lawnton Blokes</div>
+      <h2>LOCAL RESULTS, NOT STOCK PHOTOS.</h2>
+      <div class="pp-results">
+        <div class="pp-result"><img src="../assets/lov/results/result-7kg-6weeks-a.webp" alt="Member down 7kg in 6 weeks" loading="lazy"><div class="pp-result-tag">7kg <span>in 6 weeks</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-20kg.webp" alt="Member down 20kg of body fat" loading="lazy"><div class="pp-result-tag">20kg <span>of body fat</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-12kg.webp" alt="Member down 12kg of body fat" loading="lazy"><div class="pp-result-tag">12kg <span>of body fat</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-11kg.webp" alt="Member down 11kg of body fat" loading="lazy"><div class="pp-result-tag">11kg <span>of body fat</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-10kg.webp" alt="Member down 10kg" loading="lazy"><div class="pp-result-tag">10kg <span>down</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-7kg-6weeks-b.webp" alt="Member down 7kg in 6 weeks" loading="lazy"><div class="pp-result-tag">7kg <span>in 6 weeks</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-7kg.webp" alt="Member down 7kg of body fat" loading="lazy"><div class="pp-result-tag">7kg <span>of body fat</span></div></div>
+        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef680d359459081c882.jpg" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
+        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef614ebc3c37c6fabdd.jpg" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
+        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef6e041da44bebf8d69.jpg" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
+        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef614ebc398646fabde.png" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
+        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef66be28a70b615c99b.png" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-testimonials">
+    <div class="pp-testimonials-inner">
+      <div class="pp-eyebrow">Members Say</div>
+      <h2>FROM THE CREW.</h2>
+      <p class="pp-testimonials-sub">Straight from the blokes who train here every week.</p>
+      <div class="pp-testimonials-grid">
+        <div class="pp-quote"><div class="pp-quote-stars">★★★★★</div><p class="pp-quote-text">"Dropped multiple belt sizes since I started. No bullshit here — you just come in, get your work done, and the coaches keep you honest."</p><div class="pp-quote-author"><div class="pp-quote-avatar">DM</div><div><div class="pp-quote-name">Dave M.</div><div class="pp-quote-meta">Men's Club · Google</div></div></div></div>
+        <div class="pp-quote"><div class="pp-quote-stars">★★★★★</div><p class="pp-quote-text">"Haven't felt this good in my body since high school. I hadn't trained in 8 years and these blokes got me back without any judgement. Absolute legends."</p><div class="pp-quote-author"><div class="pp-quote-avatar">CT</div><div><div class="pp-quote-name">Chris T.</div><div class="pp-quote-meta">Men's Club · Facebook</div></div></div></div>
+        <div class="pp-quote"><div class="pp-quote-stars">★★★★★</div><p class="pp-quote-text">"I used to make really bad choices — smoking, drinking, no routine. Men's Club gave me a reason to show up. Best decision I've made for my health."</p><div class="pp-quote-author"><div class="pp-quote-avatar">MR</div><div><div class="pp-quote-name">Mick R.</div><div class="pp-quote-meta">Men's Club · Google</div></div></div></div>
+        <div class="pp-quote"><div class="pp-quote-stars">★★★★★</div><p class="pp-quote-text">"Joined at 47 thinking I'd be the oldest bloke there. Turns out half the crew's my age and we all push each other. Strongest I've been in 20 years."</p><div class="pp-quote-author"><div class="pp-quote-avatar">GW</div><div><div class="pp-quote-name">Grant W.</div><div class="pp-quote-meta">Men's Club · Google</div></div></div></div>
+        <div class="pp-quote"><div class="pp-quote-stars">★★★★★</div><p class="pp-quote-text">"The weekly check-ins are what keep me honest. For the first time I've stuck with something past January. Down two notches on the belt and not stopping."</p><div class="pp-quote-author"><div class="pp-quote-avatar">SB</div><div><div class="pp-quote-name">Steve B.</div><div class="pp-quote-meta">Men's Club · Facebook</div></div></div></div>
+        <div class="pp-quote"><div class="pp-quote-stars">★★★★★</div><p class="pp-quote-text">"Came in carrying a dodgy back and zero confidence. The coaches worked around my injuries from day one. Now I'm lifting pain-free and keeping up with the kids."</p><div class="pp-quote-author"><div class="pp-quote-avatar">PN</div><div><div class="pp-quote-name">Paul N.</div><div class="pp-quote-meta">Men's Club · Google</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-midcta">
+    <div class="pp-midcta-inner">
+      <div class="pp-midcta-eye">Limited Spots · Lawnton Expansion</div>
+      <h2>READY TO TRAIN WITH THE CREW?</h2>
+      <a class="pp-midcta-btn" href="#apply">Apply for Men's Club <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <p class="pp-midcta-note">No pressure, no contracts — just a chat about where you're at.</p>
+    </div>
+  </section>
+
+  <section class="pp-noband">
+    <div class="pp-noband-inner">
+      <div class="pp-eyebrow">What You Won't Find Here</div>
+      <h2>WE DON'T ACCEPT <span class="red">ANY OF THIS</span></h2>
+      <p class="pp-noband-sub">Most blokes don't quit because training's too hard. They quit because the room makes them feel small. That doesn't happen here.</p>
+      <div class="pp-nolist">
+        <span class="pp-no"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No Judgments</span>
+        <span class="pp-no"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No Egos</span>
+        <span class="pp-no"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No Mirrors</span>
+        <span class="pp-no"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No Intimidation</span>
+        <span class="pp-no"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No Bullshit</span>
+      </div>
+      <div class="pp-noband-img"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69af918eddc8c7192ad14029.jpg" alt="The intimidating gym culture Men's Club rejects" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">FAQs</div>
+    <h2>COMMON QUESTIONS.</h2>
+    <div class="pp-faq">
+      <details><summary><span class="n">01</span>I haven't trained in years — am I too out of shape for this?</summary><p>No. Men's Club is literally built for blokes who haven't trained in a long time. Every session is scaled by the coach on the spot. Most members started exactly where you are.</p></details>
+      <details><summary><span class="n">02</span>How many sessions a week, and how long?</summary><p>You get to pick any 3 sessions per week. Each one is 45 minutes — short enough to fit a busy schedule, long enough to actually move the needle.</p></details>
+      <details><summary><span class="n">03</span>Are the sessions men only?</summary><p>Yes. Every Men's Club session is blokes only. No mirrors, no posing, no intimidation — just men working hard and having a laugh.</p></details>
+      <details><summary><span class="n">04</span>Do you provide nutrition or meal plans?</summary><p>No — we don't do nutrition coaching, meal plans, or banned-food lists. We focus on what we do best: coach-led training and accountability. If you want nutrition support, we're happy to point you to a qualified dietitian.</p></details>
+      <details><summary><span class="n">05</span>What's the catch with the 250 members cap?</summary><p>We deliberately keep Men's Club capped at 250 members across our studios so coaching quality stays high. Most members renew month after month, so spots open up rarely.</p></details>
+      <details><summary><span class="n">06</span>How do I get started?</summary><p>Get in touch (takes 15 seconds). We sit down, walk you through how it works, and you decide if it's the right fit. No pressure, no hard sell.</p></details>
+    </div>
+  </section>
+
+  <section class="pp-cta-block" id="apply">
+    <h2>GET IN <span class="red">CONTACT</span></h2>
+    <p>Ready to start your transformation? Fill out the form below and a coach will be in touch — no pressure, no contracts.</p>
+    <div class="pp-cta-form">
+      <iframe
+        src="https://api.leadconnectorhq.com/widget/form/cRJglov44iSE5XqhpcpI"
+        id="inline-cRJglov44iSE5XqhpcpI-mens"
+        data-layout="{'id':'INLINE'}"
+        data-trigger-type="alwaysShow"
+        data-form-name="Contact Us Form Lawnton"
+        data-height="600"
+        data-layout-iframe-id="inline-cRJglov44iSE5XqhpcpI-mens"
+        data-form-id="cRJglov44iSE5XqhpcpI"
+        title="Apply for Men's Club"
+        scrolling="no"></iframe>
+    </div>
+    <div class="pp-cta-fine">No pressure · No contracts · A coach will be in touch within 1 business day.</div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">Other Programs</div>
+    <h2 style="margin-bottom: 0.5rem;">NOT QUITE THE RIGHT FIT?</h2>
+    <p style="color:var(--kf-gray-dark);">Have a look at the rest of what we offer.</p>
+    <div class="pp-others">
+      <a class="pp-other" href="bootcamp.html">
+        <div class="pp-other-tag">Group Coaching</div>
+        <div class="pp-other-name">Bootcamp</div>
+        <div class="pp-other-arrow">Learn more →</div>
+      </a>
+      <a class="pp-other" href="womens.html">
+        <div class="pp-other-tag">Semi-Private</div>
+        <div class="pp-other-name">Women's Club</div>
+        <div class="pp-other-arrow">Learn more →</div>
+      </a>
+      <a class="pp-other" href="https://www.youngknights.com.au" target="_blank" rel="noopener noreferrer">
+        <div class="pp-other-tag">Ages 10–17</div>
+        <div class="pp-other-name">Young Knights</div>
+        <div class="pp-other-arrow">Learn more →</div>
+      </a>
+    </div>
+  </section>
+
+  <footer class="pp-foot">
+    <p>664 Gympie Road, Lawnton QLD · <a href="tel:+61452519877">0452 519 877</a> · <a href="../index.html">Back to Home</a></p>
+  </footer>
+
+  <a class="pp-sticky-cta" href="#apply" aria-label="Apply for Men's Club">Apply Now <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+
+  <script>
+    document.querySelectorAll('.pp-video').forEach(function (w) {
+      var v = w.querySelector('video');
+      var o = w.querySelector('.pp-video-overlay');
+      if (!v || !o) return;
+      o.addEventListener('click', function () {
+        w.classList.add('playing');
+        v.controls = true;
+        v.play();
+      });
+      v.addEventListener('ended', function () {
+        w.classList.remove('playing');
+        v.controls = false;
+        v.currentTime = 0;
+      });
+    });
+
+    // GHL application form: fade in on load + auto-height
+    (function () {
+      var f = document.querySelector('.pp-cta-form iframe');
+      if (!f) return;
+      f.addEventListener('load', function () { f.classList.add('loaded'); });
+      window.addEventListener('message', function (e) {
+        var d = e.data;
+        var h = d && typeof d === 'object' && (d.height || (d.payload && d.payload.height));
+        if (h && Number(h) > 200 && Number(h) < 4000) f.style.height = Number(h) + 'px';
+      });
+    })();
+
+    // Count-up stats on scroll into view
+    (function () {
+      var nums = document.querySelectorAll('.pp-stat-num[data-count]');
+      if (!nums.length) return;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function run(el) {
+        var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        var suffix = el.getAttribute('data-suffix') || '';
+        if (reduce) { el.textContent = target.toLocaleString() + suffix; return; }
+        var dur = 1400, startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var p = Math.min((ts - startTime) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.floor(target * eased).toLocaleString() + suffix;
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = target.toLocaleString() + suffix;
+        }
+        requestAnimationFrame(step);
+      }
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { nums.forEach(run); io.disconnect(); }
+          });
+        }, { threshold: 0.3 });
+        io.observe(document.querySelector('.pp-stats'));
+      } else {
+        nums.forEach(run);
+      }
+    })();
+
+    // Vimeo testimonial wall: lazy thumbnails + click-to-play
+    (function () {
+      var cards = document.querySelectorAll('.pp-vidcard[data-vimeo]');
+      cards.forEach(function (card) {
+        var id = card.getAttribute('data-vimeo');
+        var img = card.querySelector('.pp-vidthumb');
+        var cap = card.querySelector('.pp-vidcard-cap');
+        fetch('https://vimeo.com/api/oembed.json?url=https%3A%2F%2Fvimeo.com%2F' + id + '&width=1280')
+          .then(function (r) { return r.json(); })
+          .then(function (d) {
+            if (d && d.thumbnail_url && img) {
+              img.src = d.thumbnail_url.replace(/-d_\d+x\d+$/, '-d_1280x720').replace(/_\d+x\d+/, '_1280x720');
+            }
+          })
+          .catch(function () {});
+        function play() {
+          if (card.dataset.played) return;
+          card.dataset.played = '1';
+          var f = document.createElement('iframe');
+          f.src = 'https://player.vimeo.com/video/' + id + '?autoplay=1&title=0&byline=0&portrait=0';
+          f.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+          f.setAttribute('allowfullscreen', '');
+          card.innerHTML = '';
+          card.appendChild(f);
+        }
+        card.addEventListener('click', play);
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+        });
+      });
+    })();
+
+    // Scroll-reveal: animate sections/cards in as they enter view
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var staggerSel = '.pp-pillars,.pp-steps,.pp-checks,.pp-results,.pp-testimonials-grid,.pp-vidwall,.pp-others,.pp-stats-inner,.pp-nolist';
+      var blockSel = '.pp-eyebrow,.pp-section>h2,.pp-section-inner>h2,.pp-lead-sub,.pp-meta,.pp-explainer-title,.pp-explainer-video,.pp-feature-content,.pp-crew-banner,.pp-video-wrap,.pp-compare h2,.pp-compare-sub,.pp-compare-table,.pp-compare-cta,.pp-qualify-grid,.pp-tt-wrap,.pp-tt-note,.pp-noband h2,.pp-noband-sub,.pp-noband-img,.pp-faq,.pp-cta-form,.pp-midcta-inner,.pp-testimonials h2,.pp-testimonials-sub';
+      var targets = [];
+      document.querySelectorAll(staggerSel).forEach(function (el) { el.classList.add('reveal-stagger'); targets.push(el); });
+      document.querySelectorAll(blockSel).forEach(function (el) { el.classList.add('reveal'); targets.push(el); });
+      if (!('IntersectionObserver' in window)) {
+        targets.forEach(function (t) { t.classList.add('is-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+      targets.forEach(function (t) { io.observe(t); });
+    })();
+
+    // Floating Apply button: show after hero, hide over the form / footer
+    (function () {
+      var btn = document.querySelector('.pp-sticky-cta');
+      var apply = document.getElementById('apply');
+      if (!btn) return;
+      function update() {
+        var past = window.scrollY > 700;
+        var nearForm = false;
+        if (apply) {
+          var r = apply.getBoundingClientRect();
+          nearForm = r.top < window.innerHeight && r.bottom > 0;
+        }
+        var atBottom = (window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 160);
+        btn.classList.toggle('show', past && !nearForm && !atBottom);
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
+
+  <script src="https://link.msgsndr.com/js/form_embed.js" async></script>
+
+</body>
+</html>

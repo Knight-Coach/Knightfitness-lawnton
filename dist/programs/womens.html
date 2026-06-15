@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Women's Club | Knight Fitness Lawnton</title>
+  <meta name="description" content="Women's Club at Knight Fitness Lawnton — women's-only semi-private coaching for women 30+. Get strong and confident again. No mirrors, no judgement.">
+  <link rel="canonical" href="https://www.knightfitness.com.au/programs/womens">
+  <meta name="theme-color" content="#1A1A1A">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Knight Fitness Lawnton">
+  <meta property="og:locale" content="en_AU">
+  <meta property="og:title" content="Women's Club | Knight Fitness Lawnton">
+  <meta property="og:description" content="Women's Club at Knight Fitness Lawnton — women's-only semi-private coaching for women 30+. Get strong and confident again. No mirrors, no judgement.">
+  <meta property="og:url" content="https://www.knightfitness.com.au/programs/womens">
+  <meta property="og:image" content="https://www.knightfitness.com.au/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Women's Club | Knight Fitness Lawnton">
+  <meta name="twitter:description" content="Women's Club at Knight Fitness Lawnton — women's-only semi-private coaching for women 30+. Get strong and confident again. No mirrors, no judgement.">
+  <meta name="twitter:image" content="https://www.knightfitness.com.au/og-image.jpg">
+  <link rel="stylesheet" href="program.css">
+  <style>
+    .pp-lead-sub { font-size: 1.15rem; font-weight: 700; color: var(--kf-black); max-width: 800px; margin-bottom: 1rem; }
+    /* Dark stats band */
+    .pp-stats { background: var(--kf-black); color: white; padding: 3.5rem 2rem; }
+    .pp-stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
+    @media (max-width: 760px) { .pp-stats-inner { grid-template-columns: repeat(2, 1fr); gap: 2.25rem 1.5rem; } }
+    .pp-stat-num { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(2.4rem, 5vw, 3.4rem); line-height: 1; color: var(--kf-red); letter-spacing: 0.02em; }
+    .pp-stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-top: 0.5rem; font-weight: 600; line-height: 1.4; }
+    /* Pillars */
+    .pp-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.75rem; }
+    @media (max-width: 820px) { .pp-pillars { grid-template-columns: 1fr; } }
+    .pp-pillar { background: white; border: 1px solid #eee; border-radius: 0.85rem; padding: 1.75rem; border-top: 4px solid var(--kf-red); }
+    .pp-pillar h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.5rem; letter-spacing: 0.03em; color: var(--kf-black); margin-bottom: 0.6rem; }
+    .pp-pillar p { font-size: 0.95rem; line-height: 1.55; color: var(--kf-gray-dark); }
+    /* Checklist grid */
+    .pp-checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin-top: 1.5rem; }
+    @media (max-width: 700px) { .pp-checks { grid-template-columns: 1fr; } }
+    .pp-check { display: flex; gap: 0.85rem; align-items: flex-start; background: white; padding: 1rem 1.2rem; border-radius: 0.65rem; border: 1px solid #eee; }
+    .pp-check-ic { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--kf-red); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.78rem; margin-top: 0.05rem; }
+    .pp-check span { font-size: 0.98rem; line-height: 1.4; color: var(--kf-black); }
+    /* Steps */
+    .pp-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.75rem; }
+    @media (max-width: 820px) { .pp-steps { grid-template-columns: 1fr; } }
+    .pp-step { background: white; border: 1px solid #eee; border-radius: 0.85rem; padding: 1.75rem; }
+    .pp-step-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--kf-red); line-height: 1; }
+    .pp-step h3 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 1.4rem; letter-spacing: 0.03em; margin: 0.4rem 0 0.6rem; color: var(--kf-black); }
+    .pp-step p { font-size: 0.92rem; line-height: 1.55; color: var(--kf-gray-dark); }
+    /* Timetable */
+    .pp-tt-wrap { overflow-x: auto; margin-top: 1.5rem; border-radius: 0.85rem; border: 1px solid #eee; }
+    .pp-tt { width: 100%; border-collapse: collapse; min-width: 560px; background: white; }
+    .pp-tt th { background: var(--kf-black); color: white; text-align: left; padding: 0.9rem 1rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .pp-tt td { padding: 0.85rem 1rem; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; color: var(--kf-black); }
+    .pp-tt tr:last-child td { border-bottom: none; }
+    .pp-tt td:first-child { font-weight: 700; font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 0.04em; color: var(--kf-red); }
+    .pp-tt-note { text-align: center; margin-top: 1.25rem; font-size: 0.9rem; }
+    .pp-tt-note a { color: var(--kf-red); font-weight: 700; text-decoration: none; }
+    .pp-tt-note a:hover { text-decoration: underline; }
+    /* Results gallery */
+    .pp-results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.85rem; margin-top: 1.75rem; }
+    @media (max-width: 820px) { .pp-results { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 520px) { .pp-results { grid-template-columns: repeat(2, 1fr); } }
+    .pp-result { position: relative; border-radius: 0.75rem; overflow: hidden; aspect-ratio: 3 / 4; background: var(--kf-gray); }
+    .pp-result img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* FAQ */
+    .pp-faq { max-width: 820px; margin: 1.75rem auto 0; display: grid; gap: 0.75rem; }
+    .pp-faq details { background: white; border: 1px solid #eee; border-radius: 0.7rem; overflow: hidden; }
+    .pp-faq summary { list-style: none; cursor: pointer; padding: 1.1rem 1.35rem; font-weight: 700; font-size: 1rem; color: var(--kf-black); display: flex; gap: 0.75rem; }
+    .pp-faq summary::-webkit-details-marker { display: none; }
+    .pp-faq summary .n { color: var(--kf-red); font-weight: 900; }
+    .pp-faq details[open] summary { color: var(--kf-red); }
+    .pp-faq details p { padding: 0 1.35rem 1.25rem; margin: 0; color: var(--kf-gray-dark); line-height: 1.6; font-size: 0.95rem; }
+    /* Feature photo band */
+    .pp-feature { position: relative; min-height: 440px; display: flex; align-items: center; background-size: cover; background-position: center; }
+    .pp-feature::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18,18,18,0.9) 0%, rgba(18,18,18,0.55) 55%, rgba(18,18,18,0.25) 100%); }
+    .pp-feature-content { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; width: 100%; }
+    .pp-feature-eyebrow { color: var(--kf-red); font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem; }
+    .pp-feature h2 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 0.98; letter-spacing: 0.02em; color: #fff; margin-bottom: 1.25rem; max-width: 760px; }
+    .pp-feature p { color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.6; max-width: 560px; }
+    @media (max-width: 700px) { .pp-feature { min-height: 380px; } .pp-feature::before { background: linear-gradient(180deg, rgba(18,18,18,0.6), rgba(18,18,18,0.85)); } }
+    /* Trust bar */
+    .pp-trustbar { background: white; border-bottom: 1px solid #eee; padding: 1.1rem 2rem; }
+    .pp-trustbar-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem 2.25rem; }
+    .pp-trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--kf-black); }
+    .pp-trust-item svg { color: var(--kf-red); flex: none; }
+    .pp-trust-stars { color: #FBBC05; letter-spacing: 0.08em; }
+    .pp-trust-sub { color: var(--kf-gray-dark); font-weight: 600; }
+    /* Video block */
+    .pp-video-wrap { max-width: 900px; margin: 1.75rem auto 0; }
+    .pp-video { position: relative; border-radius: 1rem; overflow: hidden; background: #000; aspect-ratio: 16 / 9; box-shadow: 0 20px 50px rgba(0,0,0,0.22); }
+    .pp-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pp-video-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.9rem; background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.45)); border: none; cursor: pointer; width: 100%; }
+    .pp-video-play { width: 84px; height: 84px; border-radius: 50%; background: var(--kf-red); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(227,30,36,0.5); transition: transform 0.2s; }
+    .pp-video-overlay:hover .pp-video-play { transform: scale(1.08); }
+    .pp-video-pill { background: rgba(0,0,0,0.65); color: white; font-weight: 700; font-size: 0.85rem; padding: 0.45rem 0.95rem; border-radius: 999px; letter-spacing: 0.04em; }
+    .pp-video.playing .pp-video-overlay { display: none; }
+    /* Pillar images */
+    .pp-pillar img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.6rem; margin-bottom: 1rem; display: block; }
+    /* Community banner (relocated group photo) */
+    .pp-crew-banner { max-width: 1100px; margin: 0 auto 2.5rem; border-radius: 1rem; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.28); }
+    .pp-crew-banner img { width: 100%; display: block; }
+    /* Embedded application form in CTA block */
+    .pp-cta-block h2 .red { color: var(--kf-red); }
+    .pp-cta-form { max-width: 600px; margin: 2rem auto 0; background: #fff; border-radius: 1rem; padding: 0.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.35); display: flex; justify-content: center; }
+    .pp-cta-form .ep-wrapper { width: 100%; display: flex; justify-content: center; }
+    .pp-cta-form iframe { width: 100%; max-width: 100%; min-height: 600px; border: none; border-radius: 0.7rem; display: block; margin: 0 auto; opacity: 0; transition: opacity 280ms ease, height 220ms ease; }
+    .pp-cta-form iframe.loaded { opacity: 1; }
+
+    /* ===== WOMEN'S CLUB COLOUR THEME + TIGHTENING ===== */
+    :root {
+      --w-accent: #C2185B;   /* berry */
+      --w-accent2: #7A1F4B;  /* deep plum */
+      --w-blush: #FBF2F4;    /* soft warm section bg */
+      --w-grad: linear-gradient(135deg, #E31E24 0%, #C2185B 100%);
+      --w-deep: linear-gradient(135deg, #1A1A1A 0%, #4A1530 100%);
+    }
+    /* Tighten vertical rhythm */
+    .pp-section { padding: 3.5rem 2rem; }
+    .pp-section.alt > .pp-section-inner { padding: 3.75rem 2rem; }
+    .pp-section h2 { margin-bottom: 1.15rem; }
+    /* Warm blush alt sections instead of flat gray */
+    .pp-section.alt { background: var(--w-blush); }
+    .pp-check { border-color: #f3e3e7; }
+    /* Eyebrow: berry tone + gradient accent dash */
+    .pp-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--w-accent); }
+    .pp-eyebrow::before { content: ''; width: 1.6rem; height: 2px; background: var(--w-grad); }
+    /* Hero pill → gradient */
+    .pp-hero-eyebrow { background: var(--w-grad); }
+    /* Stats band → colourful gradient with white figures */
+    .pp-stats { background: linear-gradient(135deg, #B71C1C 0%, #7A1F4B 100%); }
+    .pp-stat-num { color: #fff; }
+    .pp-stat-label { color: rgba(255,255,255,0.85); }
+    /* Meta + check accents */
+    .pp-meta-label { color: var(--w-accent); }
+    .pp-check-ic { background: var(--w-grad); }
+    /* Pillars: alternating accent borders + hover lift */
+    .pp-pillar { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease; }
+    .pp-pillar:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(122,31,75,0.16); }
+    .pp-pillars > .pp-pillar:nth-child(2) { border-top-color: var(--w-accent); }
+    .pp-pillars > .pp-pillar:nth-child(3) { border-top-color: var(--w-accent2); }
+    /* Card hover lifts */
+    .pp-step, .pp-other { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease; }
+    .pp-step:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(122,31,75,0.13); }
+    .pp-other:hover { border-color: var(--w-accent); }
+    .pp-other:hover .pp-other-arrow { color: var(--w-accent); }
+    .pp-result { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease; }
+    .pp-result img { transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+    .pp-result:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(0,0,0,0.18); z-index: 1; }
+    .pp-result:hover img { transform: scale(1.06); }
+    /* Feature band: plum-tinted overlay */
+    .pp-feature::before { background: linear-gradient(90deg, rgba(40,10,28,0.92) 0%, rgba(74,21,48,0.55) 55%, rgba(122,31,75,0.2) 100%); }
+    .pp-feature-eyebrow { color: #FF6FA5; }
+    /* Timetable header gradient + berry day labels */
+    .pp-tt th { background: linear-gradient(135deg, #1A1A1A, #4A1530); }
+    .pp-tt td:first-child { color: var(--w-accent); }
+    /* Testimonials: gradient avatars (keep dark section) */
+    .pp-quote-avatar { background: var(--w-grad); }
+    /* FAQ markers berry */
+    .pp-faq summary .n { color: var(--w-accent); }
+    .pp-faq details[open] summary { color: var(--w-accent); }
+    .pp-faq summary:hover { color: var(--w-accent); }
+    /* CTA block: deep plum gradient */
+    .pp-cta-block { background: var(--w-deep); }
+
+    /* ===== GOOGLE REVIEWS WIDGET ===== */
+    .gr-widget { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 14px rgba(0,0,0,0.04); margin-top: 1.75rem; }
+    .gr-header { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid #f1f3f5; flex-wrap: wrap; }
+    .gr-header-left { display: flex; align-items: center; gap: 0.75rem; }
+    .gr-header-title { font-weight: 700; font-size: 1.05rem; color: #202124; }
+    .gr-header-sub { font-size: 0.85rem; color: #5f6368; }
+    .gr-header-right { display: flex; align-items: center; gap: 0.85rem; }
+    .gr-rating-big { font-size: 2.25rem; font-weight: 700; color: #202124; line-height: 1; }
+    .gr-header-count { font-size: 0.8rem; color: #5f6368; margin-top: 2px; }
+    .gr-stars { display: inline-flex; gap: 1px; }
+    .gr-carousel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    .gr-card { background: #fff; border: 1px solid #e8eaed; border-radius: 12px; padding: 1.1rem; display: flex; flex-direction: column; gap: 0.65rem; transition: box-shadow .2s ease, transform .2s ease; }
+    .gr-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.06); transform: translateY(-2px); }
+    .gr-card-head { display: flex; align-items: center; gap: 0.65rem; }
+    .gr-avatar { width: 38px; height: 38px; border-radius: 50%; color: #fff; font-weight: 700; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .gr-card-author { flex: 1; min-width: 0; }
+    .gr-card-name { font-weight: 600; font-size: 0.95rem; color: #202124; line-height: 1.2; }
+    .gr-card-meta { font-size: 0.78rem; color: #5f6368; margin-top: 2px; }
+    .gr-card-rating { display: flex; align-items: center; gap: 0.6rem; }
+    .gr-card-date { font-size: 0.78rem; color: #5f6368; }
+    .gr-card-text { font-size: 0.9rem; line-height: 1.55; color: #3c4043; margin: 0; }
+    .gr-dots { display: none; gap: 0.5rem; justify-content: center; margin-top: 1rem; }
+    .gr-dot { width: 8px; height: 8px; border-radius: 50%; border: none; background: #dadce0; padding: 0; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+    .gr-dot.active { background: var(--w-accent); transform: scale(1.3); }
+    .gr-footer { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #f1f3f5; flex-wrap: wrap; }
+    .gr-cta { display: inline-flex; align-items: center; gap: 0.55rem; background: #fff; color: #1a73e8; border: 1px solid #dadce0; border-radius: 999px; padding: 0.6rem 1.1rem; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: background .15s ease, box-shadow .15s ease; }
+    .gr-cta:hover { background: #f8f9fa; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .gr-write { color: #5f6368; font-size: 0.85rem; text-decoration: none; font-weight: 500; }
+    .gr-write:hover { color: #1a73e8; text-decoration: underline; }
+    @media (max-width: 900px) {
+      .gr-carousel { display: flex; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; margin: 1.25rem -1.5rem 0; padding: 0.25rem 1.5rem 0.75rem; scrollbar-width: none; }
+      .gr-carousel::-webkit-scrollbar { display: none; }
+      .gr-card { flex: 0 0 85%; scroll-snap-align: center; }
+      .gr-dots { display: flex; }
+    }
+    @media (max-width: 600px) { .gr-header { flex-direction: column; align-items: flex-start; } .gr-header-right { align-self: stretch; justify-content: space-between; } }
+  </style>
+</head>
+<template id="__bundler_thumbnail" data-bg-color="#7A1F4B">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#7A1F4B"/>
+    <rect x="380" y="250" width="440" height="120" rx="14" fill="#E31E24"/>
+    <text x="600" y="338" font-family="'Bebas Neue', Impact, sans-serif" font-size="92" fill="#ffffff" text-anchor="middle" letter-spacing="4">KF</text>
+    <text x="600" y="470" font-family="'Bebas Neue', Impact, sans-serif" font-size="56" fill="#ffffff" text-anchor="middle" letter-spacing="6">WOMEN'S CLUB</text>
+    <text x="600" y="530" font-family="Arial, sans-serif" font-size="26" fill="rgba(255,255,255,0.8)" text-anchor="middle" letter-spacing="3">KNIGHT FITNESS LAWNTON</text>
+  </svg>
+</template>
+
+<body>
+
+  <nav class="pp-nav">
+    <div class="pp-nav-inner">
+      <a href="../index.html"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69c9dd515ae6bce5b7332a5b.png" alt="Knight Fitness"></a>
+      <div style="display:flex; align-items:center; gap:1.5rem;">
+        <a class="pp-back" href="../index.html#programs">← All Programs</a>
+        <a class="pp-cta" href="../contact.html">Contact us</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="pp-hero">
+    <div class="pp-hero-bg">
+      <img src="../assets/lov/womens/hero.webp" alt="Women's Club at Knight Fitness Lawnton" loading="eager">
+    </div>
+    <div class="pp-hero-content">
+      <div class="pp-hero-eyebrow">Women's Only · 30+ · Lawnton</div>
+      <h1>WOMEN'S CLUB</h1>
+      <div class="pp-hero-tag">Semi-Private Coaching</div>
+    </div>
+  </header>
+
+  <div class="pp-trustbar">
+    <div class="pp-trustbar-inner">
+      <div class="pp-trust-item"><span class="pp-trust-stars">★★★★★</span> 5.0 on Google <span class="pp-trust-sub">· 350+ reviews</span></div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>AUSactive Registered</div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="10"/></svg>First Aid &amp; CPR Certified</div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg>Fully Insured</div>
+    </div>
+  </div>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">The Program</div>
+    <h2>GET STRONG, CONFIDENT, AND BACK TO YOURSELF.</h2>
+    <p class="pp-lead-sub">We help busy women who haven't trained in a long time get back in shape — and start feeling strong, confident and like themselves again.</p>
+    <p>You're juggling kids, work and a household with nothing left for you — and your body's starting to let you know about it. Women's Club is where women over 30 rebuild their fitness, confidence and strength with proper coaching, real accountability, and a crew of locals who actually have your back. No mirrors. No judgement. Just results.</p>
+
+    <div class="pp-meta">
+      <div class="pp-meta-item">
+        <div class="pp-meta-label">Sessions</div>
+        <div class="pp-meta-value">3 / WEEK</div>
+        <div class="pp-meta-sub">Pick any times that suit</div>
+      </div>
+      <div class="pp-meta-item">
+        <div class="pp-meta-label">Session Length</div>
+        <div class="pp-meta-value">45 MIN</div>
+        <div class="pp-meta-sub">Women-only, coach-led</div>
+      </div>
+      <div class="pp-meta-item">
+        <div class="pp-meta-label">Membership</div>
+        <div class="pp-meta-value">CAPPED</div>
+        <div class="pp-meta-sub">250 members max</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-stats">
+    <div class="pp-stats-inner">
+      <div><div class="pp-stat-num">300+</div><div class="pp-stat-label">North Brisbane women transformed</div></div>
+      <div><div class="pp-stat-num">2,400kg</div><div class="pp-stat-label">Kilos lost combined</div></div>
+      <div><div class="pp-stat-num">350+</div><div class="pp-stat-label">Five-star reviews</div></div>
+      <div><div class="pp-stat-num">12+</div><div class="pp-stat-label">Years coaching women</div></div>
+    </div>
+  </section>
+
+  <section class="pp-feature" style="background-image:url('../assets/lov/womens/celebrate.webp')">
+    <div class="pp-feature-content">
+      <div class="pp-feature-eyebrow">No Mirrors · No Judgement</div>
+      <h2>STRONG LOOKS<br>GOOD ON YOU.</h2>
+      <p>Women over 30 rebuilding strength, energy and confidence together — with proper coaching and a sisterhood of locals cheering every win.</p>
+    </div>
+  </section>
+
+  <section class="pp-section" style="padding-bottom:0;">
+    <div class="pp-eyebrow">Meet Your Coach</div>
+    <h2>A WORD FROM COACH HANNAH.</h2>
+    <p style="color:var(--kf-gray-dark); max-width:700px;">The coach who'll be in your corner — on why Women's Club works, straight from the gym floor.</p>
+    <div class="pp-video-wrap">
+      <div class="pp-video">
+        <video poster="../assets/lov/videos/womens-club-hannah-poster.jpg" preload="metadata" playsinline aria-label="A word from Coach Hannah">
+          <source src="../assets/lov/videos/womens-club-hannah.mp4" type="video/mp4">
+          <track kind="captions" src="../assets/lov/videos/womens-club-hannah.en.vtt" srclang="en" label="English" default>
+        </video>
+        <button class="pp-video-overlay" aria-label="Play video: A word from Coach Hannah">
+          <span class="pp-video-play"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span>
+          <span class="pp-video-pill">Watch · 2:05</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">The Three Pillars</div>
+    <h2>COACHING, ACCOUNTABILITY, SISTERHOOD.</h2>
+    <div class="pp-pillars">
+      <div class="pp-pillar"><img src="../assets/lov/womens/bench-coach.jpeg" alt="Coach spotting a Women's Club member on the bench press" loading="lazy"><h3>Personal Coaching</h3><p>Coached guidance tailored to your body, your hormones, your goals and your life. No cookie-cutter plans — just a coach who actually gives a damn about you.</p></div>
+      <div class="pp-pillar"><img src="../assets/lov/womens/loading-bar-sm.jpg" alt="Two Women's Club members loading a barbell together" loading="lazy"><h3>Accountability</h3><p>We keep you honest. Weekly check-ins, progress tracking, and a coach in your corner making sure you never quietly fall off the wagon.</p></div>
+      <div class="pp-pillar"><img src="../assets/lov/womens/trio.webp" alt="Three Women's Club members together after a session" loading="lazy"><h3>Sisterhood &amp; Community</h3><p>Train alongside women who get it. The encouragement, the laughs, the support — this is what keeps you walking back through the door.</p></div>
+    </div>
+  </section>
+
+  <section class="pp-section" style="padding-top:0;">
+    <div class="pp-crew-banner" style="margin:0 auto;"><img src="../assets/lov/womens/park-selfie-sm.jpg" alt="The Women's Club crew together at a community park session" loading="lazy"></div>
+  </section>
+
+  <section class="pp-section alt">
+    <div class="pp-section-inner">
+      <div class="pp-eyebrow">Is This You?</div>
+      <h2>WOMEN'S CLUB IS FOR WOMEN WHO…</h2>
+      <div class="pp-checks">
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're a woman over 30</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>You avoid mirrors and hate how your clothes fit right now</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're juggling work, kids and a household with nothing left for you</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're sick of feeling tired, soft, and stuck in the same cycle</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>You've tried the diets, the apps, the home workouts — none of it stuck</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're done being intimidated by big-box gyms full of grunting blokes</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>You're prepared to eat well — you just need a real plan</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>You want to feel strong, energetic and confident again</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">How It Works</div>
+    <h2>THREE STEPS TO YOUR FIRST SESSION.</h2>
+    <div class="pp-steps">
+      <div class="pp-step"><div class="pp-step-num">01</div><h3>Get Started</h3><p>Get in touch in 15 seconds. We sit down, learn your goals and history, and map out what's actually realistic for your life — no pressure, no hard sell.</p></div>
+      <div class="pp-step"><div class="pp-step-num">02</div><h3>Train With The Crew</h3><p>Pick any 3 women's-only 45-minute sessions a week. Coach-led, small groups of like-minded women. Get strong, drop fat, have a laugh, leave better than you walked in.</p></div>
+      <div class="pp-step"><div class="pp-step-num">03</div><h3>Get Real Results</h3><p>A weekly 1-on-1 check-in with your coach keeps you honest. Clothes fit again. Strength climbs. Energy comes back.</p></div>
+    </div>
+  </section>
+
+  <section class="pp-section alt">
+    <div class="pp-section-inner">
+      <div class="pp-eyebrow">What's Included</div>
+      <h2>EVERYTHING YOU NEED TO ACTUALLY CHANGE.</h2>
+      <div class="pp-checks">
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>3 women's-only 45-minute sessions per week</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Personal Trainer leading every single session</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Flexible timetable — train around work and family</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Recovery &amp; lifestyle coaching (sleep, stress, mobility)</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Weekly 1-on-1 check-in with your coach</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Body composition tracking</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Private members' chat — coach reachable any time</span></div>
+        <div class="pp-check"><span class="pp-check-ic">✓</span><span>Capped at 250 members so you're never just a number</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">Weekly Timetable</div>
+    <h2>PICK ANY 3 SESSIONS A WEEK.</h2>
+    <div class="pp-tt-wrap">
+      <table class="pp-tt">
+        <thead>
+          <tr><th>Day</th><th>AM Sessions</th><th>PM Sessions</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mon</td><td>5:30 · 6:30 · 9:30</td><td>4:00 · 4:50 · 5:40 · 6:30</td></tr>
+          <tr><td>Tue</td><td>5:30 · 6:30 · 9:30</td><td>4:00 · 4:50 · 5:40 · 6:30</td></tr>
+          <tr><td>Wed</td><td>5:30 · 6:30 · 9:30</td><td>4:00 · 4:50 · 5:40 · 6:30</td></tr>
+          <tr><td>Thu</td><td>5:30 · 6:30 · 9:30</td><td>4:00 · 4:50 · 5:40 · 6:30</td></tr>
+          <tr><td>Fri</td><td>5:30 · 6:30 · 9:30</td><td>4:00 · 4:50</td></tr>
+          <tr><td>Sat</td><td>6:30 · 7:30 · 8:30</td><td>—</td></tr>
+          <tr><td>Sun</td><td>7:00</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="pp-tt-note"><a href="../index.html#schedule">See the full weekly timetable →</a></p>
+  </section>
+
+  <section class="pp-section alt">
+    <div class="pp-section-inner">
+      <div class="pp-eyebrow">Real Lawnton Women</div>
+      <h2>RATED 5.0 BY LOCAL WOMEN.</h2>
+      <p style="color:var(--kf-gray-dark); max-width:640px;">Don't take our word for it — here's what the women of Lawnton are saying on Google.</p>
+
+      <div class="gr-widget">
+        <header class="gr-header">
+          <div class="gr-header-left">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            <div>
+              <div class="gr-header-title">Google Reviews</div>
+              <div class="gr-header-sub">Knight Fitness Lawnton</div>
+            </div>
+          </div>
+          <div class="gr-header-right">
+            <div class="gr-rating-big">5.0</div>
+            <div>
+              <div class="gr-stars" aria-label="5 out of 5 stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg></div>
+              <div class="gr-header-count">Based on 350 reviews</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="gr-carousel" id="gr-carousel">
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#9334e6;">M</div><div class="gr-card-author"><div class="gr-card-name">Megan R.</div><div class="gr-card-meta">Local Guide · 31 reviews</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">2 weeks ago</span></div>
+            <p class="gr-card-text">Walked in terrified after years away from any gym. The coaches and the girls made me feel at home from session one. Down 8kg and actually excited to train now.</p>
+          </article>
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#1a73e8;">T</div><div class="gr-card-author"><div class="gr-card-name">Tania B.</div><div class="gr-card-meta">8 reviews</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">1 month ago</span></div>
+            <p class="gr-card-text">Women's Club has been life-changing. No mirrors, no judgement, just proper coaching around my body and my schedule. Strongest and happiest I've felt in years.</p>
+          </article>
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#e8710a;">H</div><div class="gr-card-author"><div class="gr-card-name">Hayley S.</div><div class="gr-card-meta">Local Guide · 54 reviews</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">1 month ago</span></div>
+            <p class="gr-card-text">The weekly check-ins keep me accountable like nothing else has. Two kids, full-time work, and I've finally stuck with something past the first month. Cannot recommend enough.</p>
+          </article>
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#34a853;">D</div><div class="gr-card-author"><div class="gr-card-name">Donna W.</div><div class="gr-card-meta">12 reviews</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">2 months ago</span></div>
+            <p class="gr-card-text">At 52 I assumed strength training wasn't for me. The coaches scaled everything to my body and now I deadlift more than I ever imagined. The community is the best part.</p>
+          </article>
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#d93025;">P</div><div class="gr-card-author"><div class="gr-card-name">Priya N.</div><div class="gr-card-meta">Local Guide · 23 reviews</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">3 months ago</span></div>
+            <p class="gr-card-text">Tried every gym in Pine Rivers and this is the only one that stuck. They know my name, my goals and my injuries. It genuinely feels like a sisterhood, not a card-swipe gym.</p>
+          </article>
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#1e8e3e;">K</div><div class="gr-card-author"><div class="gr-card-name">Kel M.</div><div class="gr-card-meta">6 reviews</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">4 months ago</span></div>
+            <p class="gr-card-text">Postnatal and zero confidence when I started. Twelve months on my back pain is gone and I'm lifting heavier than before the babies. The coaches genuinely care about you.</p>
+          </article>
+        </div>
+
+        <div class="gr-dots" id="gr-dots" aria-hidden="true"></div>
+
+        <div class="gr-footer">
+          <a href="https://www.google.com/maps/place/664+Gympie+Rd,+Lawnton+QLD+4501" target="_blank" rel="noopener noreferrer" class="gr-cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            See all reviews on Google
+          </a>
+          <a href="https://search.google.com/local/writereview?placeid=ChIJP8k2QzPkk2sRovF2KJ2S1cA" target="_blank" rel="noopener noreferrer" class="gr-write">Write a review</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">FAQs</div>
+    <h2>COMMON QUESTIONS.</h2>
+    <div class="pp-faq">
+      <details><summary><span class="n">01</span>I haven't trained in years — am I too unfit for this?</summary><p>No. Women's Club is literally built for women who haven't trained in a long time. Every session is scaled by the coach on the spot. Most members started exactly where you are.</p></details>
+      <details><summary><span class="n">02</span>How many sessions a week, and how long?</summary><p>You get to pick any 3 sessions per week. Each one is 45 minutes — short enough to fit a busy schedule, long enough to actually move the needle.</p></details>
+      <details><summary><span class="n">03</span>Are the sessions women only?</summary><p>Yes. Every Women's Club session is women only. No mirrors, no posing, no intimidation — just women working hard and supporting each other.</p></details>
+      <details><summary><span class="n">04</span>Do you provide nutrition or meal plans?</summary><p>No — we don't do nutrition coaching, meal plans, or banned-food lists. We focus on what we do best: coach-led training and accountability. If you want nutrition support, we're happy to point you to a qualified dietitian.</p></details>
+      <details><summary><span class="n">05</span>What about hormones, perimenopause, or recovery from kids?</summary><p>Our coaches understand training around the realities of being a woman 30+ — perimenopause, postnatal recovery, hormonal shifts. We program around your body, not against it.</p></details>
+      <details><summary><span class="n">06</span>What's the catch with the 250 members cap?</summary><p>We deliberately keep our coaching capped at 250 members across our studios so quality stays high. Most members renew month after month, so spots open up rarely.</p></details>
+      <details><summary><span class="n">07</span>How do I get started?</summary><p>Get in touch (takes 15 seconds). We sit down, walk you through how it works, and you decide if it's the right fit. No pressure, no hard sell.</p></details>
+    </div>
+  </section>
+
+  <section class="pp-cta-block" id="apply">
+    <h2>GET IN <span class="red">CONTACT</span></h2>
+    <p>Ready to start your transformation? Fill out the form below and a coach will be in touch — no pressure, no contracts.</p>
+    <div class="pp-cta-form">
+      <iframe
+        src="https://api.leadconnectorhq.com/widget/form/cRJglov44iSE5XqhpcpI"
+        id="inline-cRJglov44iSE5XqhpcpI-womens"
+        data-layout="{'id':'INLINE'}"
+        data-trigger-type="alwaysShow"
+        data-form-name="Contact Us Form Lawnton"
+        data-height="600"
+        data-layout-iframe-id="inline-cRJglov44iSE5XqhpcpI-womens"
+        data-form-id="cRJglov44iSE5XqhpcpI"
+        title="Apply for Women's Club"
+        scrolling="no"></iframe>
+    </div>
+    <div class="pp-cta-fine">No pressure · No contracts · A coach will be in touch within 1 business day.</div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-eyebrow">Other Programs</div>
+    <h2 style="margin-bottom: 0.5rem;">NOT QUITE THE RIGHT FIT?</h2>
+    <p style="color:var(--kf-gray-dark);">Have a look at the rest of what we offer.</p>
+    <div class="pp-others">
+      <a class="pp-other" href="bootcamp.html">
+        <div class="pp-other-tag">Group Coaching</div>
+        <div class="pp-other-name">Bootcamp</div>
+        <div class="pp-other-arrow">Learn more →</div>
+      </a>
+      <a class="pp-other" href="mens.html">
+        <div class="pp-other-tag">Semi-Private</div>
+        <div class="pp-other-name">Men's Club</div>
+        <div class="pp-other-arrow">Learn more →</div>
+      </a>
+      <a class="pp-other" href="https://www.youngknights.com.au" target="_blank" rel="noopener noreferrer">
+        <div class="pp-other-tag">Ages 10–17</div>
+        <div class="pp-other-name">Young Knights</div>
+        <div class="pp-other-arrow">Learn more →</div>
+      </a>
+    </div>
+  </section>
+
+  <footer class="pp-foot">
+    <p>664 Gympie Road, Lawnton QLD · <a href="tel:+61452519877">0452 519 877</a> · <a href="../index.html">Back to Home</a></p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.pp-video').forEach(function (w) {
+      var v = w.querySelector('video');
+      var o = w.querySelector('.pp-video-overlay');
+      if (!v || !o) return;
+      o.addEventListener('click', function () {
+        w.classList.add('playing');
+        v.controls = true;
+        v.play();
+      });
+      v.addEventListener('ended', function () {
+        w.classList.remove('playing');
+        v.controls = false;
+        v.currentTime = 0;
+      });
+    });
+
+    // GHL application form: fade in on load + auto-height
+    (function () {
+      var f = document.querySelector('.pp-cta-form iframe');
+      if (!f) return;
+      f.addEventListener('load', function () { f.classList.add('loaded'); });
+      window.addEventListener('message', function (e) {
+        var d = e.data;
+        var h = d && typeof d === 'object' && (d.height || (d.payload && d.payload.height));
+        if (h && Number(h) > 200 && Number(h) < 4000) f.style.height = Number(h) + 'px';
+      });
+    })();
+
+    // Google reviews carousel dots (mobile)
+    (function () {
+      var carousel = document.getElementById('gr-carousel');
+      var dotsWrap = document.getElementById('gr-dots');
+      if (!carousel || !dotsWrap) return;
+      var cards = carousel.querySelectorAll('.gr-card');
+      cards.forEach(function (card, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'gr-dot' + (i === 0 ? ' active' : '');
+        b.setAttribute('aria-label', 'Go to review ' + (i + 1));
+        b.addEventListener('click', function () {
+          carousel.scrollTo({ left: card.offsetLeft - (carousel.clientWidth - card.offsetWidth) / 2, behavior: 'smooth' });
+        });
+        dotsWrap.appendChild(b);
+      });
+      carousel.addEventListener('scroll', function () {
+        var center = carousel.scrollLeft + carousel.clientWidth / 2, closest = 0, min = Infinity;
+        cards.forEach(function (card, i) {
+          var c = card.offsetLeft + card.offsetWidth / 2, d = Math.abs(center - c);
+          if (d < min) { min = d; closest = i; }
+        });
+        dotsWrap.querySelectorAll('.gr-dot').forEach(function (dot, i) { dot.classList.toggle('active', i === closest); });
+      }, { passive: true });
+    })();
+  </script>
+
+  <script src="https://link.msgsndr.com/js/form_embed.js" async></script>
+
+</body>
+</html>

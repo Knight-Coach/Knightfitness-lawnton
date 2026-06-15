@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programs | Knight Fitness Lawnton</title>
+  <meta name="description" content="Explore Knight Fitness Lawnton programs — Bootcamp, Men's Club, Women's Club and Young Knights. Coach-led training for every level.">
+  <link rel="canonical" href="https://www.knightfitness.com.au/programs">
+  <meta name="theme-color" content="#1A1A1A">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Knight Fitness Lawnton">
+  <meta property="og:locale" content="en_AU">
+  <meta property="og:title" content="Programs | Knight Fitness Lawnton">
+  <meta property="og:description" content="Explore Knight Fitness Lawnton programs — Bootcamp, Men's Club, Women's Club and Young Knights. Coach-led training for every level.">
+  <meta property="og:url" content="https://www.knightfitness.com.au/programs">
+  <meta property="og:image" content="https://www.knightfitness.com.au/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Programs | Knight Fitness Lawnton">
+  <meta name="twitter:description" content="Explore Knight Fitness Lawnton programs — Bootcamp, Men's Club, Women's Club and Young Knights. Coach-led training for every level.">
+  <meta name="twitter:image" content="https://www.knightfitness.com.au/og-image.jpg">
+  <link rel="stylesheet" href="program.css">
+  <style>
+    /* Programs index — extends program.css */
+    .pi-hero {
+      position: relative;
+      background: var(--kf-black);
+      color: white;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .pi-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(227,30,36,0.25), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(227,30,36,0.18), transparent 55%);
+      pointer-events: none;
+    }
+    .pi-hero-inner {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .pi-hero-eyebrow {
+      display: inline-block;
+      background: var(--kf-red);
+      color: white;
+      padding: 0.45rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .pi-hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.75rem, 7vw, 5.25rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+    .pi-hero p {
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.78);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Big program cards */
+    .pi-list {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+    .pi-card {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 0;
+      background: white;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+      border: 1px solid #eee;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .pi-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+    .pi-card.flip {
+      grid-template-columns: 1fr 1.05fr;
+    }
+    .pi-card.flip .pi-card-media { order: 2; }
+    .pi-card.flip .pi-card-body { order: 1; }
+    @media (max-width: 880px) {
+      .pi-card, .pi-card.flip {
+        grid-template-columns: 1fr;
+      }
+      .pi-card.flip .pi-card-media { order: 0; }
+      .pi-card.flip .pi-card-body { order: 1; }
+    }
+
+    .pi-card-media {
+      position: relative;
+      min-height: 360px;
+      overflow: hidden;
+    }
+    .pi-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .pi-card:hover .pi-card-media img {
+      transform: scale(1.04);
+    }
+    .pi-card-tag {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      background: var(--kf-red);
+      color: white;
+      padding: 0.5rem 0.95rem;
+      border-radius: 1rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(227,30,36,0.35);
+    }
+    @media (max-width: 880px) {
+      .pi-card-media { min-height: 260px; }
+    }
+
+    .pi-card-body {
+      padding: 2.75rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    @media (max-width: 600px) {
+      .pi-card-body { padding: 2rem 1.5rem; }
+    }
+    .pi-card-sub {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--kf-red);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+    .pi-card-body h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+      color: var(--kf-black);
+    }
+    .pi-card-body p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--kf-gray-dark);
+      margin-bottom: 1.5rem;
+    }
+    .pi-card-quick {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .pi-card-quick span {
+      background: var(--kf-gray);
+      color: var(--kf-black);
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .pi-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .pi-btn-primary {
+      background: var(--kf-red);
+      color: white;
+      padding: 0.85rem 1.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+    }
+    .pi-btn-primary:hover {
+      background: var(--kf-red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(227,30,36,0.35);
+    }
+    .pi-btn-text {
+      color: var(--kf-black);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      border-bottom: 2px solid var(--kf-black);
+      padding-bottom: 0.15rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .pi-btn-text:hover {
+      color: var(--kf-red);
+      border-color: var(--kf-red);
+    }
+
+    /* Comparison row */
+    .pi-compare {
+      max-width: 1100px;
+      margin: 4rem auto 0;
+      padding: 0 2rem;
+    }
+    .pi-compare h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      letter-spacing: 0.02em;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .pi-compare-sub {
+      text-align: center;
+      color: var(--kf-gray-dark);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+    .pi-compare-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 900px) {
+      .pi-compare-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .pi-compare-grid { grid-template-columns: 1fr; }
+    }
+    .pi-compare-cell {
+      background: white;
+      border: 1px solid #eee;
+      border-top: 4px solid var(--kf-red);
+      border-radius: 0.75rem;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+    }
+    .pi-compare-cell h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+    .pi-compare-cell .pi-compare-best {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--kf-red);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.85rem;
+      min-height: 0.95rem;
+    }
+    .pi-compare-cell ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 0.5rem;
+    }
+    .pi-compare-cell li {
+      font-size: 0.85rem;
+      line-height: 1.4;
+      color: var(--kf-black);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .pi-compare-cell li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--kf-red);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="pp-nav">
+    <div class="pp-nav-inner">
+      <a href="../index.html"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69c9dd515ae6bce5b7332a5b.png" alt="Knight Fitness"></a>
+      <div style="display:flex; align-items:center; gap:1.5rem;">
+        <a class="pp-back" href="../index.html">← Home</a>
+        <a class="pp-cta" href="../index.html#free-trial">Claim Free Session</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="pi-hero">
+    <div class="pi-hero-inner">
+      <div class="pi-hero-eyebrow">Programs</div>
+      <h1>FIND THE TRAINING<br/>THAT FITS YOU.</h1>
+      <p>Four coach-led programs built around real Lawnton locals — whether you want high-energy team training, semi-private coaching, or a structured environment for the kids. Browse below and book a free session in any one.</p>
+    </div>
+  </header>
+
+  <main class="pi-list">
+
+    <!-- BOOTCAMP -->
+    <article class="pi-card">
+      <div class="pi-card-media">
+        <span class="pi-card-tag">Most Popular</span>
+        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69cf13e2ba9db66362ff9722.jpg" alt="Bootcamp at Knight Fitness Lawnton">
+      </div>
+      <div class="pi-card-body">
+        <div class="pi-card-sub">Team Training · Group Coaching</div>
+        <h2>BOOTCAMP</h2>
+        <p>The heartbeat of Knight Fitness. Coach-led group sessions built to get you fitter, stronger, and more consistent — without the guesswork of training alone. Real coaching, real community, real progress.</p>
+        <div class="pi-card-quick">
+          <span>45 min</span>
+          <span>Up to 15 / class</span>
+          <span>All levels</span>
+          <span>8+ times daily</span>
+        </div>
+        <div class="pi-card-actions">
+          <a class="pi-btn-primary" href="bootcamp.html">Explore Bootcamp →</a>
+          <a class="pi-btn-text" href="../index.html#free-trial">Book a free session</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- MEN'S CLUB -->
+    <article class="pi-card flip">
+      <div class="pi-card-media">
+        <span class="pi-card-tag">Best Results</span>
+        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69e5b7ebc56ad279080c587d.jpg" alt="Men's Club at Knight Fitness Lawnton">
+      </div>
+      <div class="pi-card-body">
+        <div class="pi-card-sub">Semi-Private Coaching · Men 30+</div>
+        <h2>MEN'S CLUB</h2>
+        <p>Built for blokes who are done mucking around. A clear plan, expert coaching, and a crew of guys who hold each other accountable — week in, week out. Personalised training for men who want more than a membership.</p>
+        <div class="pi-card-quick">
+          <span>60 min</span>
+          <span>4–6 per coach</span>
+          <span>Personal plan</span>
+          <span>Weekly check-ins</span>
+        </div>
+        <div class="pi-card-actions">
+          <a class="pi-btn-primary" href="mens.html">Explore Men's Club →</a>
+          <a class="pi-btn-text" href="../index.html#free-trial">Book a free session</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- WOMEN'S CLUB -->
+    <article class="pi-card">
+      <div class="pi-card-media">
+        <span class="pi-card-tag">Best Results</span>
+        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69e5bfd58696a78b8d4af22d.png" alt="Women's Club at Knight Fitness Lawnton">
+      </div>
+      <div class="pi-card-body">
+        <div class="pi-card-sub">Semi-Private Coaching · Women Only</div>
+        <h2>WOMEN'S CLUB</h2>
+        <p>A women-only training space where you'll build real strength, real confidence, and real habits — with coaches who actually know your name and your goals. Small-group coaching tailored to how women actually train and progress.</p>
+        <div class="pi-card-quick">
+          <span>60 min</span>
+          <span>4–6 per coach</span>
+          <span>Women only</span>
+          <span>Mindset coaching</span>
+        </div>
+        <div class="pi-card-actions">
+          <a class="pi-btn-primary" href="womens.html">Explore Women's Club →</a>
+          <a class="pi-btn-text" href="../index.html#free-trial">Book a free session</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- YOUNG KNIGHTS -->
+    <article class="pi-card flip">
+      <div class="pi-card-media">
+        <span class="pi-card-tag">Ages 10–17</span>
+        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69f99476ecdc5eb6999d3f94.png" alt="Young Knights at Knight Fitness Lawnton">
+      </div>
+      <div class="pi-card-body">
+        <div class="pi-card-sub">Teen Training · Youth Athletic Development</div>
+        <h2>YOUNG KNIGHTS</h2>
+        <p>Structured strength and athletic development for kids and teens — built around safe technique, real coaching, and a positive environment they actually enjoy showing up to. Confidence, habits, and strength that last well beyond the gym.</p>
+        <div class="pi-card-quick">
+          <span>45 min</span>
+          <span>Ages 10–17</span>
+          <span>Coach-led</span>
+          <span>After-school</span>
+        </div>
+        <div class="pi-card-actions">
+          <a class="pi-btn-primary" href="https://www.youngknights.com.au" target="_blank" rel="noopener noreferrer">Explore Young Knights →</a>
+          <a class="pi-btn-text" href="../contact.html">Contact us</a>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Quick comparison -->
+  <section class="pi-compare">
+    <h2>NOT SURE WHICH ONE?</h2>
+    <p class="pi-compare-sub">A quick side-by-side. If you're still on the fence, book a free session and a coach will help you choose.</p>
+    <div class="pi-compare-grid">
+      <div class="pi-compare-cell">
+        <h3>BOOTCAMP</h3>
+        <div class="pi-compare-best">Best for momentum</div>
+        <ul>
+          <li>Group energy &amp; community</li>
+          <li>Most session times</li>
+          <li>Best value per session</li>
+          <li>Great for beginners</li>
+        </ul>
+      </div>
+      <div class="pi-compare-cell">
+        <h3>MEN'S CLUB</h3>
+        <div class="pi-compare-best">Best for men 30+</div>
+        <ul>
+          <li>Personalised programming</li>
+          <li>Small-group coaching</li>
+          <li>Weekly check-ins</li>
+          <li>Real accountability</li>
+        </ul>
+      </div>
+      <div class="pi-compare-cell">
+        <h3>WOMEN'S CLUB</h3>
+        <div class="pi-compare-best">Best for women</div>
+        <ul>
+          <li>Women-only environment</li>
+          <li>Personalised plan</li>
+          <li>Mindset &amp; nutrition</li>
+          <li>Strong supportive crew</li>
+        </ul>
+      </div>
+      <div class="pi-compare-cell">
+        <h3>YOUNG KNIGHTS</h3>
+        <div class="pi-compare-best">Best for ages 10–17</div>
+        <ul>
+          <li>Safe technique focus</li>
+          <li>Confidence &amp; habits</li>
+          <li>After-school timing</li>
+          <li>Coach-led every rep</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Big CTA -->
+  <section class="pp-cta-block" style="margin-top:5rem;">
+    <h2>YOUR FIRST SESSION IS ON US.</h2>
+    <p>Try any program free. Meet the coaches, train with the crew, and see why 350+ Lawnton locals keep showing up.</p>
+    <a href="../index.html#free-trial" class="pp-cta-big">Claim My Free Session</a>
+    <div class="pp-cta-fine">No pressure · No contracts · A coach will be in touch within 24 hours.</div>
+  </section>
+
+  <footer class="pp-foot">
+    <p>664 Gympie Road, Lawnton QLD · <a href="tel:+61452519877">0452 519 877</a> · <a href="../index.html">Back to Home</a></p>
+  </footer>
+
+</body>
+</html>
