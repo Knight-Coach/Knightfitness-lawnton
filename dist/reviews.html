@@ -24,10 +24,11 @@
     :root { --accent: #E31E24; }
     body { padding: 0; margin: 0; }
 
+    /* ── HERO ── */
     .rv-hero {
       background: var(--kf-black);
       color: white;
-      padding: 5rem 2rem 4rem;
+      padding: 5.5rem 2rem 4.5rem;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -36,141 +37,316 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 25% 40%, rgba(227,30,36,0.22), transparent 55%),
-                  radial-gradient(circle at 75% 60%, rgba(227,30,36,0.15), transparent 55%);
+      background: radial-gradient(circle at 20% 40%, rgba(227,30,36,0.28), transparent 52%),
+                  radial-gradient(circle at 80% 65%, rgba(227,30,36,0.18), transparent 52%);
       pointer-events: none;
     }
-    .rv-hero-inner { position: relative; max-width: 800px; margin: 0 auto; }
+    .rv-hero-inner { position: relative; max-width: 820px; margin: 0 auto; }
     .rv-eyebrow {
-      display: inline-block;
-      background: var(--kf-red);
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
       color: white;
-      padding: 0.4rem 1rem;
-      border-radius: 1rem;
-      font-size: 0.7rem;
+      padding: 0.45rem 1.1rem;
+      border-radius: 2rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.4rem;
     }
     .rv-hero h1 {
       font-family: 'Bebas Neue', sans-serif;
       font-weight: 400;
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      line-height: 0.95;
+      font-size: clamp(3.2rem, 9vw, 6rem);
+      line-height: 0.92;
       letter-spacing: 0.02em;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
+    .rv-hero h1 span { color: var(--kf-red); }
     .rv-hero-rating {
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+      gap: 0.85rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius: 3rem;
-      padding: 0.65rem 1.4rem;
-      margin-bottom: 1.25rem;
+      padding: 0.7rem 1.6rem;
+      margin-bottom: 1.5rem;
     }
-    .rv-hero-stars { color: #FBBC05; font-size: 1.1rem; letter-spacing: 0.05em; }
-    .rv-hero-score { font-size: 1.1rem; font-weight: 900; color: white; }
-    .rv-hero-count { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
-    .rv-hero-sub { font-size: 1.05rem; line-height: 1.55; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto; }
+    .rv-g-logo { display: flex; align-items: center; }
+    .rv-hero-stars { color: #FBBC05; font-size: 1rem; letter-spacing: 0.06em; }
+    .rv-hero-score { font-size: 1.2rem; font-weight: 900; color: white; }
+    .rv-hero-count { font-size: 0.88rem; color: rgba(255,255,255,0.65); }
+    .rv-hero-sub { font-size: 1.05rem; line-height: 1.6; color: rgba(255,255,255,0.72); max-width: 580px; margin: 0 auto 2rem; }
+    .rv-hero-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--kf-red); color: white;
+      padding: 0.9rem 1.8rem; border-radius: 0.5rem;
+      text-decoration: none; font-weight: 700; font-size: 0.95rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .rv-hero-cta:hover { background: #c01920; transform: translateY(-2px); }
 
+    /* ── STATS STRIP ── */
+    .rv-stats {
+      background: var(--kf-red);
+      padding: 1.5rem 2rem;
+    }
+    .rv-stats-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 0.5rem 3rem;
+    }
+    .rv-stat { text-align: center; color: white; }
+    .rv-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.03em; line-height: 1; }
+    .rv-stat-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.88; margin-top: 0.2rem; }
+
+    /* ── FEATURED REVIEWS ── */
+    .rv-featured {
+      background: #111;
+      padding: 4rem 2rem;
+    }
+    .rv-featured-inner { max-width: 1200px; margin: 0 auto; }
+    .rv-featured-label {
+      text-align: center;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--kf-red);
+      margin-bottom: 0.6rem;
+    }
+    .rv-featured-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 4vw, 2.75rem);
+      letter-spacing: 0.03em;
+      color: white;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .rv-featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 900px) { .rv-featured-grid { grid-template-columns: 1fr; } }
+    .rv-featured-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-top: 3px solid var(--kf-red);
+      border-radius: 1rem;
+      padding: 1.75rem 1.75rem 1.5rem;
+      position: relative;
+    }
+    .rv-featured-quote {
+      font-size: 3.5rem;
+      line-height: 1;
+      color: var(--kf-red);
+      font-family: Georgia, serif;
+      margin-bottom: 0.5rem;
+      opacity: 0.7;
+    }
+    .rv-featured-text {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+    .rv-featured-tag {
+      display: inline-block;
+      background: rgba(227,30,36,0.18);
+      border: 1px solid rgba(227,30,36,0.4);
+      color: #ff6b6b;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 0.3rem;
+      margin-bottom: 1rem;
+    }
+    .rv-featured-author { display: flex; align-items: center; gap: 0.65rem; }
+    .rv-featured-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: white; flex: none;
+    }
+    .rv-featured-name { font-weight: 700; font-size: 0.88rem; color: white; }
+    .rv-featured-stars { color: #FBBC05; font-size: 0.75rem; }
+    .rv-featured-glogo { margin-left: auto; }
+
+    /* ── SEARCH + SORT BAR ── */
     .rv-search-wrap {
-      background: var(--kf-gray);
-      padding: 1.75rem 2rem;
+      background: white;
+      padding: 1.25rem 2rem;
       border-bottom: 1px solid #e8e8e8;
       position: sticky;
-      top: 0;
       z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
-    .rv-search-inner { max-width: 680px; margin: 0 auto; position: relative; }
-    .rv-search-inner input {
+    .rv-search-row {
+      max-width: 1300px; margin: 0 auto;
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .rv-search-field { flex: 1 1 280px; position: relative; }
+    .rv-search-field input {
       width: 100%;
-      padding: 0.85rem 1rem 0.85rem 3rem;
-      border: 2px solid #ddd;
-      border-radius: 0.65rem;
-      font-size: 0.95rem;
+      padding: 0.75rem 1rem 0.75rem 2.75rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 0.55rem;
+      font-size: 0.92rem;
       font-family: 'Lato', sans-serif;
       outline: none;
       box-sizing: border-box;
       transition: border-color 0.2s;
-      background: white;
+      background: #fafafa;
     }
-    .rv-search-inner input:focus { border-color: var(--kf-red); }
-    .rv-search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #999; pointer-events: none; }
-    .rv-count-label { text-align: center; margin-top: 0.6rem; font-size: 0.82rem; color: var(--kf-gray-dark); font-weight: 600; }
+    .rv-search-field input:focus { border-color: var(--kf-red); background: white; }
+    .rv-search-icon { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: #aaa; pointer-events: none; }
+    .rv-sort-buttons { display: flex; gap: 0.4rem; flex: none; }
+    .rv-sort-btn {
+      padding: 0.65rem 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 0.45rem;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .rv-sort-btn.active, .rv-sort-btn:hover { border-color: var(--kf-red); color: var(--kf-red); background: rgba(227,30,36,0.05); }
+    .rv-count-label { font-size: 0.78rem; color: #999; font-weight: 600; flex: none; white-space: nowrap; }
+    @media (max-width: 640px) { .rv-sort-buttons { display: none; } }
 
-    .rv-grid-wrap { max-width: 1300px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
-    .rv-grid { columns: 3; column-gap: 1.25rem; }
+    /* ── GRID ── */
+    .rv-grid-wrap { max-width: 1300px; margin: 0 auto; padding: 2.5rem 2rem 3rem; background: var(--kf-gray); }
+    .rv-grid { columns: 3; column-gap: 1.1rem; }
     @media (max-width: 1000px) { .rv-grid { columns: 2; } }
-    @media (max-width: 600px) { .rv-grid { columns: 1; } }
+    @media (max-width: 580px) { .rv-grid { columns: 1; } }
 
+    /* ── CARD ── */
     .rv-card {
       break-inside: avoid;
       background: white;
-      border-radius: 0.9rem;
-      padding: 1.25rem 1.35rem 1.35rem;
-      margin-bottom: 1.2rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.055);
-      border: 1px solid #ebebeb;
+      border-radius: 0.85rem;
+      padding: 1.2rem 1.3rem 1.15rem;
+      margin-bottom: 1.1rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+      border: 1px solid #ececec;
+      transition: box-shadow 0.2s, transform 0.2s;
     }
-    .rv-card-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.65rem; }
+    .rv-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .rv-card-head { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.6rem; }
     .rv-avatar {
-      width: 38px; height: 38px; border-radius: 50%;
-      color: white; font-weight: 700; font-size: 0.82rem;
+      width: 36px; height: 36px; border-radius: 50%;
+      color: white; font-weight: 700; font-size: 0.8rem;
       display: flex; align-items: center; justify-content: center;
-      flex: none; letter-spacing: 0.02em;
+      flex: none;
     }
-    .rv-name { font-weight: 700; font-size: 0.88rem; color: var(--kf-black); line-height: 1.2; }
-    .rv-date { font-size: 0.72rem; color: var(--kf-gray-dark); margin-top: 0.1rem; }
-    .rv-stars { color: #FBBC05; font-size: 0.82rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
-    .rv-text { font-size: 0.865rem; line-height: 1.62; color: #444; }
+    .rv-card-meta { flex: 1; min-width: 0; }
+    .rv-name { font-weight: 700; font-size: 0.86rem; color: var(--kf-black); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rv-date { font-size: 0.7rem; color: #aaa; margin-top: 0.05rem; }
+    .rv-card-rating { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.55rem; }
+    .rv-stars { color: #FBBC05; font-size: 0.78rem; letter-spacing: 0.04em; }
+    .rv-text { font-size: 0.845rem; line-height: 1.62; color: #444; }
     .rv-more-btn {
       background: none; border: none; cursor: pointer;
-      color: var(--kf-red); font-size: 0.78rem; font-weight: 700;
-      font-family: 'Lato', sans-serif; padding: 0.3rem 0 0; display: block;
+      color: var(--kf-red); font-size: 0.76rem; font-weight: 700;
+      font-family: 'Lato', sans-serif; padding: 0.25rem 0 0; display: block;
     }
     .rv-more-btn:hover { text-decoration: underline; }
 
-    .rv-empty { text-align: center; padding: 4rem 2rem; color: var(--kf-gray-dark); display: none; }
-    .rv-empty h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--kf-black); margin-bottom: 0.5rem; }
+    /* ── EMPTY STATE ── */
+    .rv-empty { text-align: center; padding: 5rem 2rem; display: none; background: var(--kf-gray); }
+    .rv-empty h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2.25rem; color: var(--kf-black); margin-bottom: 0.5rem; }
+    .rv-empty p { color: var(--kf-gray-dark); }
 
-    .rv-cta {
+    /* ── CONVERSION SECTION ── */
+    .rv-convert {
       background: var(--kf-black);
-      color: white;
+      padding: 5rem 2rem;
       text-align: center;
-      padding: 4.5rem 2rem;
+      position: relative;
+      overflow: hidden;
     }
-    .rv-cta h2 {
+    .rv-convert::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(227,30,36,0.2), transparent 65%);
+      pointer-events: none;
+    }
+    .rv-convert-inner { position: relative; max-width: 780px; margin: 0 auto; }
+    .rv-convert h2 {
       font-family: 'Bebas Neue', sans-serif;
       font-weight: 400;
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       letter-spacing: 0.02em;
-      margin-bottom: 0.75rem;
+      line-height: 0.95;
+      color: white;
+      margin-bottom: 1.25rem;
     }
-    .rv-cta p { color: rgba(255,255,255,0.72); margin-bottom: 2rem; font-size: 1.05rem; }
-    .rv-cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .rv-convert h2 span { color: var(--kf-red); }
+    .rv-convert p { color: rgba(255,255,255,0.72); font-size: 1.1rem; line-height: 1.6; margin-bottom: 0.5rem; }
+    .rv-convert-proof {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem 1.75rem;
+      margin: 1.75rem 0 2.5rem;
+    }
+    .rv-proof-item { display: flex; align-items: center; gap: 0.4rem; color: rgba(255,255,255,0.8); font-size: 0.88rem; font-weight: 600; }
+    .rv-proof-check { color: #22c55e; font-size: 1rem; }
+
+    /* ── CONTACT FORM ── */
+    .rv-form-section {
+      background: var(--kf-gray);
+      padding: 0 2rem 5rem;
+    }
+    .rv-form-inner { max-width: 680px; margin: 0 auto; }
+    .ghl-frame-wrap iframe {
+      width: 100%; min-height: 540px; border: none;
+      border-radius: 12px; display: block;
+      opacity: 0; transition: opacity 280ms ease;
+    }
+    .ghl-frame-wrap iframe.loaded { opacity: 1; }
+    .ghl-form-foot { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.85rem; font-size: 0.8rem; color: var(--kf-gray-dark); }
+    .ghl-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex: none; }
+
+    /* ── WRITE REVIEW CTA ── */
+    .rv-write {
+      background: white;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid #eee;
+    }
+    .rv-write p { color: var(--kf-gray-dark); margin-bottom: 1.25rem; font-size: 1rem; }
+    .rv-write-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .rv-btn-primary {
       background: var(--kf-red); color: white;
-      padding: 0.9rem 1.75rem; border-radius: 0.5rem;
-      text-decoration: none; font-weight: 700; font-size: 0.95rem;
-      transition: background 0.2s, transform 0.2s; display: inline-block;
+      padding: 0.85rem 1.6rem; border-radius: 0.5rem;
+      text-decoration: none; font-weight: 700; font-size: 0.92rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: background 0.2s, transform 0.2s;
     }
     .rv-btn-primary:hover { background: #c01920; transform: translateY(-2px); }
     .rv-btn-ghost {
-      background: transparent; color: white;
-      border: 2px solid rgba(255,255,255,0.32);
-      padding: 0.9rem 1.75rem; border-radius: 0.5rem;
-      text-decoration: none; font-weight: 700; font-size: 0.95rem;
+      background: white; color: var(--kf-black);
+      border: 2px solid #ddd;
+      padding: 0.85rem 1.6rem; border-radius: 0.5rem;
+      text-decoration: none; font-weight: 700; font-size: 0.92rem;
       display: inline-flex; align-items: center; gap: 0.5rem;
       transition: border-color 0.2s;
     }
-    .rv-btn-ghost:hover { border-color: white; }
+    .rv-btn-ghost:hover { border-color: var(--kf-black); }
+
+    /* ── GOOGLE LOGO SVG ── */
+    .g-logo { display: block; flex: none; }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav class="nav-wrapper" id="main-nav">
     <div class="nav-container">
       <a href="index.html" aria-label="Knight Fitness Lawnton home" class="nav-logo">
@@ -199,47 +375,175 @@
     </div>
   </div>
 
+  <!-- HERO -->
   <section class="rv-hero">
     <div class="rv-hero-inner">
-      <div class="rv-eyebrow">Google Reviews · Lawnton, QLD</div>
-      <h1>WHAT LOCALS<br>ARE SAYING</h1>
+      <div class="rv-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg>
+        Verified Google Reviews · Lawnton, QLD
+      </div>
+      <h1>365 REASONS TO<br><span>JOIN TODAY</span></h1>
       <div class="rv-hero-rating">
+        <span class="rv-g-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-label="Google"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        </span>
         <span class="rv-hero-stars">★★★★★</span>
         <span class="rv-hero-score">5.0</span>
-        <span class="rv-hero-count">· 365 Google reviews</span>
+        <span class="rv-hero-count">· 365 reviews</span>
       </div>
-      <p class="rv-hero-sub">Real words from real members. No curating, no cherry-picking — just what the people of North Brisbane say about training here.</p>
+      <p class="rv-hero-sub">Every review below is from a real Lawnton local. No paid testimonials, no actors — just your neighbours, telling the truth about what training here did for their life.</p>
+      <a href="#rv-form" class="rv-hero-cta">Get in touch — it's free →</a>
     </div>
   </section>
 
-  <div class="rv-search-wrap">
-    <div class="rv-search-inner">
-      <svg class="rv-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="search" id="rv-search" placeholder="Search reviews by name or keyword…" aria-label="Search reviews">
+  <!-- STATS -->
+  <div class="rv-stats">
+    <div class="rv-stats-inner">
+      <div class="rv-stat"><div class="rv-stat-num">365</div><div class="rv-stat-label">Five-star reviews</div></div>
+      <div class="rv-stat"><div class="rv-stat-num">2000+</div><div class="rv-stat-label">Lives changed</div></div>
+      <div class="rv-stat"><div class="rv-stat-num">60kg</div><div class="rv-stat-label">Biggest transformation</div></div>
+      <div class="rv-stat"><div class="rv-stat-num">9+</div><div class="rv-stat-label">Years in Lawnton</div></div>
+      <div class="rv-stat"><div class="rv-stat-num">8yrs</div><div class="rv-stat-label">Longest member</div></div>
     </div>
-    <div class="rv-count-label" id="rv-count"></div>
   </div>
 
-  <div class="rv-grid-wrap">
-    <div class="rv-grid" id="rv-grid"></div>
+  <!-- FEATURED REVIEWS -->
+  <section class="rv-featured">
+    <div class="rv-featured-inner">
+      <div class="rv-featured-label">Members who changed their lives</div>
+      <h2 class="rv-featured-title">THE RESULTS SPEAK FOR THEMSELVES</h2>
+      <div class="rv-featured-grid">
+        <div class="rv-featured-card">
+          <div class="rv-featured-tag">60kg lost</div>
+          <div class="rv-featured-quote">"</div>
+          <p class="rv-featured-text">I started Knight Fitness at nearly 150kg, and now, around 60kg lighter, it's become an essential part of my daily routine. It's more than just a gym; it's a place where you can start your journey, push your limits, and quickly become part of a fun, supportive, and inspiring family.</p>
+          <div class="rv-featured-author">
+            <div class="rv-featured-avatar" style="background:#34a853">GC</div>
+            <div>
+              <div class="rv-featured-name">Graeme Collins</div>
+              <div class="rv-featured-stars">★★★★★</div>
+            </div>
+            <svg class="rv-featured-glogo" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          </div>
+        </div>
+        <div class="rv-featured-card">
+          <div class="rv-featured-tag">30kg lost · 4 years</div>
+          <div class="rv-featured-quote">"</div>
+          <p class="rv-featured-text">I had never been in a gym my entire life until I joined Knight Fitness. I've dropped over 30kg and maintained that over the years. A big part of that was thanks to Mark and the coaching staff and all the other great people I've met along the way.</p>
+          <div class="rv-featured-author">
+            <div class="rv-featured-avatar" style="background:#1a73e8">LW</div>
+            <div>
+              <div class="rv-featured-name">Lee Wise</div>
+              <div class="rv-featured-stars">★★★★★</div>
+            </div>
+            <svg class="rv-featured-glogo" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          </div>
+        </div>
+        <div class="rv-featured-card">
+          <div class="rv-featured-tag">500+ classes · 4 years</div>
+          <div class="rv-featured-quote">"</div>
+          <p class="rv-featured-text">I've completed over 500 classes and reached my goal weight. The coaches truly have your best interests at heart. What really sets Knight Fitness apart is the community — it feels like a home away from home. I can't recommend it enough.</p>
+          <div class="rv-featured-author">
+            <div class="rv-featured-avatar" style="background:#d93025">BC</div>
+            <div>
+              <div class="rv-featured-name">Bec Casey</div>
+              <div class="rv-featured-stars">★★★★★</div>
+            </div>
+            <svg class="rv-featured-glogo" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH + SORT -->
+  <div class="rv-search-wrap" id="rv-search-bar">
+    <div class="rv-search-row">
+      <div class="rv-search-field">
+        <svg class="rv-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="rv-search" placeholder="Search by name or keyword…" aria-label="Search reviews">
+      </div>
+      <div class="rv-sort-buttons" role="group" aria-label="Sort reviews">
+        <button class="rv-sort-btn active" data-sort="default">Newest</button>
+        <button class="rv-sort-btn" data-sort="longest">Longest</button>
+        <button class="rv-sort-btn" data-sort="shortest">Shortest</button>
+      </div>
+      <div class="rv-count-label" id="rv-count"></div>
+    </div>
+  </div>
+
+  <!-- REVIEWS GRID -->
+  <div style="background: var(--kf-gray);">
+    <div class="rv-grid-wrap">
+      <div class="rv-grid" id="rv-grid"></div>
+    </div>
     <div class="rv-empty" id="rv-empty">
-      <h3>No results</h3>
+      <h3>No reviews found</h3>
       <p>Try a different search term.</p>
     </div>
   </div>
 
-  <section class="rv-cta">
-    <h2>HAPPY WITH YOUR EXPERIENCE?</h2>
-    <p>Your review helps other locals find us — and takes about 60 seconds.</p>
-    <div class="rv-cta-buttons">
-      <a href="https://search.google.com/local/writereview?placeid=ChIJP8k2QzPkk2sRovF2KJ2S1cA" target="_blank" rel="noopener noreferrer" class="rv-btn-primary">Write a Google Review</a>
+  <!-- CONVERSION SECTION -->
+  <section class="rv-convert">
+    <div class="rv-convert-inner">
+      <h2>YOU'VE READ<br>THE REVIEWS.<br><span>NOW IT'S YOUR TURN.</span></h2>
+      <p>These are your neighbours. People who were exactly where you are right now — unsure, a bit nervous, wondering if it's worth it.</p>
+      <p>Every single one of them is glad they took the first step.</p>
+      <div class="rv-convert-proof">
+        <div class="rv-proof-item"><span class="rv-proof-check">✓</span> No lock-in contracts</div>
+        <div class="rv-proof-item"><span class="rv-proof-check">✓</span> No gym experience needed</div>
+        <div class="rv-proof-item"><span class="rv-proof-check">✓</span> Coach-led every session</div>
+        <div class="rv-proof-item"><span class="rv-proof-check">✓</span> Reply within 1 business day</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="rv-form-section" id="rv-form">
+    <div class="rv-form-inner">
+      <div style="text-align:center; padding: 3.5rem 0 2rem;">
+        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--kf-red); margin-bottom:0.6rem;">GET STARTED</div>
+        <h2 style="font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:clamp(2rem,5vw,3rem); letter-spacing:0.03em; color:var(--kf-black); margin-bottom:0.75rem;">DROP US A MESSAGE</h2>
+        <p style="color:var(--kf-gray-dark); font-size:0.95rem; line-height:1.55; max-width:480px; margin:0 auto;">A coach will reach out to learn about your goals and find the right program for you. No pressure, no hard sell.</p>
+      </div>
+      <div class="ghl-frame-wrap">
+        <iframe
+          src="https://api.leadconnectorhq.com/widget/form/cRJglov44iSE5XqhpcpI"
+          id="inline-rv-form"
+          data-layout="{'id':'INLINE'}"
+          data-trigger-type="alwaysShow"
+          data-trigger-value=""
+          data-activation-type="alwaysActivated"
+          data-activation-value=""
+          data-deactivation-type="neverDeactivate"
+          data-deactivation-value=""
+          data-form-name="Contact Us Form Lawnton"
+          data-height="640"
+          data-layout-iframe-id="inline-rv-form"
+          data-form-id="cRJglov44iSE5XqhpcpI"
+          title="Contact Knight Fitness Lawnton"
+          scrolling="no"></iframe>
+      </div>
+      <div class="ghl-form-foot"><span class="ghl-dot"></span> Secure form · We reply within 1 business day</div>
+    </div>
+  </section>
+
+  <!-- WRITE A REVIEW -->
+  <div class="rv-write">
+    <p>Already a member? Your review helps other locals find us.</p>
+    <div class="rv-write-buttons">
+      <a href="https://search.google.com/local/writereview?placeid=ChIJP8k2QzPkk2sRovF2KJ2S1cA" target="_blank" rel="noopener noreferrer" class="rv-btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Write a Google Review
+      </a>
       <a href="https://www.google.com/maps/place/664+Gympie+Rd,+Lawnton+QLD+4501" target="_blank" rel="noopener noreferrer" class="rv-btn-ghost">
         <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         See all on Google
       </a>
     </div>
-  </section>
+  </div>
 
+  <!-- FOOTER -->
   <footer>
     <div class="container">
       <div class="footer-bottom" style="border-top: none; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;">
@@ -249,7 +553,29 @@
     </div>
   </footer>
 
+  <script src="https://link.msgsndr.com/js/form_embed.js" async></script>
   <script>
+    // GHL iframe fade-in + auto-height
+    var ghl = document.querySelector('.ghl-frame-wrap iframe');
+    if (ghl) {
+      ghl.addEventListener('load', function() { ghl.classList.add('loaded'); });
+      window.addEventListener('message', function(e) {
+        var d = e.data;
+        var h = d && typeof d === 'object' && (d.height || (d.payload && d.payload.height));
+        if (h && Number(h) > 200 && Number(h) < 4000) ghl.style.height = Number(h) + 'px';
+      });
+    }
+
+    // Fix sticky search bar top to sit below nav
+    function fixSearchTop() {
+      var nav = document.getElementById('main-nav');
+      var bar = document.getElementById('rv-search-bar');
+      if (nav && bar) bar.style.top = nav.offsetHeight + 'px';
+    }
+    fixSearchTop();
+    window.addEventListener('resize', fixSearchTop);
+
+    // Avatar helpers
     var COLORS = ['#1a73e8','#e8710a','#9334e6','#34a853','#d93025','#1e8e3e','#f29900','#0077b6','#7b2d8b','#c45e00'];
     function avatarColor(name) {
       var h = 0;
@@ -262,6 +588,8 @@
     function esc(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
+
+    var GLOGO = '<svg width="15" height="15" viewBox="0 0 24 24" aria-label="Google review" class="g-logo"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>';
 
     var REVIEWS = [
       {name:"Bec Casey",date:"6 weeks ago",text:"I've been training at Knight Fitness for the past 4 years, and in that time I've completed over 500 classes. It's been an incredible journey where I've achieved so many personal goals including reaching my goal weight and I genuinely couldn't have done it without the support here. The coaches truly have your best interests at heart. They're knowledgeable, approachable, and always willing to help. If you're dealing with an injury or limitation, they'll happily adjust exercises to make sure you can still train safely and effectively. What really sets Knight Fitness apart is the community. It feels like a home away from home. The coaches and members are welcoming, supportive, and encouraging, no matter your fitness level. You'll not only improve your health but also build friendships that last a lifetime."},
@@ -289,14 +617,14 @@
       {name:"Bob McDonald",date:"42 weeks ago",text:"Knight Fitness offers an excellent range of boot camp options, and they cater for all fitness levels. Their trainers provide encouragement, whilst also challenging you to improve. Best of all, they offer regular social events, including awareness campaigns and fundraising opportunities for various not-for-profit organisations."},
       {name:"Alycia Noble",date:"44 weeks ago",text:"I have been to many gyms and Knight Fitness is by far the best. The support, encouragement and the feeling of belonging is amazing. The coaches and members provide a great vibe and atmosphere. I wouldn't want to be anywhere else. Knight Fitness is the best gym you should check it out."},
       {name:"Hayley Renouf",date:"47 weeks ago",text:"I recently started at Knight Fitness to get back on track with my fitness journey, and I couldn't be happier! The staff and current members are fantastic — so welcoming and supportive. I love being able to join a class without the stress of planning my workout. I'm already feeling more energetic and finding my motivation again. Thanks so much, team!"},
-      {name:"Jenelle Newbery",date:"20 Mar 2025",text:"If you are looking for a gym that has positive support people and motivated trainers look no further than Knight fitness. Even though I haven't reached my fitness goals as yet, I have reached my mindset motivation and I'm going to get there. With the multiple different injuries I've had over the years the trainers have always been there for me and have believed in me. Makes me feel stronger and confident. I've also made new friendships with a group of ladies that keep me motivated. I look forward to seeing them each week."},
+      {name:"Jenelle Newbery",date:"20 Mar 2025",text:"If you are looking for a gym that has positive support people and motivated trainers look no further than Knight fitness. Even though I haven't reached my fitness goals as yet, I have reached my mindset motivation and I'm going to get there. With the multiple different injuries I've had over the years the trainers have always been there for me and have believed in me. Makes me feel stronger and confident. I've also made new friendships with a group of ladies that keep me motivated."},
       {name:"Elizabeth Kennington",date:"42 weeks ago",text:"The atmosphere at Knight Fitness is amazing! No matter where you are in your fitness journey, the people and coaches are supportive and encourage you along the way. Best gym I've ever joined!"},
       {name:"Ursula Van Heeswijk",date:"47 weeks ago",text:"Amazing gym, what stands out is the supportive and positive atmosphere. I always feel welcomed and encouraged. It's clear that they genuinely care about their members' goals and progress. I've made great improvements since joining, and I can't wait to see where my fitness journey takes me! Highly recommend it to anyone looking to level up their fitness."},
       {name:"Natalie Bridge",date:"43 weeks ago",text:"Only great things to say about Knight Fitness! I hadn't exercised for well over 18 months so I was quite nervous getting back into a gym. There was no need to be. From my first session to now (9 weeks in) the coaches have made me feel welcome and supported. Super knowledgeable and always there to answer my endless questions. You can see they genuinely love what they do. I would highly recommend these guys if you're looking to get back into the gym or even if you're new. There's no judgement and for an over 40yo, I feel completely at ease working out in this positive space."},
       {name:"Nolan Lancaster",date:"42 weeks ago",text:"I joined knight fitness about 6 months ago, and have made serious progress since. I've significantly increased my strength, endurance and have lost about 10 kg of body fat as well. The coaches are very knowledgeable and supportive of all their members and the overall community is inclusive and encouraging. There's a good variety of classes across different skill sets to keep everyone engaged. Overall a great gym that I'm glad to be a part of."},
       {name:"Sandra Clark",date:"44 weeks ago",text:"You'll love going there regularly, the coaches are amazing, the members are all friendly and support each other, we work hard having fun along the way. It's a fabulous community... like no other gym. Thanks Knight Fitness, you've changed my life."},
       {name:"Paul Ebert",date:"43 weeks ago",text:"Knight Fitness isn't just a gym, it's a community of people committed to improving their lives one day at a time. The coaches provide support, instructions and health advice ensuring you can reach your fitness goals. The members around you provide support and encouragement as you work through each session. Knight Fitness has changed my life for the better in many ways and in the 7+ years as a member I have formed many great friendships. If you are unsure about walking into those franchise brand name gyms with their wall to wall mirrors and huge egos, Knight Fitness is the place for you."},
-      {name:"Frank North",date:"42 weeks ago",text:"I have been coming to Knights for 15 months now. I enjoy and look forward to the sessions. It is always a good atmosphere to workout, with a diversity of coaches who take an interest in teaching techniques and introducing you to new exercises and activities. There is always jovial banter amongst the participants and coaches and it is not uncommon to get encouragement from either. I look forward to the challenges and am confident of the guidance I will receive."},
+      {name:"Frank North",date:"42 weeks ago",text:"I have been coming to Knights for 15 months now. I enjoy and look forward to the sessions. It is always a good atmosphere to workout, with a diversity of coaches who take an interest in teaching techniques and introducing you to new exercises and activities. There is always jovial banter amongst the participants and coaches and it is not uncommon to get encouragement from either."},
       {name:"Mathew Abboud",date:"29 Apr 2025",text:"Knight Fitness Brendale is truly one of a kind! From the moment I walked in, I was greeted by the friendliest, most welcoming staff who instantly made me feel comfortable and supported. The environment is completely non-judgmental, making it a perfect place for people of all fitness levels. The classes are fun, engaging, and led by knowledgeable trainers who genuinely care about your progress and wellbeing. I've felt more motivated and confident since joining. If you're looking for a gym that feels more like a supportive community, I highly recommend Knight Fitness!"},
       {name:"Mark Altmann",date:"40 weeks ago",text:"These guys are awesome. They know their stuff, the atmosphere is friendly, the guys I train with are a great bunch. Hands on trainers that actually help you. First 4 weeks I dropped from 23% to 20% body fat so signed up for 16 weeks. Getting progressively stronger. This program works!"},
       {name:"Sara Kay",date:"42 weeks ago",text:"Since my breast cancer I have never successfully got back into a gym routine. Training at Knight Fitness I am fitter, stronger and faster than I have been in 15 years. The support of the trainers, fellow members and program sets you up for success. Big shout out to Coach Jared and Coach Hannah for keeping me on track and guiding my progress. If you're looking for a gym with a great sense of community that will work with you to get results, come join us. You will make friends as well."},
@@ -307,7 +635,7 @@
       {name:"Steven Otto",date:"43 weeks ago",text:"I've been a member at Knight Fitness for over 8 years now. The trainers are fantastic and the support from the Knight Fitness members is amazing. Although there are many gyms closer to my home, I have never wanted to leave due to the quality of training from Mark and the team."},
       {name:"Carla Trevascus",date:"47 weeks ago",text:"I have been a member of Knight Fitness for 18 months and I cannot overstate how amazing this place is. I had not exercised for several years, gained a lot of weight and felt overwhelmed. When I trialed Knight Fitness I didn't hold much hope for success but was feeling so low I thought I'd give it a try. I immediately felt welcome, and despite my size and fitness level I felt part of this tribe. I have lost 25kg (23kg of fat and increased 0.5kg of muscle mass) since joining. I have achieved my target weight and feel so grateful to the team at Knight Fitness for the mind and body transformation."},
       {name:"Natalie Creighton",date:"44 weeks ago",text:"I've been training at knights for a few years. The coaches and members are amazing. I'd like to thank everyone who has helped me to achieve every goal I set myself and can't wait to see what is next."},
-      {name:"Christobel Clark",date:"44 weeks ago",text:"I've been going to KF for about 4 years and wouldn't want to go back to a traditional gym. KF is a community where you are welcomed, supported, encouraged, held accountable and given achievable goals based on what you are wanting. No judgement or criticism, just support, expertise and encouragement. You go, because you are seen and there are relationships. You go, because you know they will adjust things if you have an injury or particular need. You go, because just turning up gets results. And you keep going because it works. The coaches are all awesome and have a sense of humour. Found my fitness family!"},
+      {name:"Christobel Clark",date:"44 weeks ago",text:"I've been going to KF for about 4 years and wouldn't want to go back to a traditional gym. KF is a community where you are welcomed, supported, encouraged, held accountable and given achievable goals based on what you are wanting. No judgement or criticism, just support, expertise and encouragement. You go, because you are seen and there are relationships. You go, because you know they will adjust things if you have an injury or particular need. And you keep going because it works. The coaches are all awesome and have a sense of humour. Found my fitness family!"},
       {name:"Noura Kamali",date:"9 Feb 2025",text:"Knight Fitness has changed my whole perspective about fitness and exercise! Having the variety of classes, the amazing knowledgeable coaches who genuinely care about your progress, who would give you one-on-one attention, and who would change exercises to suit your personal goals. You get to workout with amazing supportive members, and the amazing playlist keeps you motivated to smash the session. All of that have made me look forward to going to the gym everyday! It's something I want to do, not something I have to do!"},
       {name:"Meaghan Phillips",date:"44 weeks ago",text:"The coaches are next-level — encouraging, knowledgeable, and always ready with a high-five or a gentle roast when you need it. The members? Just as awesome. It's a place where you're just as likely to hear someone cheering you on during a heavy lift as you are to hear someone cracking a joke mid-burpee. Whether you're smashing out a PB, dragging yourself through a sweaty bootcamp, or just showing up and doing your best, you'll never feel like you're going it alone."},
       {name:"Louise Young",date:"43 weeks ago",text:"I joined Knight Fitness a few years ago as I was wanting to get fit, what I found was a community. From the moment I started the bootcamps, the coaches and members were supportive and encouraging with every interaction we had. Shortly after I joined women's club and I have loved working out alongside others whilst seeing my body become stronger! Exercises are adjusted if needed, whether it's due to mobility or injury, there's no judgement, just support!"},
@@ -366,28 +694,32 @@
       {name:"Anita",date:"18 Sept 2023",text:"So I'm an older lady, 3 months out of ACL surgery, needing to get motivated again, gyms not my idea of fun, so I signed up for the Knight Fitness 6 week program — so glad I did. There are so many different people doing their own journey but also happy to chat and say gidday. The program has made me so much smarter about my food choices than I ever have been. My fitness levels are coming back, I'm excited about my progress. My coach without him I may have given up — he motivates you, he checks on you, he works your buns off, but so worth it. I found my place."}
     ];
 
-    var TRUNCATE = 280;
+    var TRUNCATE = 260;
+    var currentSort = 'default';
+    var currentQuery = '';
 
     function renderCard(r) {
       var ini = initials(r.name);
       var col = avatarColor(r.name);
       var long = r.text.length > TRUNCATE;
-      var short = long ? r.text.slice(0, TRUNCATE).trimEnd() + '…' : r.text;
-      var id = 'rv-' + r.name.replace(/\W+/g,'') + Math.random().toString(36).slice(2,6);
+      var shortText = long ? r.text.slice(0, TRUNCATE).trimEnd() + '…' : r.text;
+      var uid = 'rv' + Math.random().toString(36).slice(2, 8);
       return '<div class="rv-card">' +
         '<div class="rv-card-head">' +
           '<div class="rv-avatar" style="background:' + col + '">' + esc(ini) + '</div>' +
-          '<div><div class="rv-name">' + esc(r.name) + '</div><div class="rv-date">' + esc(r.date) + '</div></div>' +
+          '<div class="rv-card-meta"><div class="rv-name">' + esc(r.name) + '</div><div class="rv-date">' + esc(r.date) + '</div></div>' +
+          GLOGO +
         '</div>' +
-        '<div class="rv-stars">★★★★★</div>' +
-        '<div class="rv-text" id="txt-' + id + '">' + esc(short) + '</div>' +
-        (long ? '<button class="rv-more-btn" id="btn-' + id + '" data-full="' + esc(r.text).replace(/"/g,'&quot;') + '" data-short="' + esc(short).replace(/"/g,'&quot;') + '" data-id="' + id + '" onclick="toggleMore(this)">Read more</button>' : '') +
+        '<div class="rv-card-rating"><span class="rv-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>' +
+        '<div class="rv-text" id="t-' + uid + '">' + esc(shortText) + '</div>' +
+        (long
+          ? '<button class="rv-more-btn" id="b-' + uid + '" onclick="toggleMore(\'' + uid + '\',this)" data-full="' + esc(r.text).replace(/"/g, '&quot;') + '" data-short="' + esc(shortText).replace(/"/g, '&quot;') + '">Read more</button>'
+          : '') +
         '</div>';
     }
 
-    function toggleMore(btn) {
-      var id = btn.dataset.id;
-      var txt = document.getElementById('txt-' + id);
+    function toggleMore(uid, btn) {
+      var txt = document.getElementById('t-' + uid);
       if (btn.textContent === 'Read more') {
         txt.textContent = btn.dataset.full;
         btn.textContent = 'Read less';
@@ -397,34 +729,59 @@
       }
     }
 
-    var filtered = REVIEWS.slice();
+    function getSorted(list) {
+      var copy = list.slice();
+      if (currentSort === 'longest') copy.sort(function(a,b){ return b.text.length - a.text.length; });
+      else if (currentSort === 'shortest') copy.sort(function(a,b){ return a.text.length - b.text.length; });
+      return copy;
+    }
 
-    function render(list) {
+    function render() {
+      var q = currentQuery.toLowerCase().trim();
+      var filtered = q
+        ? REVIEWS.filter(function(r){ return r.name.toLowerCase().includes(q) || r.text.toLowerCase().includes(q); })
+        : REVIEWS.slice();
+      var sorted = getSorted(filtered);
       var grid = document.getElementById('rv-grid');
       var empty = document.getElementById('rv-empty');
       var count = document.getElementById('rv-count');
-      if (list.length === 0) {
+      if (sorted.length === 0) {
         grid.innerHTML = '';
         empty.style.display = 'block';
-        count.textContent = 'No reviews found';
+        count.textContent = 'No results';
       } else {
         empty.style.display = 'none';
-        grid.innerHTML = list.map(renderCard).join('');
-        count.textContent = 'Showing ' + list.length + ' of 365 reviews';
+        grid.innerHTML = sorted.map(renderCard).join('');
+        count.textContent = 'Showing ' + sorted.length + ' of 365 reviews';
       }
     }
 
-    render(REVIEWS);
+    render();
 
     document.getElementById('rv-search').addEventListener('input', function() {
-      var q = this.value.toLowerCase().trim();
-      if (!q) { render(REVIEWS); return; }
-      render(REVIEWS.filter(function(r) {
-        return r.name.toLowerCase().includes(q) || r.text.toLowerCase().includes(q);
-      }));
+      currentQuery = this.value;
+      render();
     });
 
-    // Nav scroll
+    document.querySelectorAll('.rv-sort-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.rv-sort-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentSort = btn.dataset.sort;
+        render();
+      });
+    });
+
+    // Sticky search below nav
+    function fixSearchTop() {
+      var nav = document.getElementById('main-nav');
+      var bar = document.getElementById('rv-search-bar');
+      if (nav && bar) bar.style.top = nav.offsetHeight + 'px';
+    }
+    fixSearchTop();
+    window.addEventListener('resize', fixSearchTop);
+
+    // Nav scroll behaviour
     var nav = document.getElementById('main-nav');
     var logo = document.getElementById('nav-logo-img');
     var toggle = document.getElementById('nav-toggle');
@@ -433,6 +790,7 @@
       var s = window.scrollY > 50;
       nav.classList.toggle('scrolled', s);
       logo.src = s ? 'assets/lov/logo-dark.webp' : 'assets/lov/logo-light.webp';
+      fixSearchTop();
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
