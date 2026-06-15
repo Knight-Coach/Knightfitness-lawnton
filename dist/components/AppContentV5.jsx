@@ -235,7 +235,7 @@ function AppContent() {
           </a>
           <div className="nav-links">
             <div className="nav-dropdown">
-              <a href="#programs" className="nav-dropdown-trigger" aria-haspopup="true">
+              <a href="programs/index.html" className="nav-dropdown-trigger" aria-haspopup="true">
                 Programs
                 <svg className="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
               </a>
@@ -243,7 +243,7 @@ function AppContent() {
                 {programNav.map((p) => (
                   <a key={p.href} href={p.href} role="menuitem" target={p.external ? "_blank" : undefined} rel={p.external ? "noopener noreferrer" : undefined}>{p.label}</a>
                 ))}
-                <a href="#programs" role="menuitem" className="nav-dropdown-all">All programs →</a>
+                <a href="programs/index.html" role="menuitem" className="nav-dropdown-all">All programs →</a>
               </div>
             </div>
             <a href="#schedule">Schedule</a>
@@ -259,7 +259,7 @@ function AppContent() {
 
       <div className={`mobile-nav ${mobileNavOpen ? "open" : ""}`} onClick={closeNav}>
         <div className="mobile-nav-panel" onClick={(e) => e.stopPropagation()}>
-          <a href="#programs" onClick={closeNav}>Programs</a>
+          <a href="programs/index.html" onClick={closeNav}>Programs</a>
           <div className="mobile-subnav">
             {programNav.map((p) => (
               <a key={p.href} href={p.href} onClick={closeNav} target={p.external ? "_blank" : undefined} rel={p.external ? "noopener noreferrer" : undefined}>{p.label}</a>
