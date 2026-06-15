@@ -247,7 +247,7 @@ function AppContent() {
               </div>
             </div>
             <a href="#schedule">Schedule</a>
-            <a href="#results">Results</a>
+            <a href="reviews.html">Reviews</a>
             <a href="about.html">About &amp; Coaches</a>
             <a className="nav-cta" href="contact.html">Contact us</a>
           </div>
@@ -266,7 +266,7 @@ function AppContent() {
             ))}
           </div>
           <a href="#schedule" onClick={closeNav}>Schedule</a>
-          <a href="#results" onClick={closeNav}>Results</a>
+          <a href="reviews.html" onClick={closeNav}>Reviews</a>
           <a href="about.html" onClick={closeNav}>About &amp; Coaches</a>
           <a className="nav-cta" href="contact.html" onClick={closeNav}>Contact us</a>
         </div>
@@ -746,7 +746,7 @@ function AppContent() {
               <h4>Quick Links</h4>
               <a href="#programs">Programs</a>
               <a href="#schedule">Schedule</a>
-              <a href="#results">Results</a>
+              <a href="reviews.html">Reviews</a>
               <a href="about.html">About &amp; Coaches</a>
               <a href="contact.html">Contact</a>
               <a href="reviews.html">Reviews</a>
