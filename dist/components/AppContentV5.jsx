@@ -766,11 +766,14 @@ function AppContent() {
             </div>
             <div className="footer-col">
               <h4>Opening Hours</h4>
-              <p style={{ margin: 0 }}>Mon – Fri</p>
-              <p style={{ marginTop: 0 }}>5:00am – 7:00pm</p>
+              <p style={{ margin: 0 }}>Mon – Thu</p>
+              <p style={{ marginTop: 0 }}>4:50am – 7:15pm</p>
+              <p style={{ margin: 0 }}>Friday</p>
+              <p style={{ marginTop: 0 }}>4:50am – 6:25pm</p>
               <p style={{ margin: 0 }}>Saturday</p>
-              <p style={{ marginTop: 0 }}>6:00am – 10:00am</p>
-              <p style={{ margin: 0, opacity: 0.7 }}>Sunday — Rest day</p>
+              <p style={{ marginTop: 0 }}>5:30am – 10:00am</p>
+              <p style={{ margin: 0 }}>Sunday</p>
+              <p style={{ marginTop: 0 }}>7:00am – 7:45am</p>
             </div>
           </div>
           <div className="footer-bottom" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "center" }}>
