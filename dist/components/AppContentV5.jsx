@@ -749,6 +749,7 @@ function AppContent() {
               <a href="#results">Results</a>
               <a href="about.html">About &amp; Coaches</a>
               <a href="contact.html">Contact</a>
+              <a href="reviews.html">Reviews</a>
               <a href="#faq">FAQ</a>
             </div>
             <div className="footer-col">

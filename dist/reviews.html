@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Reviews | Knight Fitness Lawnton — 5.0 · 365 Google Reviews</title>
+  <meta name="description" content="Read real reviews from Knight Fitness Lawnton members. Rated 5.0 from 365+ Google reviews. Real people, real results, real community in North Brisbane.">
+  <link rel="canonical" href="https://www.knightfitness-lawnton.com.au/reviews">
+  <meta name="theme-color" content="#1A1A1A">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Knight Fitness Lawnton">
+  <meta property="og:locale" content="en_AU">
+  <meta property="og:title" content="Member Reviews | Knight Fitness Lawnton">
+  <meta property="og:description" content="Read real reviews from Knight Fitness Lawnton members. Rated 5.0 from 365+ Google reviews.">
+  <meta property="og:url" content="https://www.knightfitness-lawnton.com.au/reviews">
+  <meta property="og:image" content="https://www.knightfitness-lawnton.com.au/og-image.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="components/lovable-home.css">
+  <style>
+    :root { --accent: #E31E24; }
+    body { padding: 0; margin: 0; }
+
+    .rv-hero {
+      background: var(--kf-black);
+      color: white;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .rv-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 25% 40%, rgba(227,30,36,0.22), transparent 55%),
+                  radial-gradient(circle at 75% 60%, rgba(227,30,36,0.15), transparent 55%);
+      pointer-events: none;
+    }
+    .rv-hero-inner { position: relative; max-width: 800px; margin: 0 auto; }
+    .rv-eyebrow {
+      display: inline-block;
+      background: var(--kf-red);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .rv-hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .rv-hero-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 3rem;
+      padding: 0.65rem 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .rv-hero-stars { color: #FBBC05; font-size: 1.1rem; letter-spacing: 0.05em; }
+    .rv-hero-score { font-size: 1.1rem; font-weight: 900; color: white; }
+    .rv-hero-count { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+    .rv-hero-sub { font-size: 1.05rem; line-height: 1.55; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto; }
+
+    .rv-search-wrap {
+      background: var(--kf-gray);
+      padding: 1.75rem 2rem;
+      border-bottom: 1px solid #e8e8e8;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .rv-search-inner { max-width: 680px; margin: 0 auto; position: relative; }
+    .rv-search-inner input {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 3rem;
+      border: 2px solid #ddd;
+      border-radius: 0.65rem;
+      font-size: 0.95rem;
+      font-family: 'Lato', sans-serif;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+      background: white;
+    }
+    .rv-search-inner input:focus { border-color: var(--kf-red); }
+    .rv-search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #999; pointer-events: none; }
+    .rv-count-label { text-align: center; margin-top: 0.6rem; font-size: 0.82rem; color: var(--kf-gray-dark); font-weight: 600; }
+
+    .rv-grid-wrap { max-width: 1300px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+    .rv-grid { columns: 3; column-gap: 1.25rem; }
+    @media (max-width: 1000px) { .rv-grid { columns: 2; } }
+    @media (max-width: 600px) { .rv-grid { columns: 1; } }
+
+    .rv-card {
+      break-inside: avoid;
+      background: white;
+      border-radius: 0.9rem;
+      padding: 1.25rem 1.35rem 1.35rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.055);
+      border: 1px solid #ebebeb;
+    }
+    .rv-card-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.65rem; }
+    .rv-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      color: white; font-weight: 700; font-size: 0.82rem;
+      display: flex; align-items: center; justify-content: center;
+      flex: none; letter-spacing: 0.02em;
+    }
+    .rv-name { font-weight: 700; font-size: 0.88rem; color: var(--kf-black); line-height: 1.2; }
+    .rv-date { font-size: 0.72rem; color: var(--kf-gray-dark); margin-top: 0.1rem; }
+    .rv-stars { color: #FBBC05; font-size: 0.82rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+    .rv-text { font-size: 0.865rem; line-height: 1.62; color: #444; }
+    .rv-more-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--kf-red); font-size: 0.78rem; font-weight: 700;
+      font-family: 'Lato', sans-serif; padding: 0.3rem 0 0; display: block;
+    }
+    .rv-more-btn:hover { text-decoration: underline; }
+
+    .rv-empty { text-align: center; padding: 4rem 2rem; color: var(--kf-gray-dark); display: none; }
+    .rv-empty h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--kf-black); margin-bottom: 0.5rem; }
+
+    .rv-cta {
+      background: var(--kf-black);
+      color: white;
+      text-align: center;
+      padding: 4.5rem 2rem;
+    }
+    .rv-cta h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .rv-cta p { color: rgba(255,255,255,0.72); margin-bottom: 2rem; font-size: 1.05rem; }
+    .rv-cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .rv-btn-primary {
+      background: var(--kf-red); color: white;
+      padding: 0.9rem 1.75rem; border-radius: 0.5rem;
+      text-decoration: none; font-weight: 700; font-size: 0.95rem;
+      transition: background 0.2s, transform 0.2s; display: inline-block;
+    }
+    .rv-btn-primary:hover { background: #c01920; transform: translateY(-2px); }
+    .rv-btn-ghost {
+      background: transparent; color: white;
+      border: 2px solid rgba(255,255,255,0.32);
+      padding: 0.9rem 1.75rem; border-radius: 0.5rem;
+      text-decoration: none; font-weight: 700; font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: border-color 0.2s;
+    }
+    .rv-btn-ghost:hover { border-color: white; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav-wrapper" id="main-nav">
+    <div class="nav-container">
+      <a href="index.html" aria-label="Knight Fitness Lawnton home" class="nav-logo">
+        <img src="assets/lov/logo-light.webp" alt="Knight Fitness Lawnton" class="logo" id="nav-logo-img">
+      </a>
+      <div class="nav-links">
+        <a href="programs/index.html">Programs</a>
+        <a href="index.html#schedule">Schedule</a>
+        <a href="reviews.html" aria-current="page">Reviews</a>
+        <a href="about.html">About &amp; Coaches</a>
+        <a class="nav-cta" href="contact.html">Contact us</a>
+      </div>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-panel">
+      <a href="programs/index.html">Programs</a>
+      <a href="index.html#schedule">Schedule</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="about.html">About &amp; Coaches</a>
+      <a class="nav-cta" href="contact.html">Contact us</a>
+    </div>
+  </div>
+
+  <section class="rv-hero">
+    <div class="rv-hero-inner">
+      <div class="rv-eyebrow">Google Reviews · Lawnton, QLD</div>
+      <h1>WHAT LOCALS<br>ARE SAYING</h1>
+      <div class="rv-hero-rating">
+        <span class="rv-hero-stars">★★★★★</span>
+        <span class="rv-hero-score">5.0</span>
+        <span class="rv-hero-count">· 365 Google reviews</span>
+      </div>
+      <p class="rv-hero-sub">Real words from real members. No curating, no cherry-picking — just what the people of North Brisbane say about training here.</p>
+    </div>
+  </section>
+
+  <div class="rv-search-wrap">
+    <div class="rv-search-inner">
+      <svg class="rv-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="rv-search" placeholder="Search reviews by name or keyword…" aria-label="Search reviews">
+    </div>
+    <div class="rv-count-label" id="rv-count"></div>
+  </div>
+
+  <div class="rv-grid-wrap">
+    <div class="rv-grid" id="rv-grid"></div>
+    <div class="rv-empty" id="rv-empty">
+      <h3>No results</h3>
+      <p>Try a different search term.</p>
+    </div>
+  </div>
+
+  <section class="rv-cta">
+    <h2>HAPPY WITH YOUR EXPERIENCE?</h2>
+    <p>Your review helps other locals find us — and takes about 60 seconds.</p>
+    <div class="rv-cta-buttons">
+      <a href="https://search.google.com/local/writereview?placeid=ChIJP8k2QzPkk2sRovF2KJ2S1cA" target="_blank" rel="noopener noreferrer" class="rv-btn-primary">Write a Google Review</a>
+      <a href="https://www.google.com/maps/place/664+Gympie+Rd,+Lawnton+QLD+4501" target="_blank" rel="noopener noreferrer" class="rv-btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        See all on Google
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;">
+        <p style="margin: 0;">© 2026 Knight Fitness Lawnton. All Rights Reserved.</p>
+        <p style="margin: 0;">664 Gympie Road, Lawnton QLD · <a href="tel:+61452519877" style="color: rgba(255,255,255,0.7); text-decoration: none;">0452 519 877</a> · <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">Back to Home</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var COLORS = ['#1a73e8','#e8710a','#9334e6','#34a853','#d93025','#1e8e3e','#f29900','#0077b6','#7b2d8b','#c45e00'];
+    function avatarColor(name) {
+      var h = 0;
+      for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
+      return COLORS[h % COLORS.length];
+    }
+    function initials(name) {
+      return name.split(' ').filter(Boolean).map(function(n){ return n[0]; }).slice(0,2).join('').toUpperCase();
+    }
+    function esc(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    var REVIEWS = [
+      {name:"Bec Casey",date:"6 weeks ago",text:"I've been training at Knight Fitness for the past 4 years, and in that time I've completed over 500 classes. It's been an incredible journey where I've achieved so many personal goals including reaching my goal weight and I genuinely couldn't have done it without the support here. The coaches truly have your best interests at heart. They're knowledgeable, approachable, and always willing to help. If you're dealing with an injury or limitation, they'll happily adjust exercises to make sure you can still train safely and effectively. What really sets Knight Fitness apart is the community. It feels like a home away from home. The coaches and members are welcoming, supportive, and encouraging, no matter your fitness level. You'll not only improve your health but also build friendships that last a lifetime."},
+      {name:"Benjamin Stevens",date:"16 weeks ago",text:"I signed up with Knight fitness Lawnton 6 weeks ago and from the start the service and support from Mark and all the coaches has been amazing. I'm in the mornings men's club with coach Matthew Lynn who has been great and has guided me along the way, so far I have lost weight, gained strength and feel all round better. I highly recommend Knight Fitness."},
+      {name:"Amber Scoles",date:"18 Mar 2025",text:"I have been to many gyms, but Knight fitness has supported me in lifestyle changes to have forever. It's not just about a quick weight loss fix, they really work with building life long healthy habits. I couldn't be more grateful for this gym, the life long friends I've made, and the healthy lifestyle I'll instill forever. The coaches genuinely care for each member."},
+      {name:"Sharon Baker",date:"7 weeks ago",text:"The staff at Knight Fitness are incredibly welcoming and inclusive. I was a total beginner with bad knees and they went out of their way to make sure I could participate. It's the kind of place where members actually encourage one another, making it feel more like a community than just a fitness centre. I've been coming for 18 months now and I've never looked back."},
+      {name:"Alice Everingham",date:"33 weeks ago",text:"Joining Knight Fitness has been the best decision and glad to be apart of this community. So 6 weeks in and enjoying the early AM classes, Coaches are awesome, great variety with workouts, knowledgeable, and they will suggest alternatives if you have an injury too. I joined while still getting over a shoulder injury and they were great!! The vibe throughout is next level, the place to be and highly recommend."},
+      {name:"Graeme Collins",date:"22 Mar 2025",text:"Life-changing and genuinely fun with an incredible community! I started Knight Fitness at nearly 150kg, and now, around 60kg lighter, it's become an essential part of my daily routine. From day one, I felt welcomed, supported, and motivated — not just by the workouts but by the amazing people around me. It's more than just a gym; it's a place where you can start your journey, push your limits, and quickly become part of a fun, supportive, and inspiring family."},
+      {name:"Rob Lowe",date:"23 weeks ago",text:"Just Awesome! Last year I decided to kick start my health journey at 42. I'd followed knight fitness on facebook for months and pulled the trigger on their Men's club 6 week challenge. The program completely exceeded my expectations, as did my results. I cannot speak highly enough of Knights! Their staff, the members, the entire community. If you're looking for positive change and self improvement sign up, you will not regret it."},
+      {name:"Catherine Kingston",date:"43 weeks ago",text:"Years ago I swore I would never be a member of a gym again. Step forward to age 50 and an advertisement for Knight Fitness popped up in my socials. I signed up for a 6 week program, having never even driven past the building. I've now been a member for over a year and absolutely love it. The coaches are outstanding — they keep me motivated and challenge me without making me feel overwhelmed. The Knight community is completely different to that of my previous gyms. Everyone is incredibly encouraging. Love the general vibe of the place and the social connection. It's 5 out of 5 stars from me — no hesitation."},
+      {name:"Carlo",date:"17 weeks ago",text:"Joined after 3 years of no training, this place was a blessing for me. The Trainers are enthusiastic, knowledgeable and empathetic to your needs. In combination with great facilities, a judge free environment, this will cater for all ages."},
+      {name:"Lux1Designs",date:"8 Jan 2025",text:"A non judgemental gym for ALL people of ALL fitness levels!!! What a fantastic fitness family that I am so blessed to be a part of since 2017. Have made many friends, enjoyed the many social events and challenges offered, stepped way outside my comfort zone and learnt a lot about what works and what doesn't for me. Supportive environment with a caring, dedicated and passionate team of trainers that encourage you physically and mentally. Exercises can be modified to suit you and your fitness level as you grow. Highly recommend!"},
+      {name:"Lance Courtenay",date:"14 Jun 2025",text:"Knight fitness is everything anyone needs in a gym. It's a community and it starts with the awesome group of coaches that genuinely care about each and every member which is motivating and keeps its members coming back consistently. If we are honest, consistency is the key to results. Get your membership, what have you got to lose!!"},
+      {name:"Nicole Munro",date:"43 weeks ago",text:"Love knight fitness! This is a gym where people of all ages, shapes and sizes are made to feel welcome by staff and other members. They are all so supportive, assisting where needed and celebrating every personal goal. The vibe is awesome and staff are super friendly. They work to your own personal goals and assist in lifestyle changes if you ask. If you want to make a change, get fitter and stronger, where you are encouraged by staff and make new friends while you work out, this is the gym for you!"},
+      {name:"Terri Bretherick",date:"43 weeks ago",text:"I can't recommend this gym enough! The community here is absolutely amazing; everyone is so welcoming and supportive, which makes training something I actually look forward to, helping to stay consistent. The coaches truly care about every member and are invested in helping you achieve your goals, no matter the starting point. Since joining, I've not only gained strength but also a huge boost in confidence. It's a place where we feel encouraged, challenged, and supported every step of the way. Thank you Knight team."},
+      {name:"Carlie Heaven",date:"48 weeks ago",text:"I started at Knight Fitness a year ago, having never stepped foot in a gym before — and to be honest, I was terrified. But from day one, the coaches and members made me feel so welcome and supported. The atmosphere is genuinely friendly, non-judgmental, and motivating. The coaches are incredible — so knowledgeable, patient, and encouraging. They've helped me build confidence, improve my general fitness, and stay consistent. I feel better than I have in years, both physically and mentally. If you're feeling nervous like I was, give it a go — you won't regret it!"},
+      {name:"Susan Reeves",date:"42 weeks ago",text:"Absolutely LOVE this gym! It's family-owned, and you can really feel the heart and energy they put into everything. The variety of sessions is amazing — there's always something new to try, so it never gets boring. The coaches are next level — super motivating, friendly, and they genuinely want to see you crush your goals. Such a positive vibe every time I walk in. Can't recommend it enough!"},
+      {name:"Sam Bowden",date:"16 weeks ago",text:"Great welcoming environment, friendly and down to earth, without posers and mirrors. Easy to fit in and make real change to body and lifestyle. Highly recommend if you are looking for lasting change. Great team with real support."},
+      {name:"Bianca Sexton",date:"43 weeks ago",text:"The best decision I ever made regarding my mental and physical health was joining Knight Fitness. Six years later and I'm still a part of the Knight Fam and I'll never go anywhere else. If you're searching for a gym where the coaches genuinely care about your wellness, where everyone including other clients will know your name, and a gym that actually motivates you to go and train rather than dread it, then Knight Fitness is THE gym for you!"},
+      {name:"Kellie Turner",date:"22 weeks ago",text:"First week in and I couldn't be happier. Returning to exercise after a near 10 year hiatus thanks to perimenopause and injury was a bit daunting but the Women's Club at Knight Fitness made it easy. Trainers are knowledgeable and supportive and quick to adapt to accommodate injuries with zero judgment. I'd give them 10 stars if I could."},
+      {name:"Logan North",date:"42 weeks ago",text:"Joining knights fitness is one of the best decisions I ever made. It is not your normal gym, there are no mirrors or bulked up people flexing around. Knights is a community of supportive people that encourage each other and have fun while training together. Regardless of how I am feeling walking into Knights, I always leave feeling like the best version of myself."},
+      {name:"Elizabeth Kerswell",date:"48 weeks ago",text:"Knight Fitness has been an amazing experience for me, the past four years. It's a very community oriented gym, with lots of support and encouragement from all the coaches. Also, the other members are so much fun! We have such a great time together. Who knew exercise could be so joyful? There are so many different options for classes to suit your fitness goals and preferences. There are also some amazing six week challenges throughout the year. I am so happy that I made the leap and committed to my health and wellbeing, through joining Knight Fitness."},
+      {name:"Karen Sherwood",date:"44 weeks ago",text:"I didn't need a 6 week trial to know that these people were going to be my tribe! From day 1, I became a member of a club of like minded people; a friendly and supportive community that have taken me on a journey of success. During the inevitable ups and downs of life, this family have had my back, cheered me on, and made me feel worthy of the successes that I have achieved over the years. We have great coaches that provide more than just physical training, but give insight into balanced eating plans and thought processes to help maintain healthy lifestyles, guilt free! The added bonus has been meeting positive people and making some amazing friendships along the way."},
+      {name:"Paula Laforgia",date:"28 weeks ago",text:"Knight Fitness is not your average gym... it's SO MUCH BETTER!! I have been participating in the women's club sessions 3 times a week and lost about 14kgs. Everything you research tells you to lose weight, exercise regularly and I have to say if it wasn't for the beautiful ladies I exercise with AND the amazing support of our coach Emily as well as all the coaches and staff that support you in your journey, I probably wouldn't have lost weight and wouldn't be exercising at all. Starting at a new gym can be quite intimidating but honestly, it really was not the case at Knight Fitness."},
+      {name:"Bob McDonald",date:"42 weeks ago",text:"Knight Fitness offers an excellent range of boot camp options, and they cater for all fitness levels. Their trainers provide encouragement, whilst also challenging you to improve. Best of all, they offer regular social events, including awareness campaigns and fundraising opportunities for various not-for-profit organisations."},
+      {name:"Alycia Noble",date:"44 weeks ago",text:"I have been to many gyms and Knight Fitness is by far the best. The support, encouragement and the feeling of belonging is amazing. The coaches and members provide a great vibe and atmosphere. I wouldn't want to be anywhere else. Knight Fitness is the best gym you should check it out."},
+      {name:"Hayley Renouf",date:"47 weeks ago",text:"I recently started at Knight Fitness to get back on track with my fitness journey, and I couldn't be happier! The staff and current members are fantastic — so welcoming and supportive. I love being able to join a class without the stress of planning my workout. I'm already feeling more energetic and finding my motivation again. Thanks so much, team!"},
+      {name:"Jenelle Newbery",date:"20 Mar 2025",text:"If you are looking for a gym that has positive support people and motivated trainers look no further than Knight fitness. Even though I haven't reached my fitness goals as yet, I have reached my mindset motivation and I'm going to get there. With the multiple different injuries I've had over the years the trainers have always been there for me and have believed in me. Makes me feel stronger and confident. I've also made new friendships with a group of ladies that keep me motivated. I look forward to seeing them each week."},
+      {name:"Elizabeth Kennington",date:"42 weeks ago",text:"The atmosphere at Knight Fitness is amazing! No matter where you are in your fitness journey, the people and coaches are supportive and encourage you along the way. Best gym I've ever joined!"},
+      {name:"Ursula Van Heeswijk",date:"47 weeks ago",text:"Amazing gym, what stands out is the supportive and positive atmosphere. I always feel welcomed and encouraged. It's clear that they genuinely care about their members' goals and progress. I've made great improvements since joining, and I can't wait to see where my fitness journey takes me! Highly recommend it to anyone looking to level up their fitness."},
+      {name:"Natalie Bridge",date:"43 weeks ago",text:"Only great things to say about Knight Fitness! I hadn't exercised for well over 18 months so I was quite nervous getting back into a gym. There was no need to be. From my first session to now (9 weeks in) the coaches have made me feel welcome and supported. Super knowledgeable and always there to answer my endless questions. You can see they genuinely love what they do. I would highly recommend these guys if you're looking to get back into the gym or even if you're new. There's no judgement and for an over 40yo, I feel completely at ease working out in this positive space."},
+      {name:"Nolan Lancaster",date:"42 weeks ago",text:"I joined knight fitness about 6 months ago, and have made serious progress since. I've significantly increased my strength, endurance and have lost about 10 kg of body fat as well. The coaches are very knowledgeable and supportive of all their members and the overall community is inclusive and encouraging. There's a good variety of classes across different skill sets to keep everyone engaged. Overall a great gym that I'm glad to be a part of."},
+      {name:"Sandra Clark",date:"44 weeks ago",text:"You'll love going there regularly, the coaches are amazing, the members are all friendly and support each other, we work hard having fun along the way. It's a fabulous community... like no other gym. Thanks Knight Fitness, you've changed my life."},
+      {name:"Paul Ebert",date:"43 weeks ago",text:"Knight Fitness isn't just a gym, it's a community of people committed to improving their lives one day at a time. The coaches provide support, instructions and health advice ensuring you can reach your fitness goals. The members around you provide support and encouragement as you work through each session. Knight Fitness has changed my life for the better in many ways and in the 7+ years as a member I have formed many great friendships. If you are unsure about walking into those franchise brand name gyms with their wall to wall mirrors and huge egos, Knight Fitness is the place for you."},
+      {name:"Frank North",date:"42 weeks ago",text:"I have been coming to Knights for 15 months now. I enjoy and look forward to the sessions. It is always a good atmosphere to workout, with a diversity of coaches who take an interest in teaching techniques and introducing you to new exercises and activities. There is always jovial banter amongst the participants and coaches and it is not uncommon to get encouragement from either. I look forward to the challenges and am confident of the guidance I will receive."},
+      {name:"Mathew Abboud",date:"29 Apr 2025",text:"Knight Fitness Brendale is truly one of a kind! From the moment I walked in, I was greeted by the friendliest, most welcoming staff who instantly made me feel comfortable and supported. The environment is completely non-judgmental, making it a perfect place for people of all fitness levels. The classes are fun, engaging, and led by knowledgeable trainers who genuinely care about your progress and wellbeing. I've felt more motivated and confident since joining. If you're looking for a gym that feels more like a supportive community, I highly recommend Knight Fitness!"},
+      {name:"Mark Altmann",date:"40 weeks ago",text:"These guys are awesome. They know their stuff, the atmosphere is friendly, the guys I train with are a great bunch. Hands on trainers that actually help you. First 4 weeks I dropped from 23% to 20% body fat so signed up for 16 weeks. Getting progressively stronger. This program works!"},
+      {name:"Sara Kay",date:"42 weeks ago",text:"Since my breast cancer I have never successfully got back into a gym routine. Training at Knight Fitness I am fitter, stronger and faster than I have been in 15 years. The support of the trainers, fellow members and program sets you up for success. Big shout out to Coach Jared and Coach Hannah for keeping me on track and guiding my progress. If you're looking for a gym with a great sense of community that will work with you to get results, come join us. You will make friends as well."},
+      {name:"Taylor Baillie",date:"20 Mar 2025",text:"I have always been focused on constantly improving my health and well being over the last 5 years, but have struggled finding my comfort within a gym. Not until I found Knight fitness. I first signed up for their 6 week challenge and I have done 2 more of the same challenges throughout the years. Down 15kg and feeling the happiest and healthiest I've been in a while! Thank you knight fitness for being committed to each member's individual fitness goals and providing a safe and positive environment to achieve these in!"},
+      {name:"Susan McLeod",date:"43 weeks ago",text:"I am so pleased that I found this gym. I felt comfortable straight away. The coaches are so encouraging and friendly. I need to give a special shout out to Emily. She has helped me progress and I'm feeling stronger both physically and mentally all the time. Who would have thought exercise could be fun?! As an extra bonus, I've made lots of new friendships. We have a great group each class and have lots of laughs along the way."},
+      {name:"Robert Clements",date:"6 Apr 2024",text:"Great training environment with very supportive coaches, awesome workouts to get a sweat on and push you further. An afternoon session after a day at work is the perfect way to destress. Knight Fitness is simply a great gym!"},
+      {name:"Sue",date:"37 weeks ago",text:"Joined Knight Fitness' 6 week challenge not really knowing what to expect in the Women's Classes. 4 weeks in loving it! Weekly coach check ins with Jarrod have kept me on track and feeling supported. Classes that are designed to suit everyone regardless of experience or if you have injuries — Amy has been able to provide me with alternate exercises. I can already feel and see a difference and I am looking forward to continuing my journey beyond the challenge!!"},
+      {name:"Steven Otto",date:"43 weeks ago",text:"I've been a member at Knight Fitness for over 8 years now. The trainers are fantastic and the support from the Knight Fitness members is amazing. Although there are many gyms closer to my home, I have never wanted to leave due to the quality of training from Mark and the team."},
+      {name:"Carla Trevascus",date:"47 weeks ago",text:"I have been a member of Knight Fitness for 18 months and I cannot overstate how amazing this place is. I had not exercised for several years, gained a lot of weight and felt overwhelmed. When I trialed Knight Fitness I didn't hold much hope for success but was feeling so low I thought I'd give it a try. I immediately felt welcome, and despite my size and fitness level I felt part of this tribe. I have lost 25kg (23kg of fat and increased 0.5kg of muscle mass) since joining. I have achieved my target weight and feel so grateful to the team at Knight Fitness for the mind and body transformation."},
+      {name:"Natalie Creighton",date:"44 weeks ago",text:"I've been training at knights for a few years. The coaches and members are amazing. I'd like to thank everyone who has helped me to achieve every goal I set myself and can't wait to see what is next."},
+      {name:"Christobel Clark",date:"44 weeks ago",text:"I've been going to KF for about 4 years and wouldn't want to go back to a traditional gym. KF is a community where you are welcomed, supported, encouraged, held accountable and given achievable goals based on what you are wanting. No judgement or criticism, just support, expertise and encouragement. You go, because you are seen and there are relationships. You go, because you know they will adjust things if you have an injury or particular need. You go, because just turning up gets results. And you keep going because it works. The coaches are all awesome and have a sense of humour. Found my fitness family!"},
+      {name:"Noura Kamali",date:"9 Feb 2025",text:"Knight Fitness has changed my whole perspective about fitness and exercise! Having the variety of classes, the amazing knowledgeable coaches who genuinely care about your progress, who would give you one-on-one attention, and who would change exercises to suit your personal goals. You get to workout with amazing supportive members, and the amazing playlist keeps you motivated to smash the session. All of that have made me look forward to going to the gym everyday! It's something I want to do, not something I have to do!"},
+      {name:"Meaghan Phillips",date:"44 weeks ago",text:"The coaches are next-level — encouraging, knowledgeable, and always ready with a high-five or a gentle roast when you need it. The members? Just as awesome. It's a place where you're just as likely to hear someone cheering you on during a heavy lift as you are to hear someone cracking a joke mid-burpee. Whether you're smashing out a PB, dragging yourself through a sweaty bootcamp, or just showing up and doing your best, you'll never feel like you're going it alone."},
+      {name:"Louise Young",date:"43 weeks ago",text:"I joined Knight Fitness a few years ago as I was wanting to get fit, what I found was a community. From the moment I started the bootcamps, the coaches and members were supportive and encouraging with every interaction we had. Shortly after I joined women's club and I have loved working out alongside others whilst seeing my body become stronger! Exercises are adjusted if needed, whether it's due to mobility or injury, there's no judgement, just support!"},
+      {name:"Amber Scoles",date:"24 Mar 2024",text:"I can't say enough good things about Knights, the group fitness gym that has completely transformed my life! The moment I walked in, I felt this incredible sense of community. Everyone is so friendly and genuinely supportive, it's like being part of a big fitness family. The coaches at Knights are hands down the most amazing and uplifting I've ever come across. A special shout-out to Hannah, who has been my mentor throughout the 6-week challenge. She's been an absolute game-changer, guiding me through every step and helping me develop healthy lifestyle habits that have had a profound impact on both my physical and mental well-being."},
+      {name:"Mona Liza Ee",date:"19 Dec 2024",text:"Highly recommended! Knights fitness has a great atmosphere with trainers that are friendly and very knowledgeable. As not having been in a gym for over 10 years, they were able to guide me to reach my fitness goals and beyond. I am now achieving things that I didn't think I could. Have met new friends which is a bonus too."},
+      {name:"Ross Thorpe",date:"30 Nov 2024",text:"I would like to thank all the crew at Knights fitness for their help and understanding regarding my personal fitness restrictions. At no time have I been pressured but encouraged to push on. The flexibility to change exercises to alternative ones that suit me better has been great and it keeps me inclusive with the group. All the members also help by encouragement and make it a very welcome environment. From Jarrod with his monitoring, coaching and knowledge to Zac, Jake and Mark I have enjoyed my sessions."},
+      {name:"Juanita Drummond",date:"48 weeks ago",text:"I love training at Knight Fitness! Super welcoming vibe, awesome community, and the workouts are always challenging. It's a great place to get stronger and have fun doing it!"},
+      {name:"Rogers Family",date:"42 weeks ago",text:"Joining Knights Fitness is the best choice I have ever made. Great atmosphere, the coaches are excellent and all lovely people. No judgement at all, and great community spirit! Highly recommend for anyone who hasn't worked out in a while, take a chance and give Knights fitness a go, you won't regret it!"},
+      {name:"Madeline Kennedy",date:"42 weeks ago",text:"Knights are all about building a community. Focused on helping people find comfort in the gym, as well as promoting health and wellness in a welcoming space. The Winter Warrior program is one such event — and there is nothing like a little encouragement to get you out of bed on a cold Winter's morning, and better yet, you get to share that joy with your gym buddies."},
+      {name:"Rachel Kingwell",date:"42 weeks ago",text:"I started with Knight Fitness 3 months ago and I absolutely love it! It is an incredibly positive and encouraging community — not your average gym!!!! The Winter Warrior Challenge is awesome — really motivating to get you moving through the cold winter months!"},
+      {name:"Geoffrey James",date:"12 Feb 2022",text:"Definitely the go to place if you want to keep fit! The Knight fitness team are a great bunch! Try out their 6 weeks challenge and get great support from the coaches. Great loyal following!"},
+      {name:"Mitchell Gregory",date:"44 weeks ago",text:"I have been a member of Knights Fitness now for seven years and completed over 1000 classes. This is honestly the best Gym I've ever been a part of. It is inclusive and friendly and I can't recommend it highly enough."},
+      {name:"Mark Hornby",date:"26 Dec 2024",text:"I was not sure at first, having not set foot in a gym in 25 years. I need not have worried! The team at knight fitness are really a cut above the rest. Not only warm and friendly, the coaches are professionals, hard working and dedicated to ensuring I reach my goals as I go along my fitness journey. They also consider any injuries you may have, and design a programme and workout sessions tailored to YOU! Could not be happier with my results, and am very thankful for the abundance of help I have received along the way."},
+      {name:"Emily Gordon",date:"49 weeks ago",text:"Somewhere between the chaos of work, home, and everything else, I started to forget who I was. Joining Knight Fitness has been nothing short of life-changing. The support, encouragement, and uplifting community have helped me rediscover my strength — physically, mentally, and emotionally. I'm no longer just surviving the day; I'm thriving. If you feel like you've lost your spark, this is the place to find it again."},
+      {name:"Elaine Chung",date:"24 Mar 2025",text:"I spent months looking at the reviews on Knight Fitness, I even did a sneaky drive by before I picked up the phone to make an appointment. Why? Because it had been decades since I have been to a gym, I was scared, overweight and had no time. Now, I wish I had made that call sooner. It is everything everyone says it is. It's almost been 3 years; I can't believe I'm still going. I've reduced my medication, lost kilos and dress sizes. I know I won't have been able to achieve that without Knight Fitness."},
+      {name:"Dan & Jo Miles",date:"48 weeks ago",text:"I've been training with Mark and Knight fitness for a lot of years now. I love the atmosphere at knights and all the friends I've made over that time. Workouts are hard and satisfying but can also be tailored to your fitness goals or to take in account any injuries or aches and pains. I'll keep coming back as staying in shape helps out at work and at home."},
+      {name:"Paul Walding",date:"44 weeks ago",text:"Great trainers who get the best out of you! Everyone supports everyone, a great friendly environment for beginners and more seasoned gym goers alike. Totally recommend."},
+      {name:"Lizzi Rowe",date:"43 weeks ago",text:"I've only been a part of the Knight Fitness family for about 8 months but feel like a part of the furniture. The coaches are so accommodating and patient with me and cater for my injuries. Love the vibe and so glad to be a part of the Knight team."},
+      {name:"Cate Brickell",date:"48 weeks ago",text:"I never thought I'd be a gym person, but the team at Knights has changed that. The coaches are amazing, teaching the movements, adapting for injuries, encouraging when life is tough, and always up for a chat about life or a workout. Even when life is hard, they see you and support you. I became a gym person and didn't even know it."},
+      {name:"Shanae Kalepa",date:"42 weeks ago",text:"Awesome gym and the people are friendly. The structured group classes and supportive coaches help keep you accountable. I have been consistently attending 3-4 sessions per week for the last 7 months! Worth it and would recommend."},
+      {name:"Tracey Marshall",date:"13 Nov 2020",text:"I have been a regular at Knight Fitness for nearly 2 years and I can honestly say I love it. Every session is different, challenging and most of all fun. The coaches all have their own individual training style and are all excellent at what they do. Knight Fitness is a friendly and welcoming community. Newcomers are always made to feel welcome and everyone encourages everyone else. We celebrate each other's achievements and spur each other on. There is no posing or judging here."},
+      {name:"Luke Cook",date:"37 weeks ago",text:"Great staff and classes really well structured. Allows for members to train in a fun and safe environment with coaches on hand to provide guidance and advice when needed."},
+      {name:"Hannah Wrigley",date:"44 weeks ago",text:"Knight Fitness has such a welcoming presence and all the coaches are fantastic! I have made some new friends and have a bunch of gym mums looking out for me and keeping me motivated!"},
+      {name:"Jessica Henriques",date:"25 Oct 2021",text:"I have been a part of Knight Fitness for almost 6 years now. I started at Knights looking for a great place for group fitness and I haven't looked back. I have seen great results in my fitness journey and made some great friends along the way. Knight Fitness is more than a gym, it's a community. The trainers are encouraging and your biggest cheerleaders. They genuinely want to see you meet your goals. Knights is for all fitness levels, you won't regret coming and giving them a try."},
+      {name:"Karolina Stafford",date:"47 weeks ago",text:"Tucked away like a well-kept secret Knight Fitness isn't the kind of place you stumble upon — it's the kind you hunt for. And trust me, once you find it, you'll swear the search was part of the workout. From the moment you walk through the doors, the coaches size up your comfort zone and politely escort you past it. What surprised me most wasn't just the sweat-dripping breakthroughs, but the people. There's a 'we're all in this together' vibe that materializes the moment the timer starts. Strangers became spotters, spotters became friends, and now my phone pings all week with 'see you at the 4:50am grind?' messages."},
+      {name:"Ben Hall",date:"10 Apr 2024",text:"Knight fitness has found that sweet spot as a business evolving in to its very own community. The staff are the heroes, they are friendly, caring and motivating making every class you attend a fun yet challenging experience. This gym is ego free, all the members are there to support each other and help you get the most out of your sessions. I could not recommend this gym highly enough to anyone interested in a class based gym program."},
+      {name:"Nikkita Taylor",date:"15 Nov 2024",text:"I started out doing the RUOK 28 day program they offered and really thought I wouldn't continue once it was over. In the lead up I felt so nervous but quickly realised Knights isn't a normal gym! The community you've created is so supportive and encouraging and knowing the Coaches are always there to assist and offer their knowledge is such a relief! Can't speak more highly! It's amazing!!"},
+      {name:"Dave Tomlins",date:"42 weeks ago",text:"All the crew at Knights Fitness is fantastic, they really care for each individual needs or injuries, and the best part is, it is fun with a great feel of community while maintaining fitness. I would really recommend you come and join the fun!"},
+      {name:"Abigail Dela Cruz",date:"43 weeks ago",text:"The OG Knights Fitness that started it all! I was so happy when they branched out and opened Knights Fitness in Morayfield, love the community and hardcore workouts! And we get to have friendly gym competition and events. Also, members are welcome to train in both gyms. Thanks guys!"},
+      {name:"Liz Foster",date:"43 weeks ago",text:"Amazing gym for all levels of fitness. Trainers are always welcoming, supportive and encouraging. Highly recommend Knight Fitness!!!"},
+      {name:"Rachael D",date:"31 Dec 2024",text:"I hadn't been to the gym in 15 years and was super nervous. I did the 6 week challenge and found the coaches, the classes and the other members so great, I joined after my 6 weeks was up. I'm consistently going 3-4 times a week and it's not a chore, I look forward to it. I haven't felt so good in years. Highly recommend knight fitness."},
+      {name:"Alex Watkin",date:"9 Nov 2024",text:"I have been across Brendale and Morayfield locations and love them both! The coaches are friendly, professional and love helping you. I have found my purpose again, and I love going to sessions every week! All gym members are friendly and I have made some fantastic long term friends. I love my Knight Fitness Fam!"},
+      {name:"Christine Clark",date:"43 weeks ago",text:"Being a member of Knights Fitness is kind of like heading into the Cheers Bar — taking a break from all your worries, going somewhere where everybody knows your name, and they're always glad you came! What you also get is great fitness advice, fun workouts in a positive environment and unrelenting encouragement to reach your goals no matter how big or small. If you want to feel like you are part of a community, where showing up to work out is easy, this is the gym to join."},
+      {name:"Justine Bowman",date:"19 Oct 2023",text:"I have been going to Knight Fitness for over 5 years. It is fantastic. Everyone is there to support one another and cheer on any achievements. There are no huge egos, just beautiful people. The trainers/coaches are always enthusiastic, knowledgeable and most importantly friendly and caring. It is not just a gym, it is a community!"},
+      {name:"Taylor Greenaway",date:"27 Jan 2025",text:"Really friendly and supportive culture. The trainers are always happy to demonstrate and explain any exercises and ensure that you are using the correct technique. Great range of classes and times. If you're interested in starting at a gym for the first time or looking for a no-ego gym I would recommend Knights."},
+      {name:"Aaron Zimpel",date:"48 weeks ago",text:"Twelve months in and I'm hooked. Welcoming crew, knowledgeable coaches, and razor-sharp, structured sessions that keep me driven and smashing goals. I've learnt heaps and loved every minute. Best fitness move I've made."},
+      {name:"Ashley Pringle",date:"1 Sept 2023",text:"This gym is the bomb! Signed up for the 6 week challenge in the hope to shed a few kilos. I lost more than I thought I could in 6 weeks but also gained a great place to improve my fitness with great trainers and great people! The sessions fit perfectly for me as a shift worker and everyone is welcoming, helpful and friendly (even at 4:50am!). Their programs work if you are committed to them. I also love how they have social activities for friends and family!"},
+      {name:"Sean O'Griobhtha",date:"27 weeks ago",text:"Can't speak highly enough about the caliber of staff and coaches at Knight fitness, always available to assist you in your fitness journey, the team help you monitor your progress and provide feedback and tips to get the best out of your training. A great selection and mix of classes at numerous times that make it easy to start and continue training. The environment is positive, motivating and inclusive which creates a great community vibe. Knight Fitness is a great place for all fitness levels. Highly recommended."},
+      {name:"Alana Baud",date:"23 Jan 2020",text:"I have been training at Knight Fitness for almost three months now and cannot recommend them enough. I completed my six week challenge and smashed my goals thanks to the amazing coaches who are always there to chat, guide and encourage you, as they genuinely care about helping you achieve your goals. The classes offer plenty of variety and the coaches are all very knowledgeable. The gym has a great atmosphere and everyone is very approachable. Highly recommend!!"},
+      {name:"Robyn Thomas",date:"24 Oct 2023",text:"My fitness has improved incredibly since I started a 6 week challenge. The coaches support me every step of the way and the community keeps me coming back."},
+      {name:"Rachael Reitano",date:"13 Jan 2025",text:"I absolutely recommend Knight Fitness to anyone! Not only did they help me with my physical goals but also my mental health and long term lifestyle. Their in house challenge helped me lose weight and better my mental health. Love the classes and the coaches dedication."},
+      {name:"Kionasina Magele",date:"43 weeks ago",text:"The day I walked into knight fitness was a vibe one would never forget, from the amazing coaches to the beautiful members, nothing but the feel of kindness, love and respect. Short story, starting at close to 200kg sitting at 122kg. Forever thankful, the best is yet to come."},
+      {name:"Taryn Porter",date:"7 Feb 2022",text:"I have now been at Knight Fitness for 5 years. I have always been into sport and running but I was looking for a different challenge, and I got that and more!! The classes are challenging but still cater for every fitness level. Most importantly the coaches are amazing, every single one. Not only do they motivate you but they really love seeing your progress. They don't just call out instructions — they take the time to make sure your technique is correct. All this complimented by their knowledge on nutrition means you get the full package. WARNING — the addiction to this place is real, it's an actual thing."},
+      {name:"Lee Wise",date:"31 Oct 2023",text:"I'm now into my 4th year at Knight Fitness and I can say I still love it as much as I did when I walked through the doors. I had never been in a gym my entire life until I joined Knight Fitness so was unsure on what to expect. I was very happy that all the trainers were very welcoming and showed me exactly what to do. I've dropped over 30kg and maintained that over the years and a big part of that was thanks to Mark and the coaching staff and all the other great people I've met along the way at Knight Fitness."},
+      {name:"Brenten Uren",date:"17 Jan 2024",text:"Knight fitness has changed my life. I am not only the fittest I have probably been since my early twenties but I am now committed to my ongoing fitness and health regime at Knights. This is not a normal gym, it's one big family, egos are left at the front door, everyone is very supportive, great camaraderie. I highly recommend Knight Fitness to anyone looking at changing their life — be a better you!"},
+      {name:"Chris Breed",date:"27 Aug 2024",text:"Highly recommend Knights Fitness — my goals are general overall fitness, but they work with your specific personal goals. The trainers are fantastic and very approachable. If you have an injury they will give you alternative exercises and keep checking in on you. I was away for 2 weeks with a cold and they noticed I had not been there and called me to see if I was OK — just amazing personal service and shows how much they care about everyone there. Just turn up, do what they tell you and you'll be amazed at how you improve."},
+      {name:"Scott MacQueen",date:"42 weeks ago",text:"Awesome Gym with great atmosphere. Extremely people focused Trainers who encourage and motivate you no matter what level you are. If you are over normal gyms then Knights are definitely worth a try."},
+      {name:"Caitlin Mason",date:"28 Oct 2020",text:"I've been going to Knight Fitness for over a year now, I started on the 6 week challenge and seen incredible results. The trainers at Knight Fitness are always welcoming, they're extremely passionate and encouraging! The atmosphere is like we're one big family encouraging each other to strive for the best results! The trainers are always looking out for the members when it comes to goals, form, and diet. They're considerate and helpful when it comes to injuries. I couldn't recommend this place more — it is the BEST!!"},
+      {name:"Erin Van Peelen",date:"47 weeks ago",text:"Absolutely love coming here! I've been a member for 8 years and counting. You're not just a number, the coaches get to know all their members and the variety in the sessions keep every week interesting."},
+      {name:"Robyn Wilson",date:"42 weeks ago",text:"Even though I didn't finish the winter warrior challenge due to my 2 new knees giving me grief, the coaches at knight fitness are Da Bomb, they always have my back and push me to do things I once thought I couldn't do. Due to the awesome coaches I am in a better and stronger place in my life. Thanks coaches!"},
+      {name:"Heidi Payne",date:"30 Dec 2024",text:"Since joining Knights, I have gained more than increased fitness. I have increased nutrition awareness, gained strength, lost body fat, grown my confidence, and most importantly... I have made awesome friends!! Great community and next level coaches. Thanks Knights."},
+      {name:"Nyandeng Wieu",date:"31 weeks ago",text:"Knight Fitness is more than just a gym — it's a community filled with kindness, care, and genuine support. From the moment you walk in, you can feel the positive energy and passion from every team member. The staff are not only professional and knowledgeable but also incredibly encouraging, always taking the time to support each person's journey — both mentally and physically. Dear Mark and Adele, you are truly blessings to our community. Your leadership, compassion, and vision have touched the lives of so many people. Knight Fitness doesn't just build bodies — it builds confidence, resilience, and community."},
+      {name:"Adrian Bensley",date:"43 weeks ago",text:"Fantastic gym with a welcoming community of like minded individuals. Workouts are consistent and focused on individual goals and abilities. Highly recommend!"},
+      {name:"Tim H",date:"42 weeks ago",text:"As a 37 year old guy who sits at a computer all day I struggled in the fitness department and found myself heavy breathing just going up a flight of stairs. I had never trained before and going to a gym seemed overwhelming. I decided to give Knight Fitness a go a couple of months ago and haven't looked back. Their Men's Groups are great. The groups consist of guys who are in similar situations and of various fitness levels, however you won't feel intimidated as everyone encourages each other. I would highly recommend Knight Fitness — Zac and the rest of the team are friendly, motivational and just a great bunch."},
+      {name:"Kurt Brumley",date:"24 Aug 2023",text:"Knights Fitness has been my fitness haven for the last five years. The heart and soul of Knights Fitness, undoubtedly lies in their outstanding team of personal trainers. The trainers exhibit expert knowledge, addressing queries and providing insights into various fitness techniques. Beyond the fitness aspect, the friendly demeanour of the staff creates an inviting atmosphere that sets Knights Fitness apart from other gyms. It's evident that they prioritise creating a community that values not only physical health but also emotional wellbeing. I highly recommend Knights Fitness to anyone seeking a holistic and effective approach to their fitness journey."},
+      {name:"Anita",date:"18 Sept 2023",text:"So I'm an older lady, 3 months out of ACL surgery, needing to get motivated again, gyms not my idea of fun, so I signed up for the Knight Fitness 6 week program — so glad I did. There are so many different people doing their own journey but also happy to chat and say gidday. The program has made me so much smarter about my food choices than I ever have been. My fitness levels are coming back, I'm excited about my progress. My coach without him I may have given up — he motivates you, he checks on you, he works your buns off, but so worth it. I found my place."}
+    ];
+
+    var TRUNCATE = 280;
+
+    function renderCard(r) {
+      var ini = initials(r.name);
+      var col = avatarColor(r.name);
+      var long = r.text.length > TRUNCATE;
+      var short = long ? r.text.slice(0, TRUNCATE).trimEnd() + '…' : r.text;
+      var id = 'rv-' + r.name.replace(/\W+/g,'') + Math.random().toString(36).slice(2,6);
+      return '<div class="rv-card">' +
+        '<div class="rv-card-head">' +
+          '<div class="rv-avatar" style="background:' + col + '">' + esc(ini) + '</div>' +
+          '<div><div class="rv-name">' + esc(r.name) + '</div><div class="rv-date">' + esc(r.date) + '</div></div>' +
+        '</div>' +
+        '<div class="rv-stars">★★★★★</div>' +
+        '<div class="rv-text" id="txt-' + id + '">' + esc(short) + '</div>' +
+        (long ? '<button class="rv-more-btn" id="btn-' + id + '" data-full="' + esc(r.text).replace(/"/g,'&quot;') + '" data-short="' + esc(short).replace(/"/g,'&quot;') + '" data-id="' + id + '" onclick="toggleMore(this)">Read more</button>' : '') +
+        '</div>';
+    }
+
+    function toggleMore(btn) {
+      var id = btn.dataset.id;
+      var txt = document.getElementById('txt-' + id);
+      if (btn.textContent === 'Read more') {
+        txt.textContent = btn.dataset.full;
+        btn.textContent = 'Read less';
+      } else {
+        txt.textContent = btn.dataset.short;
+        btn.textContent = 'Read more';
+      }
+    }
+
+    var filtered = REVIEWS.slice();
+
+    function render(list) {
+      var grid = document.getElementById('rv-grid');
+      var empty = document.getElementById('rv-empty');
+      var count = document.getElementById('rv-count');
+      if (list.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        count.textContent = 'No reviews found';
+      } else {
+        empty.style.display = 'none';
+        grid.innerHTML = list.map(renderCard).join('');
+        count.textContent = 'Showing ' + list.length + ' of 365 reviews';
+      }
+    }
+
+    render(REVIEWS);
+
+    document.getElementById('rv-search').addEventListener('input', function() {
+      var q = this.value.toLowerCase().trim();
+      if (!q) { render(REVIEWS); return; }
+      render(REVIEWS.filter(function(r) {
+        return r.name.toLowerCase().includes(q) || r.text.toLowerCase().includes(q);
+      }));
+    });
+
+    // Nav scroll
+    var nav = document.getElementById('main-nav');
+    var logo = document.getElementById('nav-logo-img');
+    var toggle = document.getElementById('nav-toggle');
+    var drawer = document.getElementById('mobile-nav');
+    function onScroll() {
+      var s = window.scrollY > 50;
+      nav.classList.toggle('scrolled', s);
+      logo.src = s ? 'assets/lov/logo-dark.webp' : 'assets/lov/logo-light.webp';
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    function setOpen(open) {
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    toggle.addEventListener('click', function() { setOpen(!drawer.classList.contains('open')); });
+    drawer.addEventListener('click', function(e) { if (e.target === drawer) setOpen(false); });
+    drawer.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { setOpen(false); }); });
+  </script>
+</body>
+</html>
