@@ -379,6 +379,53 @@
       border-radius: 50%;
       background: var(--kf-red);
     }
+
+    /* ── MOBILE OVERRIDES ── */
+    @media (max-width: 600px) {
+      /* Hero */
+      .pi-hero { padding: 3rem 1.25rem 2.5rem; }
+      .pi-hero p { font-size: 1rem; }
+
+      /* Stats — 2×2 grid on small screens */
+      .pi-stats { padding: 1rem 1.25rem; }
+      .pi-stats-inner { gap: 0.75rem 1.75rem; }
+      .pi-stat-num { font-size: 1.6rem; }
+
+      /* Jump chips — tighter */
+      .pi-jump { padding: 1.25rem 1rem 0.25rem; gap: 0.5rem; }
+      .pi-jump-chip { font-size: 0.8rem; padding: 0.5rem 1rem; }
+
+      /* Card list */
+      .pi-list { padding: 1.75rem 1rem 1rem; gap: 1.75rem; }
+
+      /* Card images smaller so content is visible above the fold */
+      .pi-card-media { min-height: 200px; }
+
+      /* Card body tighter */
+      .pi-card-body { padding: 1.5rem 1.25rem 1.75rem; }
+      .pi-card-body p { font-size: 0.95rem; margin-bottom: 1.1rem; }
+      .pi-card-quick { margin-bottom: 1.25rem; }
+
+      /* Buttons: primary full-width, secondary below */
+      .pi-card-actions { flex-direction: column; align-items: stretch; gap: 0.85rem; }
+      .pi-btn-primary { text-align: center; padding: 1rem 1.5rem; }
+      .pi-btn-text { text-align: center; }
+
+      /* Compare section */
+      .pi-compare { padding: 0 1rem; margin-top: 2.5rem; }
+      .pi-compare-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .pi-compare-cell { padding: 1.1rem 1rem; }
+      .pi-compare-cell h3 { font-size: 1.2rem; }
+      .pi-compare-cell li { font-size: 0.8rem; }
+
+      /* CTA section */
+      .pp-cta-block { padding: 3.5rem 1.25rem; margin-top: 0 !important; }
+      .pp-cta-big { display: block; text-align: center; padding: 1rem 1.5rem; }
+    }
+
+    @media (max-width: 380px) {
+      .pi-compare-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
