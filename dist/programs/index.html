@@ -25,6 +25,76 @@
   <link rel="stylesheet" href="program.css">
   <style>
     /* Programs index — extends program.css */
+
+    /* Nav extras */
+    .pp-nav-links { display: flex; align-items: center; gap: 1.5rem; }
+    .pp-navlink {
+      font-size: 0.875rem; font-weight: 700; letter-spacing: 0.04em;
+      color: var(--kf-gray-dark); text-decoration: none;
+      transition: color 0.18s;
+    }
+    .pp-navlink:hover { color: var(--kf-red); }
+    @media (max-width: 700px) {
+      .pp-navlink { display: none; }
+      .pp-back { display: none; }
+    }
+
+    /* Stats strip */
+    .pi-stats {
+      background: var(--kf-red);
+      padding: 1.25rem 2rem;
+    }
+    .pi-stats-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 0.5rem 3rem;
+    }
+    .pi-stat { text-align: center; color: white; }
+    .pi-stat-num {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.85rem; letter-spacing: 0.03em; line-height: 1;
+    }
+    .pi-stat-label {
+      display: block;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; opacity: 0.88; margin-top: 0.2rem;
+    }
+
+    /* Quick-jump chips */
+    .pi-jump {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 0.6rem; padding: 1.5rem 2rem 0.5rem;
+      max-width: 860px; margin: 0 auto;
+    }
+    .pi-jump-chip {
+      display: inline-block;
+      background: var(--kf-gray);
+      color: var(--kf-black);
+      border: 2px solid transparent;
+      border-radius: 2rem;
+      padding: 0.55rem 1.25rem;
+      font-size: 0.85rem; font-weight: 700;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s;
+    }
+    .pi-jump-chip:hover { background: var(--kf-red); color: white; transform: translateY(-2px); }
+    .pi-jump-chip--outline {
+      background: transparent;
+      border-color: var(--kf-red);
+      color: var(--kf-red);
+    }
+    .pi-jump-chip--outline:hover { background: var(--kf-red); color: white; }
+
+    /* Footer extras */
+    .pp-foot-inner { max-width: 1100px; margin: 0 auto; }
+    .pp-foot-links {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 0.5rem 2rem; margin-bottom: 1.25rem;
+    }
+    .pp-foot-links a { color: rgba(255,255,255,0.75); font-weight: 700; font-size: 0.875rem; text-decoration: none; }
+    .pp-foot-links a:hover { color: var(--kf-red); }
+
     .pi-hero {
       position: relative;
       background: var(--kf-black);
@@ -316,25 +386,47 @@
   <nav class="pp-nav">
     <div class="pp-nav-inner">
       <a href="../index.html"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69c9dd515ae6bce5b7332a5b.png" alt="Knight Fitness"></a>
-      <div style="display:flex; align-items:center; gap:1.5rem;">
+      <div class="pp-nav-links">
         <a class="pp-back" href="../index.html">← Home</a>
-        <a class="pp-cta" href="../contact.html">Claim Free Session</a>
+        <a class="pp-navlink" href="../reviews.html">Reviews</a>
+        <a class="pp-navlink" href="../index.html#schedule">Schedule</a>
+        <a class="pp-navlink" href="../about.html">About</a>
+        <a class="pp-cta" href="../contact.html">Free Session</a>
       </div>
     </div>
   </nav>
 
   <header class="pi-hero">
     <div class="pi-hero-inner">
-      <div class="pi-hero-eyebrow">Programs</div>
+      <div class="pi-hero-eyebrow">4 Programs · North Brisbane</div>
       <h1>FIND THE TRAINING<br/>THAT FITS YOU.</h1>
-      <p>Four coach-led programs built around real Lawnton locals — whether you want high-energy team training, semi-private coaching, or a structured environment for the kids. Browse below and book a free session in any one.</p>
+      <p>Four coach-led programs built around real Lawnton locals — whether you want high-energy team training, semi-private coaching, or a structured environment for the kids.</p>
     </div>
   </header>
+
+  <!-- Stats strip -->
+  <div class="pi-stats">
+    <div class="pi-stats-inner">
+      <div class="pi-stat"><span class="pi-stat-num">365+</span><span class="pi-stat-label">5-Star Reviews</span></div>
+      <div class="pi-stat"><span class="pi-stat-num">2000+</span><span class="pi-stat-label">Lives Changed</span></div>
+      <div class="pi-stat"><span class="pi-stat-num">9+</span><span class="pi-stat-label">Years Coaching</span></div>
+      <div class="pi-stat"><span class="pi-stat-num">FREE</span><span class="pi-stat-label">First Session</span></div>
+    </div>
+  </div>
+
+  <!-- Quick-jump nav -->
+  <div class="pi-jump">
+    <a href="#bootcamp" class="pi-jump-chip">Bootcamp</a>
+    <a href="#mens-club" class="pi-jump-chip">Men's Club</a>
+    <a href="#womens-club" class="pi-jump-chip">Women's Club</a>
+    <a href="#young-knights" class="pi-jump-chip">Young Knights</a>
+    <a href="#compare" class="pi-jump-chip pi-jump-chip--outline">Compare all →</a>
+  </div>
 
   <main class="pi-list">
 
     <!-- BOOTCAMP -->
-    <article class="pi-card">
+    <article id="bootcamp" class="pi-card">
       <div class="pi-card-media">
         <span class="pi-card-tag">Most Popular</span>
         <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69cf13e2ba9db66362ff9722.jpg" alt="Bootcamp at Knight Fitness Lawnton">
@@ -357,7 +449,7 @@
     </article>
 
     <!-- MEN'S CLUB -->
-    <article class="pi-card flip">
+    <article id="mens-club" class="pi-card flip">
       <div class="pi-card-media">
         <span class="pi-card-tag">Best Results</span>
         <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69e5b7ebc56ad279080c587d.jpg" alt="Men's Club at Knight Fitness Lawnton">
@@ -380,9 +472,9 @@
     </article>
 
     <!-- WOMEN'S CLUB -->
-    <article class="pi-card">
+    <article id="womens-club" class="pi-card">
       <div class="pi-card-media">
-        <span class="pi-card-tag">Best Results</span>
+        <span class="pi-card-tag">Women Only</span>
         <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69e5bfd58696a78b8d4af22d.png" alt="Women's Club at Knight Fitness Lawnton">
       </div>
       <div class="pi-card-body">
@@ -403,7 +495,7 @@
     </article>
 
     <!-- YOUNG KNIGHTS -->
-    <article class="pi-card flip">
+    <article id="young-knights" class="pi-card flip">
       <div class="pi-card-media">
         <span class="pi-card-tag">Ages 10–17</span>
         <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69f99476ecdc5eb6999d3f94.png" alt="Young Knights at Knight Fitness Lawnton">
@@ -428,7 +520,7 @@
   </main>
 
   <!-- Quick comparison -->
-  <section class="pi-compare">
+  <section id="compare" class="pi-compare">
     <h2>NOT SURE WHICH ONE?</h2>
     <p class="pi-compare-sub">A quick side-by-side. If you're still on the fence, book a free session and a coach will help you choose.</p>
     <div class="pi-compare-grid">
@@ -484,7 +576,16 @@
   </section>
 
   <footer class="pp-foot">
-    <p>664 Gympie Road, Lawnton QLD · <a href="tel:+61452519877">0452 519 877</a> · <a href="../index.html">Back to Home</a></p>
+    <div class="pp-foot-inner">
+      <div class="pp-foot-links">
+        <a href="../index.html">Home</a>
+        <a href="../reviews.html">Reviews</a>
+        <a href="../about.html">About &amp; Coaches</a>
+        <a href="../contact.html">Contact</a>
+      </div>
+      <p>664 Gympie Road, Lawnton QLD 4501 · <a href="tel:+61452519877">0452 519 877</a></p>
+      <p style="margin-top:0.5rem; font-size:0.8rem;">© 2025 Knight Fitness Lawnton</p>
+    </div>
   </footer>
 
 </body>
