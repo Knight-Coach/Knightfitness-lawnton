@@ -426,6 +426,45 @@
     @media (max-width: 380px) {
       .pi-compare-grid { grid-template-columns: 1fr; }
     }
+
+    /* Hero CTA */
+    .pi-hero-cta { margin-top: 1.75rem; }
+    .pi-hero-cta a {
+      display: inline-block;
+      background: var(--kf-red);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+      box-shadow: 0 6px 20px rgba(227,30,36,0.4);
+    }
+    .pi-hero-cta a:hover {
+      background: var(--kf-red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(227,30,36,0.5);
+    }
+    .pi-hero-note {
+      display: block;
+      margin-top: 0.65rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+    @media (max-width: 600px) {
+      .pi-hero-cta a { display: block; text-align: center; }
+    }
+
+    /* Trust bar */
+    .pp-trustbar { background: white; border-bottom: 1px solid #eee; padding: 1.1rem 2rem; }
+    .pp-trustbar-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem 2.25rem; }
+    .pp-trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--kf-black); }
+    .pp-trust-item svg { color: var(--kf-red); flex: none; }
+    .pp-trust-stars { color: #FBBC05; letter-spacing: 0.08em; }
+    .pp-trust-sub { color: var(--kf-gray-dark); font-weight: 600; }
   </style>
 </head>
 <body>
@@ -448,16 +487,30 @@
       <div class="pi-hero-eyebrow">4 Programs · North Brisbane</div>
       <h1>FIND THE TRAINING<br/>THAT FITS YOU.</h1>
       <p>Four coach-led programs built around real Lawnton locals — whether you want high-energy team training, semi-private coaching, or a structured environment for the kids.</p>
+      <div class="pi-hero-cta">
+        <a href="../contact.html">Book a Free Session</a>
+        <span class="pi-hero-note">No commitment · A coach will be in touch within 24 hours</span>
+      </div>
     </div>
   </header>
 
   <!-- Stats strip -->
   <div class="pi-stats">
     <div class="pi-stats-inner">
-      <div class="pi-stat"><span class="pi-stat-num">365+</span><span class="pi-stat-label">5-Star Reviews</span></div>
+      <div class="pi-stat"><span class="pi-stat-num">500+</span><span class="pi-stat-label">5-Star Reviews</span></div>
       <div class="pi-stat"><span class="pi-stat-num">2000+</span><span class="pi-stat-label">Lives Changed</span></div>
       <div class="pi-stat"><span class="pi-stat-num">9+</span><span class="pi-stat-label">Years Coaching</span></div>
       <div class="pi-stat"><span class="pi-stat-num">FREE</span><span class="pi-stat-label">First Session</span></div>
+    </div>
+  </div>
+
+  <!-- Trust bar -->
+  <div class="pp-trustbar">
+    <div class="pp-trustbar-inner">
+      <div class="pp-trust-item"><span class="pp-trust-stars">★★★★★</span> 5.0 on Google <span class="pp-trust-sub">· 500+ reviews</span></div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>AUSactive Registered</div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="10"/></svg>First Aid &amp; CPR Certified</div>
+      <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg>Fully Insured</div>
     </div>
   </div>
 
@@ -476,7 +529,7 @@
     <article id="bootcamp" class="pi-card">
       <div class="pi-card-media">
         <span class="pi-card-tag">Most Popular</span>
-        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69cf13e2ba9db66362ff9722.jpg" alt="Bootcamp at Knight Fitness Lawnton">
+        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69cf13e2ba9db66362ff9722.jpg" alt="Bootcamp at Knight Fitness Lawnton" loading="lazy">
       </div>
       <div class="pi-card-body">
         <div class="pi-card-sub">Team Training · Group Coaching</div>
@@ -499,7 +552,7 @@
     <article id="mens-club" class="pi-card flip">
       <div class="pi-card-media">
         <span class="pi-card-tag">Best Results</span>
-        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69e5b7ebc56ad279080c587d.jpg" alt="Men's Club at Knight Fitness Lawnton">
+        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69e5b7ebc56ad279080c587d.jpg" alt="Men's Club at Knight Fitness Lawnton" loading="lazy">
       </div>
       <div class="pi-card-body">
         <div class="pi-card-sub">Semi-Private Coaching · Men 30+</div>
@@ -522,7 +575,7 @@
     <article id="womens-club" class="pi-card">
       <div class="pi-card-media">
         <span class="pi-card-tag">Women Only</span>
-        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69e5bfd58696a78b8d4af22d.png" alt="Women's Club at Knight Fitness Lawnton">
+        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69e5bfd58696a78b8d4af22d.png" alt="Women's Club at Knight Fitness Lawnton" loading="lazy">
       </div>
       <div class="pi-card-body">
         <div class="pi-card-sub">Semi-Private Coaching · Women Only</div>
@@ -545,7 +598,7 @@
     <article id="young-knights" class="pi-card flip">
       <div class="pi-card-media">
         <span class="pi-card-tag">Ages 10–17</span>
-        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69f99476ecdc5eb6999d3f94.png" alt="Young Knights at Knight Fitness Lawnton">
+        <img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69f99476ecdc5eb6999d3f94.png" alt="Young Knights at Knight Fitness Lawnton" loading="lazy">
       </div>
       <div class="pi-card-body">
         <div class="pi-card-sub">Teen Training · Youth Athletic Development</div>
@@ -568,7 +621,7 @@
 
   <!-- Quick comparison -->
   <section id="compare" class="pi-compare">
-    <h2>NOT SURE WHICH ONE?</h2>
+    <h2>FIND YOUR FIT</h2>
     <p class="pi-compare-sub">A quick side-by-side. If you're still on the fence, book a free session and a coach will help you choose.</p>
     <div class="pi-compare-grid">
       <div class="pi-compare-cell">
