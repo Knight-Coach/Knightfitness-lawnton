@@ -216,15 +216,51 @@
 
 <body>
 
-  <nav class="pp-nav">
-    <div class="pp-nav-inner">
-      <a href="../index.html"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69c9dd515ae6bce5b7332a5b.png" alt="Knight Fitness"></a>
-      <div style="display:flex; align-items:center; gap:1.5rem;">
-        <a class="pp-back" href="../index.html#programs">← All Programs</a>
-        <a class="pp-cta" href="../contact.html">Contact us</a>
+  <nav class="nav-wrapper" id="main-nav">
+    <div class="nav-container">
+      <a href="/" aria-label="Knight Fitness Lawnton home" class="nav-logo">
+        <img loading="eager" decoding="async" src="/assets/lov/logo-dark.webp" alt="Knight Fitness Lawnton" class="logo">
+      </a>
+      <div class="nav-links">
+        <div class="nav-dropdown">
+          <a href="/programs" class="nav-dropdown-trigger" aria-haspopup="true">
+            Programs
+            <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </a>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="/programs/bootcamp" role="menuitem">Bootcamp</a>
+            <a href="/programs/mens" role="menuitem">Men's Club</a>
+            <a href="/programs/womens" role="menuitem">Women's Club</a>
+            <a href="https://www.youngknights.com.au" role="menuitem" target="_blank" rel="noopener noreferrer">Young Knights</a>
+            <a href="/programs" role="menuitem" class="nav-dropdown-all">All programs &rarr;</a>
+          </div>
+        </div>
+        <a href="/#schedule">Schedule</a>
+        <a href="/reviews">Reviews</a>
+        <a href="/about">About &amp; Coaches</a>
+        <a class="nav-cta" href="/contact">Contact us</a>
       </div>
+      <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-panel">
+      <a href="/programs">Programs</a>
+      <div class="mobile-subnav">
+        <a href="/programs/bootcamp">Bootcamp</a>
+        <a href="/programs/mens">Men's Club</a>
+        <a href="/programs/womens">Women's Club</a>
+        <a href="https://www.youngknights.com.au" target="_blank" rel="noopener noreferrer">Young Knights</a>
+      </div>
+      <a href="/#schedule">Schedule</a>
+      <a href="/reviews">Reviews</a>
+      <a href="/about">About &amp; Coaches</a>
+      <a class="nav-cta" href="/contact">Contact us</a>
+    </div>
+  </div>
 
   <header class="pp-hero">
     <div class="pp-hero-bg">
@@ -574,5 +610,6 @@
 
   <script src="https://link.msgsndr.com/js/form_embed.js" async></script>
 
+  <script src="/programs/nav.js" defer></script>
 </body>
 </html>
