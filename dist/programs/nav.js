@@ -1,9 +1,26 @@
-// Mobile nav drawer toggle for the program pages.
-// The desktop Programs dropdown is CSS-only (:hover / :focus-within);
-// this only drives the hamburger drawer on small screens.
+// Program page nav: scroll-state (transparent → white, logo swap) + mobile drawer.
 (function () {
+  var nav    = document.getElementById('main-nav');
+  var logo   = document.getElementById('nav-logo-img');
   var toggle = document.querySelector('.nav-toggle');
   var drawer = document.getElementById('mobile-nav');
+
+  // Scroll state: transparent over hero → solid white
+  if (nav) {
+    function onScroll() {
+      var scrolled = window.scrollY > 60;
+      nav.classList.toggle('scrolled', scrolled);
+      if (logo) {
+        logo.src = scrolled
+          ? '/assets/lov/logo-dark.webp'
+          : '/assets/lov/logo-light.webp';
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // Mobile drawer toggle
   if (!toggle || !drawer) return;
 
   function setOpen(open) {
@@ -17,7 +34,6 @@
     setOpen(toggle.getAttribute('aria-expanded') !== 'true');
   });
 
-  // Close when tapping the backdrop or following a link.
   drawer.addEventListener('click', function (e) {
     if (e.target === drawer || (e.target.closest && e.target.closest('.mobile-nav-panel a'))) {
       setOpen(false);
