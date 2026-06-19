@@ -716,10 +716,6 @@ function AppContent() {
             </a>
             <ul className="trust-creds">
               <li className="trust-cred">
-                <svg className="trust-cred-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z" /><path d="M9 12l2 2 4-4" /></svg>
-                <div><strong>AUSactive</strong><span>Registered Business</span></div>
-              </li>
-              <li className="trust-cred">
                 <svg className="trust-cred-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /><circle cx="12" cy="12" r="10" /></svg>
                 <div><strong>First Aid &amp; CPR</strong><span>All coaches certified</span></div>
               </li>
