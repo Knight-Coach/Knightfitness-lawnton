@@ -30,18 +30,64 @@ programs/
   womens.html           Women's Club program
   youth.html            Redirect → youngknights.com.au
   program.css           Shared styles for program pages
+5rm.html                Members' 5RM Board (/5rm) — see "5RM Board" below
+5rm/
+  board-core.js         Board logic (pure functions, unit-tested from ../tests)
+  board.css             Board styles + self-hosted font faces
 components/
   AppContentV5.jsx      Homepage React app (JSX, transpiled in-browser by Babel)
+  FiveRMBoard.jsx       5RM Board React app (JSX, transpiled in-browser by Babel)
   lovable-home.css      Shared styles for homepage / about / contact
 assets/lov/...          Images (compressed) + the coach video
+assets/5rm/             Board logo + Inter / Plus Jakarta Sans woff2
+assets/vendor/          Self-hosted React 18.3.1, ReactDOM, Babel standalone 7.29.0
 favicon.svg, apple-touch-icon.png, og-image.jpg
 robots.txt, sitemap.xml, 404.html, vercel.json
 ```
 
+Outside `dist/`:
+
+```
+apps-script/knight-5rm-save-back.gs   Google Apps Script that writes board scores back into the 5RM sheet
+tests/board-core.test.mjs             Unit tests for 5rm/board-core.js (`npm test`, Node 18+, no dependencies)
+```
+
+## 5RM Board (`/5rm`)
+
+A member-facing strength board for the gym TV, built from the *Knight Fitness 5RM Board* design handoff. It shows squat, bench and deadlift 5RM numbers, progress since the last test, leaderboards, biggest movers, new PBs, milestone clubs and the full roster, and gives coaches a phone-friendly score-entry flow plus a data admin panel. It is `noindex` and not in the sitemap: it sits behind a gym passcode.
+
+### How it is built
+- `5rm.html` mounts `components/FiveRMBoard.jsx` with the same React 18 + Babel-in-browser pattern as the homepage, but with React, ReactDOM and Babel **self-hosted** from `assets/vendor/` and the fonts from `assets/5rm/fonts/`, so a kiosk TV never depends on a CDN at render time.
+- All calculations (parsing the Google Sheet CSV, ranking, movers, PBs, milestone clubs, roster paging, member-card trends, duplicate detection, import/merge/roll-forward) live in `5rm/board-core.js` as pure functions. `npm test` runs 58 unit tests against it with Node's built-in runner.
+- `5rm/board.css` carries the design tokens (colours, type scale, radii, shadows) as CSS custom properties; only per-item values (crew colour, bar widths) are set inline.
+- The TV layout is a fixed 1920×1080 stage scaled to fit the viewport (`--tv-scale`); under 760px wide the phone layout renders instead.
+- Data is stored in the browser's `localStorage` (`kf5rm.*` keys) and flushed on unload/visibility change; up to 10 pre-edit snapshots are kept for "Restore" in Coach mode. The gym passcode unlock is remembered for 30 days per device.
+
+### Options (query string)
+- `/5rm?rotate=20` — seconds per view (6–40, default 14).
+- `/5rm?demo=1` — preview every view with placeholder history (invented previous-round values and crews). Nothing is saved in demo mode.
+
+### Coach setup (once per board)
+1. Open `/5rm` on the TV browser in kiosk / full-screen mode and enter the gym passcode (default **4500**).
+2. Tap **Coach mode** (bottom right). Set **This round tested** and **Next testing date** — they show in the header and the next date counts down inside three weeks.
+3. Set a **Coach PIN** so only staff can open *Enter scores* and *Coach mode*, and change the **Gym passcode** if you like.
+4. Assign each member's **Class** (crew timeslot) in the table — that drives the coloured left borders and the crew filter. The shipped roster has everyone on 4:50 AM until you change it.
+5. **Live link to your Google Sheet** (optional): in the sheet, *File → Share → Publish to web → Comma-separated values* for each lift tab and paste the links, one per line. The board merges by name every 10 minutes. If a tab's header just says "5RM" rather than "Squat 5RM", prefix the link with the lift: `squat=https://…`, `bench=https://…`, `deadlift=https://…`.
+6. **Save-back link** (optional, so scores entered on the board flow into the sheet): open the 5RM sheet → *Extensions → Apps Script*, paste `apps-script/knight-5rm-save-back.gs`, set `COACH_PIN` to the same PIN as step 3, check the `TABS` names match your tab names, then *Deploy → New deployment → Web app* (execute as you, access: anyone) and paste the `/exec` URL into Coach mode. Writes that fail (offline, wrong PIN) are queued on the device and retried automatically.
+7. **Start new test round** copies every current number into "previous" and archives the round so the trend lines grow; then use **Enter scores** during testing.
+
+### Testing session keyboard shortcuts
+Digits and `.` type, Backspace deletes, Enter saves and moves on, → skips ("Not today"), ← goes back, Esc finishes.
+
+### Data notes
+- The shipped roster is the current numbers from the gym's spreadsheet at hand-over. Previous-round values are **not** seeded (the prototype's were placeholders), so *Movers*, *New PBs* and the ▲ gains fill in after the first roll-forward + test round or once a linked sheet supplies "Previous 5RM" columns.
+- Two clubs are modelled (Men's and Women's). Club filters appear automatically once any member has `club: "womens"` (via a JSON backup import or the sheet).
+- Kilograms throughout; values are shown with at most two decimals and trailing zeros stripped.
+
 ## Important implementation notes
 
 ### Homepage rendering (recommended upgrade)
-`index.html` currently loads **React 18 (production) + Babel Standalone from a CDN** and transpiles `components/AppContentV5.jsx` **in the browser** at runtime. This works, but Babel-in-the-browser adds ~1s to first paint and a large script download.
+`index.html` currently loads **React 18 (production) + Babel Standalone from a CDN** and transpiles `components/AppContentV5.jsx` **in the browser** at runtime (the same libraries are self-hosted in `assets/vendor/` for the 5RM Board, so the homepage could point there too). This works, but Babel-in-the-browser adds ~1s to first paint and a large script download.
 
 **Recommended:** migrate the homepage to a real build (Vite or similar):
 1. `npm create vite@latest` (React template).

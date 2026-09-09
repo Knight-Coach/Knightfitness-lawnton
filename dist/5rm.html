@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>5RM Board — Knight Fitness Lawnton</title>
+  <meta name="description" content="Knight Fitness members' 5RM strength board: squat, bench and deadlift numbers, progress since last test, leaderboards and milestone clubs.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0e1628">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="5RM Board">
+
+  <link rel="preload" href="/assets/5rm/fonts/plus-jakarta-sans-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/5rm/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/5rm/board.css?v=1">
+
+  <!-- React + Babel (self-hosted so the gym TV never depends on a CDN) -->
+  <script src="/assets/vendor/react-18.3.1.production.min.js"></script>
+  <script src="/assets/vendor/react-dom-18.3.1.production.min.js"></script>
+  <script src="/assets/vendor/babel-standalone-7.29.0.min.js"></script>
+  <script src="/5rm/board-core.js?v=1"></script>
+</head>
+<body>
+  <noscript>
+    <div style="font-family: system-ui, sans-serif; padding: 40px; text-align: center; color: #334155;">The 5RM Board needs JavaScript to run.</div>
+  </noscript>
+  <div id="root"></div>
+
+  <script type="text/babel" src="/components/FiveRMBoard.jsx?v=1"></script>
+  <script type="text/babel">
+    ReactDOM.createRoot(document.getElementById('root')).render(<FiveRMBoard />);
+  </script>
+</body>
+</html>
