@@ -229,26 +229,38 @@ function FiveRMBoard() {
       .then(results => {
         const latest = stateRef.current;
         const club = latest.club === 'all' ? K.clubsPresent(latest.data)[0] : latest.club;
-        const r = K.mergeSheetResults(latest.data, results, club);
+        const r = K.mergeSheetResults(latest.data, results, club, latest.outbox);
         if (r.failed < links.length) save(r.data);
         patch({ syncMsg: K.syncMessage(r, links.length, Date.now()), lastSync: Date.now() });
       });
   }, [save]);
 
+  // A score is queued BEFORE the request goes out and cleared only once the sheet
+  // confirms it. Queueing on failure instead would lose anything still in flight
+  // when the tab closes, and a refusal (wrong PIN) would drop the score for good.
+  // While a row sits here the sync will not overwrite it - see mergeSheetResults.
   const pushRemote = useCallback(row => {
     const cur = stateRef.current;
     const api = (cur.settings.api || '').trim();
     if (!api) return;
+    patch(prev => {
+      const outbox = K.outboxAdd(prev.outbox, row);
+      persistOutbox(outbox);
+      return { outbox };
+    });
     fetch(api, { method: 'POST', body: K.saveBody(cur.settings.pin, row) })
       .then(r => r.text())
       .then(text => {
         const res = K.parseApiReply(text);
         patch(prev => {
+          if (!res.ok) {
+            // Left queued on purpose: fix the PIN and the retry carries it through.
+            const kept = K.outboxAdd(prev.outbox, row);
+            persistOutbox(kept);
+            return { apiState: 'error', apiMsg: 'The sheet refused that score: ' + res.error + '. Check the coach PIN matches the script. It stays saved here and will retry.', outbox: kept };
+          }
           const outbox = K.outboxRemove(prev.outbox, row.name);
           persistOutbox(outbox);
-          if (!res.ok) {
-            return { apiState: 'error', apiMsg: 'The sheet refused that score: ' + res.error + '. Check the coach PIN matches the script.', outbox };
-          }
           return { apiState: outbox.length ? 'queued' : 'ok', apiMsg: 'Saved into the sheet · ' + K.timeShort(Date.now()), outbox };
         });
       })

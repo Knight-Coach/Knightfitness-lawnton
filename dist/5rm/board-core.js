@@ -293,8 +293,15 @@
     return { name: name, club: club || 'mens', prog: prog || 'g1', sq: emptyCell(), bp: emptyCell(), dl: emptyCell(), h: [] };
   }
 
+  // Runs of whitespace collapse: a name typed or pasted into the sheet as
+  // "Keith  Gray" is the same person as "Keith Gray", and matching them lets the
+  // sync update that member instead of appending a second copy of them.
+  function nameKey(x) {
+    return String(x || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
   function sameName(a, b) {
-    return String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
+    return nameKey(a) === nameKey(b);
   }
 
   function findByName(data, name) {
@@ -1059,14 +1066,21 @@
   }
 
   // Merges parsed sheet records into the roster by name; unknown names are appended.
-  function mergeSheetResults(data, results, club) {
+  // `pending` is the outbox: scores entered on this device that the sheet has not
+  // confirmed yet. The sheet is the source of truth for everyone else, but for a
+  // member still queued it is by definition behind, so its numbers must not be
+  // written back over the ones the coach just entered. Without this a sync lands
+  // in the gap between entering a score and it reaching the sheet, and the older
+  // sheet value wins - the score is gone from the board.
+  function mergeSheetResults(data, results, club, pending) {
     var d = data.slice();
-    var added = 0, updated = 0, failed = 0;
+    var added = 0, updated = 0, failed = 0, held = 0;
     results.forEach(function (rs) {
       if (!rs) { failed++; return; }
       rs.forEach(function (rec) {
         var i = findByName(d, rec.name);
         if (i >= 0) {
+          if (outboxHas(pending, rec.name)) { held++; return; }
           var row = Object.assign({}, d[i]);
           LIFT_KEYS.forEach(function (k) {
             if (!rec[k]) return;
@@ -1081,12 +1095,14 @@
         }
       });
     });
-    return { data: d, added: added, updated: updated, failed: failed };
+    return { data: d, added: added, updated: updated, failed: failed, held: held };
   }
 
   function syncMessage(r, urlCount, now) {
     if (r.failed === urlCount) return 'Could not reach the sheet. Check the link is a published CSV.';
-    return 'Synced ' + r.updated + ' members' + (r.added ? ', added ' + r.added : '') + (r.failed ? ' · ' + r.failed + ' link(s) failed' : '') + ' · ' + timeShort(now || Date.now());
+    return 'Synced ' + r.updated + ' members' + (r.added ? ', added ' + r.added : '')
+      + (r.held ? ' · kept ' + r.held + ' just entered here' : '')
+      + (r.failed ? ' · ' + r.failed + ' link(s) failed' : '') + ' · ' + timeShort(now || Date.now());
   }
 
   /* ------------------------------------------------------------------ */
@@ -1268,6 +1284,10 @@
     return (list || []).filter(function (x) { return !sameName(x.name, name); });
   }
 
+  function outboxHas(list, name) {
+    return (list || []).some(function (x) { return sameName(x.name, name); });
+  }
+
   /* ------------------------------------------------------------------ */
 
   return {
@@ -1281,7 +1301,7 @@
     daysTo: daysTo, agoLabel: agoLabel, cycleLabel: cycleLabel, initials: initials, clubLabel: clubLabel,
     addWeeks: addWeeks, suggestNext: suggestNext, nextNeedsUpdate: nextNeedsUpdate, crewKey: crewKey, parseCrew: parseCrew,
     progColor: progColor, program: program, lift: lift, liftColorFor: liftColorFor, clone: clone, newRow: newRow,
-    sameName: sameName, findByName: findByName, digitsOnly: digitsOnly, clampRotate: clampRotate, unlockValid: unlockValid,
+    nameKey: nameKey, sameName: sameName, findByName: findByName, digitsOnly: digitsOnly, clampRotate: clampRotate, unlockValid: unlockValid,
 
     seedData: seedData, filled: filled, normaliseData: normaliseData, normaliseSettings: normaliseSettings,
     buildMembers: buildMembers, hasNumbers: hasNumbers, liftValue: liftValue, totalGain: totalGain,
@@ -1306,6 +1326,6 @@
     sessionContext: sessionContext, sessionProgress: sessionProgress,
     draftsFilled: draftsFilled, checkEntry: checkEntry, checkEntries: checkEntries,
     pingBody: pingBody, saveBody: saveBody, parseApiReply: parseApiReply, saveDestination: saveDestination,
-    codeStep: codeStep, keyLabel: keyLabel, outboxAdd: outboxAdd, outboxRemove: outboxRemove
+    codeStep: codeStep, keyLabel: keyLabel, outboxAdd: outboxAdd, outboxRemove: outboxRemove, outboxHas: outboxHas
   };
 });

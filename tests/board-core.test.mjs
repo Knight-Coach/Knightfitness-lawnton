@@ -559,9 +559,58 @@ describe('Google Sheet CSV', () => {
     assert.equal(data[0].sq.c, '150', 'input untouched');
   });
 
+  test('a sync never overwrites a score still queued for the sheet', () => {
+    // The gap this closes: coach enters 160, the write has not landed yet, and the
+    // ten-minute sync reads the sheet's older 150 straight back over it.
+    const data = [row('Keith Gray', ['160', '140'], [], []), row('Hannah', ['100', '90'], [], [])];
+    const pending = K.outboxAdd([], { name: 'Keith Gray', sq: { c: '160' } });
+    const sheet = [
+      { name: 'Keith Gray', sq: { c: '150', p: '140' } },
+      { name: 'Hannah', sq: { c: '105', p: '90' } }
+    ];
+
+    const r = K.mergeSheetResults(data, [sheet], 'mens', pending);
+    assert.equal(r.data[0].sq.c, '160', 'the queued score survives the sync');
+    assert.equal(r.held, 1);
+    assert.equal(r.updated, 1, 'everyone else still syncs normally');
+    assert.equal(r.data[1].sq.c, '105');
+
+    const after = K.mergeSheetResults(data, [sheet], 'mens', K.outboxRemove(pending, 'Keith Gray'));
+    assert.equal(after.data[0].sq.c, '150', 'once the sheet confirms it, the sheet leads again');
+    assert.equal(after.held, 0);
+    assert.equal(after.updated, 2);
+  });
+
+  test('no outbox behaves exactly as before', () => {
+    const data = [row('Keith Gray', ['160', '140'], [], [])];
+    const sheet = [{ name: 'Keith Gray', sq: { c: '150', p: '140' } }];
+    for (const pending of [undefined, null, []]) {
+      const r = K.mergeSheetResults(data, [sheet], 'mens', pending);
+      assert.equal(r.data[0].sq.c, '150');
+      assert.equal(r.held, 0);
+    }
+  });
+
+  test('a queued member the sheet has never seen is still not duplicated', () => {
+    const data = [row('Keith Gray', ['160', ''], [], [])];
+    const pending = K.outboxAdd([], { name: 'Keith Gray', sq: { c: '160' } });
+    const r = K.mergeSheetResults(data, [[{ name: 'Keith Gray', sq: { c: '150', p: '' } }]], 'mens', pending);
+    assert.equal(r.data.length, 1, 'held rows are skipped, not re-added as new members');
+    assert.equal(r.added, 0);
+  });
+
+  test('a double-spaced sheet name updates the member instead of duplicating them', () => {
+    const data = [row('Keith Gray', ['150', '140'], [], [])];
+    const r = K.mergeSheetResults(data, [[{ name: 'Keith  Gray', sq: { c: '160', p: '150' } }]], 'mens');
+    assert.equal(r.data.length, 1);
+    assert.equal(r.added, 0);
+    assert.equal(r.data[0].sq.c, '160');
+  });
+
   test('syncMessage', () => {
     assert.equal(K.syncMessage({ updated: 0, added: 0, failed: 2 }, 2), 'Could not reach the sheet. Check the link is a published CSV.');
     assert.match(K.syncMessage({ updated: 90, added: 2, failed: 1 }, 3, new Date(2026, 8, 9, 6, 5)), /^Synced 90 members, added 2 · 1 link\(s\) failed · 6:05 am$/i);
+    assert.match(K.syncMessage({ updated: 88, added: 0, held: 2, failed: 0 }, 3, new Date(2026, 8, 9, 6, 5)), /^Synced 88 members · kept 2 just entered here · 6:05 am$/i);
   });
 });
 
@@ -625,6 +674,15 @@ describe('keypad codes and outbox', () => {
     assert.deepEqual(K.NUMPAD, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'del']);
     assert.equal(K.keyLabel('del'), '⌫');
     assert.equal(K.keyLabel('7'), '7');
+  });
+
+  test('outboxHas finds a queued member regardless of case or spacing', () => {
+    const list = K.outboxAdd([], { name: 'Keith Gray', sq: { c: '160' } });
+    assert.equal(K.outboxHas(list, 'keith gray'), true);
+    assert.equal(K.outboxHas(list, 'KEITH  GRAY'), true);
+    assert.equal(K.outboxHas(list, 'Hannah'), false);
+    assert.equal(K.outboxHas([], 'Keith Gray'), false);
+    assert.equal(K.outboxHas(null, 'Keith Gray'), false);
   });
 
   test('outbox keeps one pending write per member', () => {
