@@ -386,6 +386,50 @@ input, select, textarea, button { font-family: inherit; }
 .undo { align-self: center; min-height: 44px; display: flex; align-items: center; padding: 0 20px; border-radius: 999px; background: var(--card); border: 1px solid var(--border); font-size: 15px; font-weight: 700; color: var(--red-42); cursor: pointer; }
 .sess__hint { font-size: 13px; color: var(--secondary); text-align: center; }
 
+/* Session: crew and lift setup, what is left, plausibility check, three-lift entry */
+
+.sess__title--sub { margin-top: 6px; font-size: 24px; }
+.sess__count { font-size: 14px; font-weight: 600; color: var(--secondary); }
+.lift-card--all { border-left-color: var(--ink); }
+.sess__topRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.sess__progressRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sess__toggle { min-height: 34px; display: flex; align-items: center; padding: 0 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); font-size: 13px; font-weight: 700; color: var(--ink-4); cursor: pointer; white-space: nowrap; }
+.sess__toggle--on { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+.sess__strip, .sess__check { background: var(--gold-tint-08); border: 1px solid hsl(45 93% 47% / 0.35); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.sess__stripText { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.4; }
+.sess__stripSub { display: block; font-size: 13px; font-weight: 600; color: var(--secondary); margin-top: 4px; }
+.sess__stripActions, .sess__checkActions { display: flex; gap: 8px; flex-wrap: wrap; }
+.sess__stripActions .btn, .sess__checkActions .btn { flex: 1 1 auto; min-width: 96px; min-height: 48px; padding: 0 14px; font-size: 15px; }
+.sess__checkText { font-size: 15px; font-weight: 700; line-height: 1.45; }
+
+.sess__dest { font-size: 13px; font-weight: 600; color: var(--secondary); text-align: center; line-height: 1.4; }
+.sess__dest--warn { color: var(--gold-30); font-weight: 700; }
+.sess__dest--error { color: var(--destructive-45); font-weight: 700; }
+
+.sess-lifts { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.sess-lift { display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; background: var(--muted); border: 1px solid var(--border); border-left-width: 5px; border-left-style: solid; border-radius: 14px; padding: 10px 14px; min-height: 56px; cursor: pointer; }
+.sess-lift--on { background: var(--card); border-color: var(--ink); box-shadow: var(--shadow-card); }
+.sess-lift__label { min-width: 0; }
+.sess-lift__name { font-family: var(--display); font-weight: 700; font-size: 17px; }
+.sess-lift__ctx { font-size: 12px; font-weight: 600; color: var(--secondary); }
+.sess-lift__val { font-family: var(--display); font-weight: 800; font-size: 30px; letter-spacing: -1px; white-space: nowrap; }
+.sess-lift__val--empty { color: var(--disabled); }
+.sess-lift__unit { font-family: var(--ui); font-size: 13px; font-weight: 700; color: var(--secondary); margin-left: 4px; }
+
+.sess-member__quick { align-items: center; }
+.sess-member__quickLabel { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--secondary); margin-right: 4px; }
+.sess-member--empty { gap: 14px; }
+.sess__doneActions { display: flex; gap: 10px; width: 100%; }
+.sess__doneActions .btn { flex: 1; }
+.btn--dark { background: var(--ink); color: #fff; border: 1px solid var(--ink); font-weight: 800; }
+.btn--off { opacity: 0.45; }
+
+.coach__quickRow { display: flex; gap: 6px; }
+.coach__quick { padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); font-size: 12px; font-weight: 700; color: var(--red-42); cursor: pointer; white-space: nowrap; }
+.coach__btnRow--test { align-items: center; flex-wrap: wrap; }
+.coach__ok { color: var(--success-30); font-weight: 600; }
+
 /* ---------------------------------------------------------------- */
 /* Passcode gate + coach PIN                                          */
 /* ---------------------------------------------------------------- */

@@ -55,8 +55,8 @@ describe('numbers and formatting', () => {
     assert.match(K.cycleLabel({ tested: '2026-09-07', next: '2026-09-18' }, now), /^Tested Monday,? 7 September  ·  Next test in 9 days$/);
     assert.equal(K.cycleLabel({ next: '2026-09-10' }, now), 'Next test in 1 day');
     assert.equal(K.cycleLabel({ next: '2026-09-09' }, now), 'Testing now');
-    assert.match(K.cycleLabel({ next: '2026-12-01' }, now), /^Next test Tuesday,? 1 December$/);
-    assert.equal(K.cycleLabel({}, now), 'Add your testing dates in Coach mode');
+    assert.match(K.cycleLabel({ next: '2026-12-01' }, now), /^Next test 1 Dec\.? ?2026$/, 'a far-off date drops the weekday so the TV header stays on one line');
+    assert.equal(K.cycleLabel({}, now), '', 'no coach instruction on a members\u2019 screen');
     assert.equal(K.cycleLabel({}, now, 'Custom'), 'Custom');
   });
 
@@ -635,5 +635,183 @@ describe('keypad codes and outbox', () => {
     assert.equal(list[1].name, 'keith gray');
     assert.equal(list[1].sq.c, '165');
     assert.deepEqual(K.outboxRemove(list, 'KEITH GRAY').map(x => x.name), ['Hannah']);
+  });
+});
+
+describe('testing dates', () => {
+  test('addWeeks shifts whole weeks and rolls over months and years', () => {
+    assert.equal(K.addWeeks('2026-09-07', 12), '2026-11-30');
+    assert.equal(K.addWeeks('2026-12-28', 1), '2027-01-04');
+    assert.equal(K.addWeeks('2026-09-07', 0), '2026-09-07');
+    assert.equal(K.addWeeks('', 1, new Date(2026, 8, 9)), '2026-09-16', 'falls back to today');
+  });
+
+  test('suggestNext offers a round gap after the round just tested', () => {
+    assert.equal(K.NEXT_WEEKS, 12);
+    assert.equal(K.suggestNext('2026-09-07'), '2026-11-30');
+    assert.equal(K.suggestNext('2026-09-07', 8), '2026-11-02');
+    assert.equal(K.suggestNext('', 12, new Date(2026, 8, 9)), '2026-12-02');
+  });
+
+  test('nextNeedsUpdate spots a missing or stale next-test date', () => {
+    const now = new Date(2026, 8, 9);
+    assert.equal(K.nextNeedsUpdate({}, now), true);
+    assert.equal(K.nextNeedsUpdate({ next: '2026-09-01' }, now), true, 'already past');
+    assert.equal(K.nextNeedsUpdate({ next: '2026-09-09' }, now), false, 'today still counts');
+    assert.equal(K.nextNeedsUpdate({ next: '2026-09-18' }, now), false);
+  });
+});
+
+describe('crew labels', () => {
+  test('parseCrew accepts the ways a coach would write a timeslot', () => {
+    assert.equal(K.parseCrew('5:40 AM'), 'g2');
+    assert.equal(K.parseCrew('540am'), 'g2');
+    assert.equal(K.parseCrew('5.40 am'), 'g2');
+    assert.equal(K.parseCrew('6:30 PM crew'), 'g7');
+    assert.equal(K.parseCrew('g3'), 'g3');
+    assert.equal(K.parseCrew('4:00 PM'), 'g4');
+  });
+
+  test('parseCrew rejects anything ambiguous', () => {
+    assert.equal(K.parseCrew('125'), null, 'a weight is not a crew');
+    assert.equal(K.parseCrew('540'), null, 'no am/pm is ambiguous');
+    assert.equal(K.parseCrew(''), null);
+    assert.equal(K.parseCrew('Keith Gray'), null);
+    assert.equal(K.crewKey('4:50 AM'), '450am');
+  });
+});
+
+describe('import with crews', () => {
+  test('a name and a crew alone assigns the crew and leaves numbers alone', () => {
+    const data = [row('Keith Gray', ['160', '150'], ['120', ''], ['170', ''])];
+    const out = K.applyImport(data, 'Keith Gray, 5:40 AM\nKeith Grey Unknown, 6:30 PM\n');
+    assert.equal(out[0].prog, 'g2');
+    assert.deepEqual(out[0].sq, { c: '160', p: '150' }, 'numbers untouched');
+    assert.equal(out[1].name, 'Keith Grey Unknown');
+    assert.equal(out[1].prog, 'g7', 'a new name still lands in its crew');
+  });
+
+  test('a crew is picked up from any column, before or after the lifts', () => {
+    const data = [];
+    const out = K.applyImport(data, 'Ann Ant, 6:30 PM, 100, 60, 120\nBob Bee, 100, 60, 120, 4:00 PM\n');
+    assert.equal(out[0].prog, 'g7');
+    assert.deepEqual(out[0].sq, { c: '100', p: '' });
+    assert.deepEqual(out[0].dl, { c: '120', p: '' });
+    assert.equal(out[1].prog, 'g4');
+    assert.deepEqual(out[1].bp, { c: '60', p: '' });
+  });
+
+  test('rows without a crew keep the default, and new rows take the given club', () => {
+    const out = K.applyImport([], 'Jane Doe, 50, 40, 60', 'womens');
+    assert.equal(out[0].prog, 'g1');
+    assert.equal(out[0].club, 'womens');
+    assert.equal(K.applyImport([], 'John Doe, 50')[0].club, 'mens');
+  });
+});
+
+describe('session queue', () => {
+  const sdata = [
+    row('Zed', ['100'], [], [], { prog: 'g2' }),
+    row('Amy', ['100'], [], [], { prog: 'g1' }),
+    row('Bob', ['100'], [], [], { prog: 'g2' })
+  ];
+
+  test('buildQueue filters by crew as well as club', () => {
+    assert.deepEqual(K.buildQueue(sdata, 'all', 'all').map(x => x.name), ['Amy', 'Bob', 'Zed']);
+    assert.deepEqual(K.buildQueue(sdata, 'all', 'g2').map(x => x.name), ['Bob', 'Zed']);
+    assert.deepEqual(K.buildQueue(sdata, 'all', 'g5'), []);
+    assert.deepEqual(K.buildQueue(sdata, 'all').map(x => x.name), ['Amy', 'Bob', 'Zed'], 'crew is optional');
+    assert.equal(K.buildQueue(sdata, 'all', 'g2')[0].prog, 'g2');
+  });
+
+  test('isHandled counts entered and skipped, not untouched', () => {
+    assert.equal(K.isHandled({ 2: 'done' }, 2), true);
+    assert.equal(K.isHandled({ 2: 'skip' }, 2), true);
+    assert.equal(K.isHandled({ 2: 'done' }, 0), false);
+    assert.equal(K.isHandled(undefined, 0), false);
+  });
+
+  test('remaining-only drops everyone already handled', () => {
+    const q = K.buildQueue(sdata, 'all', 'all');
+    assert.deepEqual(K.sessionRemaining(q, { 1: 'done', 2: 'skip' }).map(x => x.name), ['Zed']);
+    assert.deepEqual(K.sessionRemaining(q, {}).map(x => x.name), ['Amy', 'Bob', 'Zed']);
+    assert.deepEqual(K.sessionQueue(sdata, 'all', 'g2', { 2: 'done' }, true).map(x => x.name), ['Zed']);
+    assert.deepEqual(K.sessionQueue(sdata, 'all', 'g2', { 2: 'done' }, false).map(x => x.name), ['Bob', 'Zed']);
+    assert.deepEqual(K.sessionQueue(sdata, 'all', 'all', { 0: 'done', 1: 'done', 2: 'done' }, true), []);
+  });
+
+  test('sessionProgress reads differently when showing only what is left', () => {
+    assert.deepEqual(K.sessionProgress(11, 95, 8), { label: '12 of 95 · 8 entered', pct: 8 / 95 * 100 });
+    assert.deepEqual(K.sessionProgress(0, 7, 8, 95, true), { label: '7 still to do · 8 entered', pct: 8 / 95 * 100 });
+    assert.equal(K.sessionProgress(0, 1, 9, 95, true).label, '1 still to do · 9 entered');
+    assert.equal(K.sessionProgress(0, 12, 0, 12, false).label, '1 of 12 · 0 entered');
+  });
+});
+
+describe('entry plausibility', () => {
+  test('a mistyped decimal is caught and the likely number offered', () => {
+    const r = K.checkEntry('1275', { c: '127.5' }, 'sq');
+    assert.equal(r.kind, 'high');
+    assert.equal(r.suggestion, '127.5');
+    assert.match(r.message, /heavier than any squat 5RM/);
+    assert.equal(K.checkEntry('400', {}, 'dl').suggestion, '40');
+    assert.equal(K.checkEntry('500', {}, 'bp').kind, 'high', 'bench has a lower ceiling');
+    assert.equal(K.checkEntry('300', {}, 'sq'), null, 'the ceiling itself is allowed');
+  });
+
+  test('big jumps and drops against their last number', () => {
+    assert.equal(K.checkEntry('160', { c: '80' }, 'sq').kind, 'jump');
+    assert.equal(K.checkEntry('40', { c: '120' }, 'sq').kind, 'drop');
+    assert.equal(K.checkEntry('120', { c: '80' }, 'sq'), null, 'exactly half again is fine');
+    assert.equal(K.checkEntry('130', { c: '125' }, 'sq'), null);
+    assert.equal(K.checkEntry('130', { c: '', p: '125' }, 'sq'), null, 'falls back to the previous round');
+    assert.equal(K.checkEntry('200', {}, 'sq'), null, 'no history means nothing to compare');
+  });
+
+  test('empty and tiny entries', () => {
+    assert.equal(K.checkEntry('', {}, 'sq').kind, 'invalid');
+    assert.equal(K.checkEntry('.', {}, 'sq').kind, 'invalid');
+    assert.equal(K.checkEntry('0', {}, 'sq').kind, 'invalid');
+    assert.equal(K.checkEntry('5', {}, 'sq').kind, 'low');
+    assert.equal(K.checkEntry('10', {}, 'sq'), null);
+  });
+
+  test('draftsFilled and checkEntries cover a whole member', () => {
+    assert.deepEqual(K.draftsFilled({ sq: '100', bp: '  ', dl: '' }), ['sq']);
+    assert.deepEqual(K.draftsFilled({}), []);
+    const warnings = K.checkEntries({ sq: '1275', bp: '80', dl: '170' }, row('X', ['127.5'], ['78'], ['165']));
+    assert.equal(warnings.length, 1);
+    assert.equal(warnings[0].lift, 'sq');
+    assert.equal(warnings[0].kind, 'high');
+    assert.deepEqual(K.checkEntries({ sq: '130' }, row('X', ['125'], [], [])), []);
+  });
+});
+
+describe('save-back plumbing', () => {
+  test('bodies carry the PIN', () => {
+    assert.deepEqual(JSON.parse(K.pingBody('1984')), { ping: true, pin: '1984' });
+    assert.deepEqual(JSON.parse(K.pingBody()), { ping: true, pin: '' });
+    const body = JSON.parse(K.saveBody('1984', { name: 'Keith Gray' }));
+    assert.equal(body.pin, '1984');
+    assert.equal(body.member.name, 'Keith Gray');
+  });
+
+  test('parseApiReply treats an unreadable reply as accepted', () => {
+    assert.deepEqual(K.parseApiReply('{"ok":true}'), { ok: true, error: '' });
+    assert.deepEqual(K.parseApiReply('{"ok":false,"error":"bad pin"}'), { ok: false, error: 'bad pin' });
+    assert.deepEqual(K.parseApiReply('{"ok":false}'), { ok: false, error: 'error' });
+    assert.deepEqual(K.parseApiReply('<html>redirect</html>'), { ok: true, error: '' });
+    assert.deepEqual(K.parseApiReply(''), { ok: true, error: '' });
+  });
+
+  test('saveDestination says where scores are going', () => {
+    assert.equal(K.saveDestination({ api: 'https://script.google.com/x/exec' }).kind, 'sheet');
+    assert.match(K.saveDestination({ api: 'https://x' }).label, /gym sheet/);
+    const linkedOnly = K.saveDestination({ sheets: 'https://docs.google.com/x' });
+    assert.equal(linkedOnly.kind, 'device');
+    assert.match(linkedOnly.label, /save-back link/);
+    const bare = K.saveDestination({});
+    assert.equal(bare.kind, 'device');
+    assert.match(bare.label, /Link the gym sheet/);
   });
 });

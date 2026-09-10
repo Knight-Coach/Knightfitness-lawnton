@@ -97,6 +97,13 @@
 
   var WORKING_PCTS = [95, 90, 85, 80, 75, 70, 65, 60, 55, 50];
 
+  // Above these a 5RM is almost certainly a mistyped number (127.5 entered as 1275).
+  var PLAUSIBLE_MAX = { sq: 300, bp: 220, dl: 350 };
+  var PLAUSIBLE_MIN = 10;
+
+  // Weeks between testing rounds, offered as a one-tap suggestion.
+  var NEXT_WEEKS = 12;
+
   // Current numbers from the gym's spreadsheet at hand-over (kg). Previous-round
   // values are NOT seeded — those come from the sheet or from testing on the board.
   var ROSTER_RAW = [
@@ -183,6 +190,26 @@
     return Math.ceil((d - new Date(t.getFullYear(), t.getMonth(), t.getDate())) / 86400000);
   }
 
+  // The same calendar date shifted by whole weeks, as YYYY-MM-DD.
+  function addWeeks(iso, weeks, now) {
+    var d = parseIso(iso) || (now ? new Date(now) : new Date());
+    d.setDate(d.getDate() + (weeks || 0) * 7);
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+
+  // The next test date to offer: a round number of weeks after the round just tested.
+  function suggestNext(testedIso, weeks, now) {
+    return addWeeks(testedIso || todayIso(now), weeks || NEXT_WEEKS, now);
+  }
+
+  // True when the stored next-test date is missing or already behind us.
+  function nextNeedsUpdate(settings, now) {
+    var st = settings || {};
+    if (!st.next) return true;
+    var dn = daysTo(st.next, now);
+    return dn === null || dn < 0;
+  }
+
   function agoLabel(t, now) {
     if (!t) return 'autosave on';
     var s = Math.round(((now || Date.now()) - t) / 1000);
@@ -201,11 +228,13 @@
     if (st.tested) parts.push('Tested ' + dateLong(st.tested));
     var dn = daysTo(st.next, now);
     if (dn !== null) {
+      // A weekday is useful for a date that is nearly here and noise for one months
+      // away, and the long form wraps the TV header.
       parts.push(dn > 0
-        ? (dn <= LIMITS.countdownDays ? 'Next test in ' + dn + (dn === 1 ? ' day' : ' days') : 'Next test ' + dateLong(st.next))
+        ? (dn <= LIMITS.countdownDays ? 'Next test in ' + dn + (dn === 1 ? ' day' : ' days') : 'Next test ' + dateShort(st.next))
         : 'Testing now');
     }
-    return parts.length ? parts.join('  ·  ') : (fallback || 'Add your testing dates in Coach mode');
+    return parts.length ? parts.join('  ·  ') : (fallback || '');
   }
 
   function initials(name) {
@@ -224,6 +253,21 @@
 
   function program(id) {
     for (var i = 0; i < PROGRAMS.length; i++) if (PROGRAMS[i].id === id) return PROGRAMS[i];
+    return null;
+  }
+
+  function crewKey(text) {
+    return String(text || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
+  // Recognises a crew written any reasonable way: "5:40 AM", "540am", "5.40 am crew", "g2".
+  function parseCrew(text) {
+    var t = crewKey(text);
+    if (!t) return null;
+    for (var i = 0; i < PROGRAMS.length; i++) {
+      var k = crewKey(PROGRAMS[i].label);
+      if (t === PROGRAMS[i].id || t === k || t === k + 'crew') return PROGRAMS[i].id;
+    }
     return null;
   }
 
@@ -714,8 +758,10 @@
     });
   }
 
-  // "Paste from sheet": JSON backup or Name, Squat, Bench, Deadlift[, prevSq, prevBp, prevDl] lines.
-  function applyImport(data, text) {
+  // "Paste from sheet": a JSON backup, or lines of
+  // Name, Squat, Bench, Deadlift[, prevSq, prevBp, prevDl] with an optional crew
+  // in any column after the name ("Keith Gray, 5:40 AM" assigns a crew on its own).
+  function applyImport(data, text, club) {
     var txt = String(text || '').trim();
     if (!txt) return null;
     var rows = null;
@@ -730,18 +776,25 @@
       return d;
     }
     txt.split('\n').forEach(function (line) {
-      var c = line.split(/[\t,;]/).map(function (x) { return x.trim(); });
-      if (!c[0] || /^name$/i.test(c[0])) return;
-      var base = { name: c[0], prog: 'g1', sq: { c: c[1] || '', p: c[4] || '' }, bp: { c: c[2] || '', p: c[5] || '' }, dl: { c: c[3] || '', p: c[6] || '' } };
-      var i = findByName(d, c[0]);
+      var cells = line.split(/[\t,;]/).map(function (x) { return x.trim(); });
+      var name = cells[0];
+      if (!name || /^name$/i.test(name)) return;
+      var prog = null, vals = [];
+      cells.slice(1).forEach(function (cell) {
+        if (prog === null && parseCrew(cell)) { prog = parseCrew(cell); return; }
+        vals.push(cell);
+      });
+      var base = { name: name, sq: { c: vals[0] || '', p: vals[3] || '' }, bp: { c: vals[1] || '', p: vals[4] || '' }, dl: { c: vals[2] || '', p: vals[5] || '' } };
+      var i = findByName(d, name);
       if (i >= 0) {
         var row = Object.assign({}, d[i]);
+        if (prog) row.prog = prog;
         LIFT_KEYS.forEach(function (k) {
           var nv = base[k];
           row[k] = Object.assign({}, row[k] || {}, { c: nv.c || (row[k] || {}).c || '', p: nv.p || (row[k] || {}).p || '' });
         });
         d[i] = row;
-      } else d.push(Object.assign(newRow(c[0]), base));
+      } else d.push(Object.assign(newRow(name, club || 'mens', prog || 'g1'), base));
     });
     return d;
   }
@@ -876,11 +929,28 @@
   /* Testing session                                                     */
   /* ------------------------------------------------------------------ */
 
-  function buildQueue(data, club) {
+  function buildQueue(data, club, prog) {
+    var p = prog || 'all';
     return data
-      .map(function (row, i) { return { name: row.name, i: i, club: row.club || 'mens' }; })
-      .filter(function (x) { return club === 'all' || x.club === club; })
+      .map(function (row, i) { return { name: row.name, i: i, club: row.club || 'mens', prog: row.prog || 'g1' }; })
+      .filter(function (x) { return (club === 'all' || x.club === club) && (p === 'all' || x.prog === p); })
       .sort(function (a, b) { return a.name.localeCompare(b.name); });
+  }
+
+  // A member is handled once they have a score in or are marked "not today".
+  function isHandled(done, i) {
+    var st = (done || {})[i];
+    return st === 'done' || st === 'skip';
+  }
+
+  function sessionRemaining(queue, done) {
+    return queue.filter(function (x) { return !isHandled(done, x.i); });
+  }
+
+  // The list a coach walks: everyone in scope, or only those still to do.
+  function sessionQueue(data, club, prog, done, remainingOnly) {
+    var q = buildQueue(data, club, prog);
+    return remainingOnly ? sessionRemaining(q, done) : q;
   }
 
   function padKey(draft, k) {
@@ -913,8 +983,50 @@
     return c.c ? 'Current on the board: ' + c.c + ' kg' : (c.p ? 'Last test: ' + c.p + ' kg' : 'No previous number');
   }
 
-  function sessionProgress(idx, total, doneCount) {
-    return { label: (idx + 1) + ' of ' + total + ' · ' + doneCount + ' entered', pct: (doneCount / Math.max(1, total)) * 100 };
+  function sessionProgress(idx, queueLen, doneCount, scopeTotal, remainingOnly) {
+    var total = scopeTotal === undefined || scopeTotal === null ? queueLen : scopeTotal;
+    var label = remainingOnly
+      ? (queueLen === 1 ? '1 still to do' : queueLen + ' still to do') + ' · ' + doneCount + ' entered'
+      : (idx + 1) + ' of ' + total + ' · ' + doneCount + ' entered';
+    return { label: label, pct: (doneCount / Math.max(1, total)) * 100 };
+  }
+
+  function draftsFilled(drafts) {
+    return LIFT_KEYS.filter(function (k) { return String((drafts || {})[k] || '').trim() !== ''; });
+  }
+
+  // A reason to double-check an entry, or null when it looks fine. Never blocks a
+  // save: the coach confirms and carries on, so an unusual but real lift still goes in.
+  function checkEntry(value, cell, liftKey) {
+    var v = parseFloat(value);
+    var name = ((lift(liftKey) || {}).label || 'lift').toLowerCase();
+    if (!isFinite(v) || v <= 0) return { kind: 'invalid', message: 'Enter a weight before saving.', suggestion: '' };
+    var max = PLAUSIBLE_MAX[liftKey] || 350;
+    if (v > max) {
+      var shifted = Math.round(v * 10) / 100;
+      return {
+        kind: 'high',
+        message: fmt(v) + ' kg is heavier than any ' + name + ' 5RM we would expect.',
+        suggestion: shifted >= PLAUSIBLE_MIN && shifted <= max ? String(shifted) : ''
+      };
+    }
+    if (v < PLAUSIBLE_MIN) return { kind: 'low', message: fmt(v) + ' kg looks light for a ' + name + ' 5RM.', suggestion: '' };
+    var base = num((cell || {}).c) || num((cell || {}).p);
+    if (base) {
+      if (v > base * 1.5) return { kind: 'jump', message: fmt(v) + ' kg is a big jump from ' + fmt(base) + ' kg.', suggestion: '' };
+      if (v < base * 0.5) return { kind: 'drop', message: fmt(v) + ' kg is well below their last number of ' + fmt(base) + ' kg.', suggestion: '' };
+    }
+    return null;
+  }
+
+  // The same check across a whole member, for a session entering all three lifts.
+  function checkEntries(drafts, row) {
+    var out = [];
+    draftsFilled(drafts).forEach(function (k) {
+      var r = checkEntry(drafts[k], (row || {})[k], k);
+      if (r) out.push(Object.assign({ lift: k }, r));
+    });
+    return out;
   }
 
   /* ------------------------------------------------------------------ */
@@ -938,6 +1050,31 @@
   /* Save-back outbox (scores waiting to be written to the sheet)        */
   /* ------------------------------------------------------------------ */
 
+  function pingBody(pin) {
+    return JSON.stringify({ ping: true, pin: pin || '' });
+  }
+
+  function saveBody(pin, member) {
+    return JSON.stringify({ pin: pin || '', member: member });
+  }
+
+  // The Apps Script replies with JSON. Anything unparseable counts as accepted,
+  // since older deployments answered with a bare redirect body.
+  function parseApiReply(text) {
+    var res = null;
+    try { res = JSON.parse(text); } catch (e) { return { ok: true, error: '' }; }
+    if (res && res.ok === false) return { ok: false, error: String(res.error || 'error') };
+    return { ok: true, error: '' };
+  }
+
+  // Where a coach's entries are going, in words they can act on.
+  function saveDestination(settings) {
+    var st = settings || {};
+    if ((st.api || '').trim()) return { kind: 'sheet', label: 'Saving into the gym sheet' };
+    if ((st.sheets || '').trim()) return { kind: 'device', label: 'Saved on this device only. Add a save-back link in Coach mode to write scores into the sheet.' };
+    return { kind: 'device', label: 'Saved on this device only. Link the gym sheet in Coach mode so every screen sees these numbers.' };
+  }
+
   function outboxAdd(list, row) {
     var out = (list || []).filter(function (x) { return !sameName(x.name, row.name); });
     out.push(clone(row));
@@ -953,10 +1090,12 @@
   return {
     LIFT_KEYS: LIFT_KEYS, LIFTS: LIFTS, PROGRAMS: PROGRAMS, CLUBS: CLUBS, MILESTONES: MILESTONES,
     COLORS: COLORS, STORAGE_KEYS: STORAGE_KEYS, DEFAULT_SETTINGS: DEFAULT_SETTINGS, LIMITS: LIMITS,
+    PLAUSIBLE_MAX: PLAUSIBLE_MAX, PLAUSIBLE_MIN: PLAUSIBLE_MIN, NEXT_WEEKS: NEXT_WEEKS,
     NAV_SPEC: NAV_SPEC, KEYPAD: KEYPAD, NUMPAD: NUMPAD, WORKING_PCTS: WORKING_PCTS, ROSTER_RAW: ROSTER_RAW,
 
     hash: hash, num: num, fmt: fmt, todayIso: todayIso, dateLong: dateLong, dateShort: dateShort, timeShort: timeShort,
     daysTo: daysTo, agoLabel: agoLabel, cycleLabel: cycleLabel, initials: initials, clubLabel: clubLabel,
+    addWeeks: addWeeks, suggestNext: suggestNext, nextNeedsUpdate: nextNeedsUpdate, crewKey: crewKey, parseCrew: parseCrew,
     progColor: progColor, program: program, lift: lift, liftColorFor: liftColorFor, clone: clone, newRow: newRow,
     sameName: sameName, findByName: findByName, digitsOnly: digitsOnly, clampRotate: clampRotate, unlockValid: unlockValid,
 
@@ -974,8 +1113,11 @@
 
     parseCsv: parseCsv, parseSheet: parseSheet, parseSheetLinks: parseSheetLinks, mergeSheetResults: mergeSheetResults, syncMessage: syncMessage,
 
-    buildQueue: buildQueue, padKey: padKey, padAdd: padAdd, queueMatches: queueMatches, canAddName: canAddName,
+    buildQueue: buildQueue, isHandled: isHandled, sessionRemaining: sessionRemaining, sessionQueue: sessionQueue,
+    padKey: padKey, padAdd: padAdd, queueMatches: queueMatches, canAddName: canAddName,
     sessionContext: sessionContext, sessionProgress: sessionProgress,
+    draftsFilled: draftsFilled, checkEntry: checkEntry, checkEntries: checkEntries,
+    pingBody: pingBody, saveBody: saveBody, parseApiReply: parseApiReply, saveDestination: saveDestination,
     codeStep: codeStep, keyLabel: keyLabel, outboxAdd: outboxAdd, outboxRemove: outboxRemove
   };
 });
