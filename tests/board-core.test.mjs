@@ -746,6 +746,15 @@ describe('session queue', () => {
     assert.equal(K.sessionProgress(0, 1, 9, 95, true).label, '1 still to do · 9 entered');
     assert.equal(K.sessionProgress(0, 12, 0, 12, false).label, '1 of 12 · 0 entered');
   });
+
+  test('sessionProgress counts skipped members separately from entered ones', () => {
+    const p = K.sessionProgress(0, 12, { done: 2, skip: 10 }, 12, false);
+    assert.equal(p.label, '1 of 12 · 2 entered · 10 not testing');
+    assert.equal(p.pct, 100, 'the bar is full once everyone is handled');
+    assert.equal(K.sessionProgress(0, 12, { done: 2, skip: 0 }, 12, false).label, '1 of 12 · 2 entered');
+    assert.equal(K.sessionProgress(0, 0, { done: 2, skip: 10 }, 12, true).label, '0 still to do · 2 entered · 10 not testing');
+    assert.equal(K.sessionProgress(0, 12, {}, 12, false).label, '1 of 12 · 0 entered');
+  });
 });
 
 describe('entry plausibility', () => {
@@ -1045,5 +1054,44 @@ describe('roster sorting', () => {
     K.sortMembers(all, 'total');
     assert.deepEqual(all.map(m => m.name), before);
     assert.deepEqual(K.sortMembers(all, 'whatever').map(m => m.name), before);
+  });
+});
+
+describe('nobody else testing', () => {
+  const data = [
+    row('Ann', ['100'], [], [], { prog: 'g1' }),
+    row('Bob', ['100'], [], [], { prog: 'g1' }),
+    row('Cal', ['100'], [], [], { prog: 'g1' }),
+    row('Dee', ['100'], [], [], { prog: 'g2' })
+  ];
+  const crew = K.buildQueue(data, 'all', 'g1');
+
+  test('outstandingCount ignores anyone entered or already skipped', () => {
+    assert.equal(K.outstandingCount(crew, {}), 3);
+    assert.equal(K.outstandingCount(crew, { 0: 'done' }), 2);
+    assert.equal(K.outstandingCount(crew, { 0: 'done', 1: 'skip' }), 1);
+    assert.equal(K.outstandingCount(crew, { 0: 'done', 1: 'skip', 2: 'skip' }), 0);
+    assert.equal(K.outstandingCount([], {}), 0);
+  });
+
+  test('skipRemaining clears the outstanding list without touching what was entered', () => {
+    const done = K.skipRemaining(crew, { 0: 'done' });
+    assert.deepEqual(done, { 0: 'done', 1: 'skip', 2: 'skip' });
+    assert.equal(K.outstandingCount(crew, done), 0);
+    assert.deepEqual(K.sessionRemaining(crew, done), []);
+  });
+
+  test('it only reaches the crew it was given', () => {
+    const done = K.skipRemaining(crew, {});
+    assert.equal(done[3], undefined, 'the 5:40 AM member is untouched');
+    assert.equal(K.outstandingCount(K.buildQueue(data, 'all', 'g2'), done), 1);
+  });
+
+  test('it does not mutate, and is safe to repeat', () => {
+    const before = { 0: 'done' };
+    const first = K.skipRemaining(crew, before);
+    assert.deepEqual(before, { 0: 'done' });
+    assert.deepEqual(K.skipRemaining(crew, first), first);
+    assert.deepEqual(K.skipRemaining(crew, undefined), { 0: 'skip', 1: 'skip', 2: 'skip' });
   });
 });
