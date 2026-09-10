@@ -19,13 +19,17 @@ const L = K.LIMITS;
 /* ---------- Page options (query string) ---------- */
 // /5rm?rotate=20   seconds per view (6–40)
 // /5rm?demo=1      preview with the prototype's placeholder history; nothing is saved
+// /5rm?coach=1     open straight into score entry, for a coach's phone or iPad
 const PAGE = (() => {
   const q = new URLSearchParams(window.location.search);
   return {
     rotateSeconds: K.clampRotate(q.get('rotate') || L.rotateDefault),
-    demo: q.get('demo') === '1'
+    demo: q.get('demo') === '1',
+    coach: q.get('coach') === '1'
   };
 })();
+
+const coachLink = () => window.location.origin + window.location.pathname + '?coach=1';
 
 /* ---------- Storage (guarded: private browsing can throw) ---------- */
 const store = {
@@ -54,6 +58,7 @@ function initState() {
     prog: 'all', club: 'all',
     sel: null, picker: false, me: null, meAt: 0, mq: '',
     edit: false, imp: false, q: '', impText: '', histOpen: false,
+    bulk: false, bulkText: '', bulkProg: 'g1', bulkSimilar: false, bulkMsg: '', copied: 0,
     data: loadData(),
     settings: K.normaliseSettings(store.json(KEYS.settings)),
     hist: Array.isArray(store.json(KEYS.history)) ? store.json(KEYS.history) : [],
@@ -174,6 +179,15 @@ function FiveRMBoard() {
     if (!gate('coach')) return;
     patch({ edit: true, rotating: false, sel: null, picker: false });
   };
+
+  // /5rm?coach=1 skips the board: a coach opening the link is here to enter scores.
+  const coachOpened = useRef(false);
+  useEffect(() => {
+    if (!PAGE.coach || coachOpened.current) return;
+    if (!s.viewOk && (s.settings.viewPin || '').trim()) return;
+    coachOpened.current = true;
+    openSession();
+  });
 
   const pinKey = k => {
     const cur = stateRef.current;
@@ -437,11 +451,35 @@ function FiveRMBoard() {
   /* ---------- Coach mode data actions ---------- */
   const field = (i, lift, which, value) => save(K.setField(stateRef.current.data, i, lift, which, value, K.todayIso()));
   const meta = (i, key, value) => save(K.setMeta(stateRef.current.data, i, key, value));
-  const addMember = () => {
-    const name = window.prompt('Member name');
-    if (!name || !name.trim()) return;
-    addNamed(name);
-    patch({ q: name.trim() });
+  const openBulk = () => patch(prev => ({
+    bulk: true, bulkText: '', bulkSimilar: false, bulkMsg: '',
+    bulkProg: prev.prog !== 'all' ? prev.prog : 'g1'
+  }));
+
+  const applyBulk = () => {
+    const cur = stateRef.current;
+    const club = cur.club === 'all' ? K.clubsPresent(cur.data)[0] : cur.club;
+    const plan = K.planBulkAdd(cur.data, K.parseBulkNames(cur.bulkText, cur.bulkProg));
+    const entries = plan.add.concat(cur.bulkSimilar ? plan.similar : []);
+    if (!entries.length) { patch({ bulkMsg: 'Nothing new to add.' }); return; }
+    save(K.addMembers(cur.data, entries, club));
+    patch({ bulk: false, bulkText: '', bulkMsg: 'Added ' + (entries.length === 1 ? '1 member' : entries.length + ' members') + '.' });
+  };
+
+  const copyCoachLink = () => {
+    const url = coachLink();
+    const done = () => { patch({ copied: Date.now() }); setTimeout(() => patch({ copied: 0 }), 3000); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done).catch(() => done());
+      return;
+    }
+    const el = document.createElement('textarea');
+    el.value = url;
+    document.body.appendChild(el);
+    el.select();
+    try { document.execCommand('copy'); } catch (e) { /* the field is selectable either way */ }
+    document.body.removeChild(el);
+    done();
   };
   const removeMember = (i, name) => { if (window.confirm('Remove ' + name + ' from the board?')) save(K.removeMember(stateRef.current.data, i)); };
   const mergeRows = (keep, drop) => save(K.mergeRows(stateRef.current.data, keep, drop));
@@ -481,7 +519,7 @@ function FiveRMBoard() {
     const w = de.clientWidth || window.innerWidth;
     const h = de.clientHeight || window.innerHeight;
     if (!w || !h) return;
-    const mob = w < L.mobileBreak;
+    const mob = w < L.touchBreak;
     if (stateRef.current.mobile !== mob) patch({ mobile: mob });
     de.style.setProperty('--tv-scale', String(Math.min(w / 1920, h / 1080)));
   }, []);
@@ -757,7 +795,7 @@ function FiveRMBoard() {
           patch={patch} setSetting={setSetting}
           onClose={() => { markIdle(); patch({ edit: false, imp: false, q: '' }); }}
           onSync={() => syncNow(false)}
-          onField={field} onMeta={meta} onAddMember={addMember} onRemove={removeMember} onMerge={mergeRows}
+          onField={field} onMeta={meta} onBulk={openBulk} onApplyBulk={applyBulk} onCopyLink={copyCoachLink} onRemove={removeMember} onMerge={mergeRows}
           onApplyImport={applyImport} onRollForward={rollForward} onReset={resetSeed} onRestore={restore} onExport={exportBackup}
           onTestConnection={testConnection}
           rotateSeconds={PAGE.rotateSeconds}
@@ -1296,7 +1334,10 @@ function SessionScreen({ s, list, scope, row, dest, onClose, onStart, onSwitch, 
 /* Coach mode (data admin)                                             */
 /* ================================================================== */
 
-function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onSync, onField, onMeta, onAddMember, onRemove, onMerge, onApplyImport, onRollForward, onReset, onRestore, onExport, onTestConnection, rotateSeconds }) {
+function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onSync, onField, onMeta, onBulk, onApplyBulk, onCopyLink, onRemove, onMerge, onApplyImport, onRollForward, onReset, onRestore, onExport, onTestConnection, rotateSeconds }) {
+  const bulkPlan = s.bulk
+    ? K.planBulkAdd(s.data, K.parseBulkNames(s.bulkText, s.bulkProg))
+    : { add: [], exact: [], similar: [] };
   const dupes = K.findDuplicates(s.data).slice(0, L.dupes);
   const dupeCount = K.findDuplicates(s.data).length;
   const rows = s.data
@@ -1335,16 +1376,47 @@ function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onS
         <div className="coach__head">
           <div className="coach__titles">
             <div className="coach__title">Coach mode · 5RM data</div>
-            <div className="coach__count">{s.data.length} members · {K.agoLabel(s.saved)}{PAGE.demo ? ' · demo mode, nothing is saved' : ''}</div>
+            <div className="coach__count">{s.data.length} members · {K.agoLabel(s.saved)}{PAGE.demo ? ' · demo mode, nothing is saved' : ''}{s.bulkMsg ? ' · ' + s.bulkMsg : ''}</div>
           </div>
           <div className="coach__actions">
-            <div className="cbtn cbtn--red" onClick={onAddMember}>Add member</div>
+            <div className="cbtn cbtn--red" onClick={onBulk}>Add members</div>
             <div className="cbtn" onClick={() => patch({ imp: true })}>Paste from sheet</div>
             <div className="cbtn" onClick={onRollForward}>Start new test round</div>
             <div className="cbtn" onClick={onExport}>Export backup</div>
             <div className="cbtn cbtn--dark" onClick={onClose}>Done</div>
           </div>
         </div>
+
+        {s.bulk && (
+          <div className="coach__section coach__import">
+            <div className="coach__importText">
+              One name per line. Put a crew after a comma to set their class, for example <strong>Jane Smith, 5:40 AM</strong>. Anyone already on the roster is skipped.
+            </div>
+            <textarea className="coach__textarea coach__textarea--names" value={s.bulkText} onChange={e => patch({ bulkText: e.target.value })} placeholder={'Jane Smith\nBob Bee, 5:40 AM\nAnn Ant'} />
+            <div className="coach__bulkRow">
+              <div className="coach__field">
+                <div className="coach__label">Put everyone else in</div>
+                <select className="erow__select" value={s.bulkProg} onChange={e => patch({ bulkProg: e.target.value })} aria-label="Default crew">
+                  {K.PROGRAMS.map(pr => <option key={pr.id} value={pr.id}>{pr.label}</option>)}
+                </select>
+              </div>
+              <div className="coach__bulkSummary">{s.bulkText.trim() ? K.bulkSummary(bulkPlan) : 'Paste or type the names above.'}</div>
+            </div>
+            {bulkPlan.exact.length > 0 && (
+              <div className="coach__bulkNote">Already on the roster, skipping: {bulkPlan.exact.map(x => x.match).join(', ')}</div>
+            )}
+            {bulkPlan.similar.length > 0 && (
+              <div className={cx('coach__bulkPick', s.bulkSimilar && 'coach__bulkPick--on')} onClick={() => patch({ bulkSimilar: !s.bulkSimilar })}>
+                <span className="coach__box">{s.bulkSimilar ? '☑' : '☐'}</span>
+                Add these anyway: {bulkPlan.similar.map(x => x.name + ' (like ' + x.match + ')').join(', ')}
+              </div>
+            )}
+            <div className="coach__btnRow">
+              <div className="cbtn cbtn--red" onClick={onApplyBulk}>Add {bulkPlan.add.length + (s.bulkSimilar ? bulkPlan.similar.length : 0)} to the roster</div>
+              <div className="cbtn" onClick={() => patch({ bulk: false })}>Cancel</div>
+            </div>
+          </div>
+        )}
 
         {s.imp && (
           <div className="coach__section coach__import">
@@ -1389,6 +1461,15 @@ function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onS
             <div className="cbtn cbtn--toggle" onClick={rotateToggle}>{st.norotate ? 'Turn rotation on' : 'Turn rotation off'}</div>
             <div className="coach__small">{st.norotate ? 'Auto-rotate is off — the board stays on the view you pick' : 'Auto-rotate is on — views change every ' + rotateSeconds + ' seconds'}</div>
           </div>
+        </div>
+
+        <div className="coach__section">
+          <div className="coach__label">Coach score-entry link</div>
+          <div className="coach__linkBox">
+            <input className="coach__input coach__input--link" readOnly value={coachLink()} onFocus={e => e.target.select()} aria-label="Coach score-entry link" />
+            <div className="cbtn cbtn--outline" onClick={onCopyLink}>{s.copied ? 'Copied' : 'Copy'}</div>
+          </div>
+          <div className="coach__msg">Open this on a phone or iPad and it goes straight to score entry, skipping the board. Add it to the home screen for one tap.</div>
         </div>
 
         <div className="coach__section">

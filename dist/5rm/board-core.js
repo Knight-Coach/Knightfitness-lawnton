@@ -92,7 +92,8 @@
     syncMs: 600000,       // re-fetch the published sheet every 10 minutes
     countdownDays: 21,    // "Next test in N days" once within three weeks
     historyRounds: 20,
-    mobileBreak: 760
+    touchBreak: 1100,   // phones and tablets get the touch layout; only a real
+    mobileBreak: 760    // big screen gets the scaled 1920x1080 TV stage
   };
 
   var WORKING_PCTS = [95, 90, 85, 80, 75, 70, 65, 60, 55, 50];
@@ -718,6 +719,60 @@
     return d;
   }
 
+  // A pasted list of members: "Jane Smith" or "Jane Smith, 5:40 AM" per line.
+  // Blank lines and a leading "Name" header are ignored.
+  function parseBulkNames(text, defaultProg) {
+    var out = [];
+    String(text || '').split('\n').forEach(function (line) {
+      var cells = line.split(/[\t,;]/).map(function (x) { return x.trim(); });
+      var name = cells[0];
+      if (!name || /^name$/i.test(name)) return;
+      var prog = null;
+      cells.slice(1).forEach(function (c) { if (!prog) prog = parseCrew(c); });
+      out.push({ name: name, prog: prog || defaultProg || 'g1' });
+    });
+    return out;
+  }
+
+  // What a bulk add would do: who is new, who is already on the roster, and who
+  // looks like an existing member spelled differently. Nothing is written here,
+  // so the coach sees the outcome before committing to it.
+  function planBulkAdd(data, entries) {
+    var add = [], exact = [], similar = [], seen = {};
+    (entries || []).forEach(function (e) {
+      var name = String(e.name || '').trim();
+      if (!name) return;
+      var key = name.toLowerCase();
+      if (seen[key]) { exact.push({ name: name, match: name }); return; }
+      seen[key] = 1;
+      var i = findByName(data, name);
+      if (i >= 0) { exact.push({ name: name, match: data[i].name }); return; }
+      var near = '';
+      for (var j = 0; j < data.length && !near; j++) {
+        if (data[j].name && looksSame(data[j].name, name)) near = data[j].name;
+      }
+      if (near) similar.push({ name: name, prog: e.prog, match: near });
+      else add.push({ name: name, prog: e.prog });
+    });
+    return { add: add, exact: exact, similar: similar };
+  }
+
+  function bulkSummary(plan) {
+    var parts = [plan.add.length === 1 ? '1 new member' : plan.add.length + ' new members'];
+    if (plan.exact.length) parts.push(plan.exact.length === 1 ? '1 already on the roster' : plan.exact.length + ' already on the roster');
+    if (plan.similar.length) parts.push(plan.similar.length === 1 ? '1 looks like an existing member' : plan.similar.length + ' look like existing members');
+    return parts.join(' · ');
+  }
+
+  function addMembers(data, entries, club) {
+    var d = data.slice();
+    (entries || []).forEach(function (e) {
+      var name = String(e.name || '').trim();
+      if (name) d.push(newRow(name, club || 'mens', e.prog || 'g1'));
+    });
+    return d;
+  }
+
   function addMember(data, name, club) {
     var n = String(name || '').trim();
     if (!n) return data;
@@ -1109,6 +1164,7 @@
 
     lev: lev, looksSame: looksSame, findDuplicates: findDuplicates, mergeRows: mergeRows,
     setField: setField, setMeta: setMeta, addMember: addMember, removeMember: removeMember, recordScore: recordScore,
+    parseBulkNames: parseBulkNames, planBulkAdd: planBulkAdd, bulkSummary: bulkSummary, addMembers: addMembers,
     rollForward: rollForward, applyImport: applyImport, snapshotHistory: snapshotHistory,
 
     parseCsv: parseCsv, parseSheet: parseSheet, parseSheetLinks: parseSheetLinks, mergeSheetResults: mergeSheetResults, syncMessage: syncMessage,

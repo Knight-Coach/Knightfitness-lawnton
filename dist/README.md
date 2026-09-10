@@ -64,8 +64,12 @@ A member-facing strength board for the gym TV, built from the *Knight Fitness 5R
 - Data is stored in the browser's `localStorage` (`kf5rm.*` keys) and flushed on unload/visibility change; up to 10 pre-edit snapshots are kept for "Restore" in Coach mode. The gym passcode unlock is remembered for 30 days per device.
 
 ### Options (query string)
+- `/5rm?coach=1` — **the coach link**. Opens straight into score entry, skipping the board. Give this to coaches for their phone or iPad and add it to the home screen for one-tap access. Coach mode shows the link with a Copy button.
 - `/5rm?rotate=20` — seconds per view (6–40, default 14).
 - `/5rm?demo=1` — preview every view with placeholder history (invented previous-round values and crews). Nothing is saved in demo mode.
+
+### Screens by device
+Under 1100px wide — every phone, and an iPad in either orientation — the board renders its touch layout: a single scrolling list, large tap targets and a full-size number pad. Tablets get two columns of member cards and a bigger keypad. At 1100px and up (laptops, the gym TV) the fixed 1920×1080 stage is scaled to fit instead.
 
 ### Coach setup (once per board)
 1. Open `/5rm` on the TV browser in kiosk / full-screen mode and enter the gym passcode (default **4500**).
@@ -89,6 +93,13 @@ Tap **Enter scores** (bottom right of the board, or top right on a phone).
 The line under the progress bar always says where scores are going: into the gym sheet, or saved on this device only.
 
 **Keyboard** (a laptop during testing): digits and `.` type, Backspace deletes, Enter saves and moves on, → skips, ← goes back, ↑ ↓ pick the lift when entering all three, Esc finishes.
+
+### Adding members
+**Add members** in Coach mode takes a pasted list, one name per line, so a new intake goes in at once rather than one at a time. Put a crew after a comma to set someone's class (`Jane Smith, 5:40 AM`); everyone else lands in the crew chosen below the box. Before anything is written it shows what will happen: how many are new, who is already on the roster and is being skipped, and who looks like an existing member spelled differently (`Keith Grey` against `Keith Gray`). Near-matches are held back unless you tick to add them anyway.
+
+A single name works the same way — type one line and add it. During a testing session you can also add someone on the spot: search their name and the panel offers to add them to the roster and the current crew.
+
+Use **Paste from sheet** instead when you are importing numbers rather than names.
 
 ### Data notes
 - The shipped roster is the current numbers from the gym's spreadsheet at hand-over. Previous-round values are **not** seeded (the prototype's were placeholders), so *Movers*, *New PBs* and the ▲ gains fill in after the first roll-forward + test round or once a linked sheet supplies "Previous 5RM" columns.
