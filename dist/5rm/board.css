@@ -72,7 +72,7 @@
 }
 
 html, body { margin: 0; padding: 0; background: var(--bg); font-family: var(--ui); color: var(--ink); }
-@media (min-width: 760px) { html, body { overflow: hidden; } }
+@media (min-width: 1100px) { html, body { overflow: hidden; } }
 * { box-sizing: border-box; }
 a { color: var(--red); text-decoration: none; }
 a:hover { color: var(--red-46); }
@@ -429,6 +429,39 @@ input, select, textarea, button { font-family: inherit; }
 .coach__quick { padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); font-size: 12px; font-weight: 700; color: var(--red-42); cursor: pointer; white-space: nowrap; }
 .coach__btnRow--test { align-items: center; flex-wrap: wrap; }
 .coach__ok { color: var(--success-30); font-weight: 600; }
+
+/* Tablets: the touch layout, given room to breathe rather than a stretched phone */
+
+@media (min-width: 700px) {
+  .ph { max-width: 980px; margin: 0 auto; padding: 26px 24px 40px; gap: 20px; }
+  .ph__logo { height: 42px; }
+  .ph__cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; align-items: start; }
+  .ph__detail { width: 100%; max-width: 760px; align-self: center; }
+  .ph-card__name { font-size: 21px; }
+  .pill { min-height: 48px; font-size: 15px; padding: 0 20px; }
+  .field { min-height: 54px; font-size: 18px; }
+  .sess__col { max-width: 620px; padding: 26px 22px 44px; }
+  .numpad { gap: 12px; }
+  .numpad__key { min-height: 76px; font-size: 30px; }
+  .sess-member__draft { font-size: 72px; }
+  .sess-lift { min-height: 64px; }
+  .sess-lift__val { font-size: 32px; }
+  .btn { min-height: 60px; font-size: 17px; }
+  .lift-card { padding: 22px; }
+}
+
+/* Bulk add + the coach entry link */
+
+.coach__textarea--names { height: 180px; font-size: 14px; }
+.coach__bulkRow { display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; }
+.coach__bulkSummary { flex: 1; min-width: 200px; font-size: 14px; font-weight: 700; color: var(--ink-4); padding-bottom: 8px; }
+.coach__bulkNote { font-size: 13px; color: var(--secondary); line-height: 1.5; }
+.coach__bulkPick { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink-4); line-height: 1.5; cursor: pointer; }
+.coach__bulkPick--on { color: var(--red-42); }
+.coach__box { font-size: 15px; line-height: 1.2; }
+.coach__input--link { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.coach__linkBox { display: flex; align-items: center; gap: 8px; }
+.coach__linkBox .coach__input { flex: 1; min-width: 0; }
 
 /* ---------------------------------------------------------------- */
 /* Passcode gate + coach PIN                                          */

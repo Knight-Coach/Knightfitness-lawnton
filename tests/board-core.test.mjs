@@ -815,3 +815,73 @@ describe('save-back plumbing', () => {
     assert.match(bare.label, /Link the gym sheet/);
   });
 });
+
+describe('bulk add', () => {
+  const roster = [row('Keith Gray', [], [], []), row('Steve Otto', [], [], [])];
+
+  test('parseBulkNames reads a pasted list, with or without a crew per line', () => {
+    const e = K.parseBulkNames('Name\nJane Smith\nBob Bee, 5:40 AM\n\n  \nAnn Ant;6:30 PM\n', 'g3');
+    assert.deepEqual(e, [
+      { name: 'Jane Smith', prog: 'g3' },
+      { name: 'Bob Bee', prog: 'g2' },
+      { name: 'Ann Ant', prog: 'g7' }
+    ]);
+    assert.deepEqual(K.parseBulkNames('Solo Person'), [{ name: 'Solo Person', prog: 'g1' }]);
+    assert.deepEqual(K.parseBulkNames(''), []);
+    assert.deepEqual(K.parseBulkNames('   \n\n'), []);
+  });
+
+  test('planBulkAdd separates new names, exact repeats and likely misspellings', () => {
+    const plan = K.planBulkAdd(roster, K.parseBulkNames('Jane Smith\nKeith Gray\nKeith Grey\nJane Smith\nBob Bee', 'g1'));
+    assert.deepEqual(plan.add.map(x => x.name), ['Jane Smith', 'Bob Bee']);
+    assert.deepEqual(plan.exact.map(x => x.name), ['Keith Gray', 'Jane Smith'], 'existing names and repeats within the paste');
+    assert.deepEqual(plan.similar, [{ name: 'Keith Grey', prog: 'g1', match: 'Keith Gray' }]);
+  });
+
+  test('planBulkAdd keeps the crew from each line', () => {
+    const plan = K.planBulkAdd(roster, K.parseBulkNames('Jane Smith, 4:00 PM\nBob Bee', 'g6'));
+    assert.deepEqual(plan.add, [{ name: 'Jane Smith', prog: 'g4' }, { name: 'Bob Bee', prog: 'g6' }]);
+  });
+
+  test('bulkSummary reads correctly in the singular', () => {
+    assert.equal(K.bulkSummary({ add: [1], exact: [], similar: [] }), '1 new member');
+    assert.equal(K.bulkSummary({ add: [], exact: [], similar: [] }), '0 new members');
+    assert.equal(
+      K.bulkSummary({ add: [1, 2], exact: [1], similar: [1] }),
+      '2 new members · 1 already on the roster · 1 looks like an existing member'
+    );
+    assert.match(K.bulkSummary({ add: [1], exact: [1, 2], similar: [1, 2] }), /2 already on the roster · 2 look like existing members$/);
+  });
+
+  test('addMembers appends with the given club and crew, and does not mutate', () => {
+    const out = K.addMembers(roster, [{ name: ' Jane Smith ', prog: 'g4' }, { name: 'Bob Bee' }, { name: '  ' }], 'womens');
+    assert.equal(out.length, 4, 'blank names are dropped');
+    assert.deepEqual(out[2], { name: 'Jane Smith', club: 'womens', prog: 'g4', sq: { c: '', p: '' }, bp: { c: '', p: '' }, dl: { c: '', p: '' }, h: [] });
+    assert.equal(out[3].prog, 'g1', 'no crew falls back to the first');
+    assert.equal(out[3].club, 'womens');
+    assert.equal(roster.length, 2);
+    assert.equal(K.addMembers(roster, [], 'mens').length, 2);
+  });
+
+  test('a paste of only new names adds them all', () => {
+    const entries = K.parseBulkNames('Ann Ant\nBob Bee\nCal Cat', 'g5');
+    const plan = K.planBulkAdd([], entries);
+    assert.equal(plan.add.length, 3);
+    assert.equal(plan.exact.length + plan.similar.length, 0);
+    const out = K.addMembers([], plan.add, 'mens');
+    assert.deepEqual(out.map(r => r.name), ['Ann Ant', 'Bob Bee', 'Cal Cat']);
+    assert.ok(out.every(r => r.prog === 'g5'));
+  });
+});
+
+describe('layout breakpoints', () => {
+  test('tablets get the touch layout, only a big screen gets the TV stage', () => {
+    assert.equal(K.LIMITS.touchBreak, 1100);
+    const touch = w => w < K.LIMITS.touchBreak;
+    assert.equal(touch(390), true, 'phone');
+    assert.equal(touch(768), true, 'iPad portrait');
+    assert.equal(touch(1024), true, 'iPad landscape');
+    assert.equal(touch(1366), false, 'laptop');
+    assert.equal(touch(1920), false, 'gym TV');
+  });
+});
