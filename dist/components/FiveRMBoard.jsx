@@ -169,7 +169,7 @@ function FiveRMBoard() {
 
   const freshSession = prog => ({
     mode: '', lift: '', active: 'sq', drafts: {}, cur: null, done: {}, q: '',
-    prog: prog || 'all', remainingOnly: false, confirm: null, dateAsked: false, dateStrip: false
+    prog: prog || 'all', remainingOnly: false, confirm: null, dateAsked: false, dateStrip: false, skipAsk: false
   });
 
   const openSession = () => {
@@ -401,6 +401,18 @@ function FiveRMBoard() {
       delete done[u.cur];
       return { done, cur: u.cur, drafts: u.drafts || {}, confirm: null };
     });
+  };
+
+  // The stragglers at the end of a session: one button instead of tapping
+  // "Not today" down the rest of the list.
+  const askSkipRest = () => sessSet({ skipAsk: true });
+  const cancelSkipRest = () => sessSet({ skipAsk: false });
+  const skipRest = () => {
+    const cur = stateRef.current;
+    const ss = cur.sess;
+    if (!ss) return;
+    const scope = K.buildQueue(cur.data, cur.club, ss.prog);
+    sessSet({ done: K.skipRemaining(scope, ss.done), drafts: {}, confirm: null, skipAsk: false, cur: null });
   };
 
   const sessClose = () => patch({ sess: null, rotating: true, elapsed: 0 });
@@ -760,6 +772,7 @@ function FiveRMBoard() {
           onJump={i => sessSet({ cur: i, drafts: {}, confirm: null, q: '' })}
           onAdd={() => addNamed(s.sess.q)}
           onActive={setActive} onPad={padKey} onQuick={padAdd}
+          onAskSkipRest={askSkipRest} onCancelSkipRest={cancelSkipRest} onSkipRest={skipRest}
           onBack={sessBack} onSkip={sessSkip} onSave={sessSave} onUndo={sessUndo}
           onFix={() => sessSet({ confirm: null })} onSuggestion={useSuggestion}
           onUseToday={useTodayAsTested} onDismissDate={() => sessSet({ dateStrip: false })}
@@ -1230,18 +1243,23 @@ function PhoneDetail({ m, raw, st, testedShort, onBack }) {
 /* Testing session (coach score entry)                                 */
 /* ================================================================== */
 
-function SessionScreen({ s, list, scope, row, dest, onClose, onStart, onSwitch, onCrew, onRemaining, onQuery, onJump, onAdd, onActive, onPad, onQuick, onBack, onSkip, onSave, onUndo, onFix, onSuggestion, onUseToday, onDismissDate }) {
+function SessionScreen({ s, list, scope, row, dest, onClose, onStart, onSwitch, onCrew, onRemaining, onQuery, onJump, onAdd, onActive, onPad, onQuick, onBack, onSkip, onSave, onUndo, onFix, onSuggestion, onUseToday, onDismissDate, onAskSkipRest, onCancelSkipRest, onSkipRest }) {
   const ss = s.sess;
   const setup = !ss.mode;
   const memberMode = ss.mode === 'member';
   const q = (ss.q || '').trim();
-  const doneN = Object.keys(ss.done || {}).length;
+  const handled = Object.keys(ss.done || {});
+  const counts = {
+    done: handled.filter(k => ss.done[k] === 'done').length,
+    skip: handled.filter(k => ss.done[k] === 'skip').length
+  };
   const pos = list.findIndex(x => x.i === ss.cur);
-  const prog = K.sessionProgress(Math.max(0, pos), list.length, doneN, scope.length, ss.remainingOnly);
+  const prog = K.sessionProgress(Math.max(0, pos), list.length, counts, scope.length, ss.remainingOnly);
   const activeLift = K.lift(ss.active) || K.LIFTS[0];
   const liftDef = K.lift(ss.lift) || K.LIFTS[0];
   const crewDot = ss.prog === 'all' ? K.COLORS.neutralDot : K.progColor(ss.prog);
   const suggestion = (ss.confirm || []).filter(w => w.suggestion)[0];
+  const outstanding = K.outstandingCount(scope, ss.done);
   const filled = K.draftsFilled(ss.drafts).length;
 
   const crewPill = (
@@ -1314,10 +1332,26 @@ function SessionScreen({ s, list, scope, row, dest, onClose, onStart, onSwitch, 
             <div className="sess__bar"><div className="sess__fill" style={{ width: prog.pct + '%' }} /></div>
             <div className="sess__progressRow">
               <div className="sess__progress">{prog.label}</div>
-              <div className={cx('sess__toggle', ss.remainingOnly && 'sess__toggle--on')} onClick={onRemaining}>
-                {ss.remainingOnly ? 'Showing what is left' : 'Show what is left'}
+              <div className="sess__progressActions">
+                {outstanding > 0 && <div className="sess__toggle" onClick={onAskSkipRest}>Nobody else testing</div>}
+                <div className={cx('sess__toggle', ss.remainingOnly && 'sess__toggle--on')} onClick={onRemaining}>
+                  {ss.remainingOnly ? 'Showing what is left' : 'Show what is left'}
+                </div>
               </div>
             </div>
+
+            {ss.skipAsk && (
+              <div className="sess__strip">
+                <div className="sess__stripText">
+                  Mark the {outstanding === 1 ? 'last member' : 'remaining ' + outstanding + ' members'} as not testing?
+                  <span className="sess__stripSub">Nothing already entered changes. It clears the list for this session.</span>
+                </div>
+                <div className="sess__stripActions">
+                  <div className="btn btn--skip" onClick={onCancelSkipRest}>Cancel</div>
+                  <div className="btn btn--dark" onClick={onSkipRest}>Not testing</div>
+                </div>
+              </div>
+            )}
 
             {ss.dateStrip && (
               <div className="sess__strip">

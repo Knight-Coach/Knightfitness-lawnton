@@ -418,7 +418,8 @@ input, select, textarea, button { font-family: inherit; }
 .sess__count { font-size: 14px; font-weight: 600; color: var(--secondary); }
 .lift-card--all { border-left-color: var(--ink); }
 .sess__topRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.sess__progressRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sess__progressRow { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.sess__progressActions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .sess__toggle { min-height: 34px; display: flex; align-items: center; padding: 0 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); font-size: 13px; font-weight: 700; color: var(--ink-4); cursor: pointer; white-space: nowrap; }
 .sess__toggle--on { background: var(--ink); border-color: var(--ink); color: #fff; }
 

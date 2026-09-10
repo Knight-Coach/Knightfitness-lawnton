@@ -106,7 +106,7 @@ Tap **Enter scores** (bottom right of the board, or top right on a phone).
 1. **Pick the crew in front of you.** The session defaults to whatever crew the board is filtered to. Choosing 5:40 AM makes the list a dozen people instead of the whole gym; you can change crew at any point during the session.
 2. **Pick what you are entering** — a single lift to walk the list once, or **All three lifts** to enter squat, bench and deadlift while each member is in front of you. Switching afterwards starts a fresh pass.
 3. **Work down the list.** Type the number and press *Save · next*. *Not today* skips someone. *Back* returns to the previous member. The undo pill after each save puts the numbers back **and** returns you to that member with what you typed still on screen, so a wrong entry is corrected rather than retyped.
-4. **Show what is left** filters the list to whoever has not been entered or skipped, which is what you want near the end of a session.
+4. **Show what is left** filters the list to whoever has not been entered or skipped, which is what you want near the end of a session. **Nobody else testing** clears the rest in one go when the stragglers simply are not in today; it asks once first, changes no scores, and the progress line then reads, for example, `2 entered · 10 not testing`.
 5. **Unusual numbers are queried once.** Typing 1275 instead of 127.5, or a number far above or below someone's last, brings up a check with the likely number offered as a one-tap fix. It never blocks a save — a real but surprising lift goes in with *Save anyway*.
 6. **The first score of a session offers to date the round**, and sets the next round twelve weeks out if that date is missing or already past.
 

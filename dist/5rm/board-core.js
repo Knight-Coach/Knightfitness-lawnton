@@ -1111,6 +1111,19 @@
     return queue.filter(function (x) { return !isHandled(done, x.i); });
   }
 
+  // Marks everyone still outstanding as not testing, for the end of a session when
+  // the stragglers simply are not in today. Touches session state only: no score
+  // is changed, so nothing anyone lifted is lost.
+  function skipRemaining(queue, done) {
+    var out = Object.assign({}, done || {});
+    (queue || []).forEach(function (x) { if (!isHandled(out, x.i)) out[x.i] = 'skip'; });
+    return out;
+  }
+
+  function outstandingCount(queue, done) {
+    return (queue || []).filter(function (x) { return !isHandled(done, x.i); }).length;
+  }
+
   // The list a coach walks: everyone in scope, or only those still to do.
   function sessionQueue(data, club, prog, done, remainingOnly) {
     var q = buildQueue(data, club, prog);
@@ -1147,12 +1160,18 @@
     return c.c ? 'Current on the board: ' + c.c + ' kg' : (c.p ? 'Last test: ' + c.p + ' kg' : 'No previous number');
   }
 
-  function sessionProgress(idx, queueLen, doneCount, scopeTotal, remainingOnly) {
+  // `counts` is { done, skip }; a bare number is read as entered-only. Skips are
+  // reported separately, so clearing the stragglers never reads as scores entered.
+  function sessionProgress(idx, queueLen, counts, scopeTotal, remainingOnly) {
+    var c = typeof counts === 'number' ? { done: counts, skip: 0 } : (counts || {});
+    var entered = c.done || 0, skipped = c.skip || 0;
     var total = scopeTotal === undefined || scopeTotal === null ? queueLen : scopeTotal;
-    var label = remainingOnly
-      ? (queueLen === 1 ? '1 still to do' : queueLen + ' still to do') + ' · ' + doneCount + ' entered'
-      : (idx + 1) + ' of ' + total + ' · ' + doneCount + ' entered';
-    return { label: label, pct: (doneCount / Math.max(1, total)) * 100 };
+    var head = remainingOnly
+      ? (queueLen === 1 ? '1 still to do' : queueLen + ' still to do')
+      : (idx + 1) + ' of ' + total;
+    var parts = [head, entered + ' entered'];
+    if (skipped) parts.push(skipped + ' not testing');
+    return { label: parts.join(' · '), pct: ((entered + skipped) / Math.max(1, total)) * 100 };
   }
 
   function draftsFilled(drafts) {
@@ -1282,6 +1301,7 @@
     parseCsv: parseCsv, parseSheet: parseSheet, parseSheetLinks: parseSheetLinks, mergeSheetResults: mergeSheetResults, syncMessage: syncMessage,
 
     buildQueue: buildQueue, isHandled: isHandled, sessionRemaining: sessionRemaining, sessionQueue: sessionQueue,
+    skipRemaining: skipRemaining, outstandingCount: outstandingCount,
     padKey: padKey, padAdd: padAdd, queueMatches: queueMatches, canAddName: canAddName,
     sessionContext: sessionContext, sessionProgress: sessionProgress,
     draftsFilled: draftsFilled, checkEntry: checkEntry, checkEntries: checkEntries,
