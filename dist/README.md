@@ -54,7 +54,7 @@ tests/board-core.test.mjs             Unit tests for 5rm/board-core.js (`npm tes
 
 ## 5RM Board (`/5rm`)
 
-A member-facing strength board for the gym TV, built from the *Knight Fitness 5RM Board* design handoff. It shows squat, bench and deadlift 5RM numbers, progress since the last test, leaderboards, biggest movers, new PBs, milestone clubs and the full roster, and gives coaches a phone-friendly score-entry flow plus a data admin panel. It is `noindex` and not in the sitemap: it sits behind a gym passcode.
+A member-facing strength board for the gym TV, built from the *Knight Fitness 5RM Board* design handoff. It shows squat, bench and deadlift 5RM numbers, progress since the last test, leaderboards, biggest movers, most kilos added, new PBs, milestone clubs, crew standings and the full roster, and gives coaches a phone-friendly score-entry flow plus a data admin panel. It is `noindex` and not in the sitemap: it sits behind a gym passcode.
 
 ### How it is built
 - `5rm.html` mounts `components/FiveRMBoard.jsx` with the same React 18 + Babel-in-browser pattern as the homepage, but with React, ReactDOM and Babel **self-hosted** from `assets/vendor/` and the fonts from `assets/5rm/fonts/`, so a kiosk TV never depends on a CDN at render time.
@@ -65,8 +65,28 @@ A member-facing strength board for the gym TV, built from the *Knight Fitness 5R
 
 ### Options (query string)
 - `/5rm?coach=1` — **the coach link**. Opens straight into score entry, skipping the board. Give this to coaches for their phone or iPad and add it to the home screen for one-tap access. Coach mode shows the link with a Copy button.
-- `/5rm?rotate=20` — seconds per view (6–40, default 14).
+- `/5rm?rotate=20` — seconds per view (6–40) for that screen only, overriding the speed set in Coach mode.
 - `/5rm?demo=1` — preview every view with placeholder history (invented previous-round values and crews). Nothing is saved in demo mode.
+
+### Views
+Ten views rotate on the board, and the chips along the top jump straight to any of them.
+
+| View | Shows |
+| --- | --- |
+| Total | Big three total, top sixteen |
+| Squat / Bench / Deadlift | That lift, top sixteen |
+| Movers | Biggest percentage gain on a single lift |
+| Gains | Most kilos added across all three lifts |
+| New PBs | Every lift that went up this round |
+| Milestones | The 100 kg / 150 kg / 200 kg / 400 kg clubs |
+| Crews | Crew against crew: kilos added, new PBs, average total |
+| Everyone | The full roster, paged |
+
+Movers and Gains answer different questions. Movers is a percentage on one lift, so it favours members starting from light numbers; Gains ranks the total work added, so it favours the heavier lifters. Running both means both groups get their moment on the wall.
+
+**Coach mode controls which views run.** Switch any of them off and both the rotation and the chips follow; the last one on cannot be switched off, so the board is never blank. Rotation speed is set there too, from eight to forty seconds per view. A `?rotate=` link still overrides the setting for that one screen.
+
+**Sorting the roster.** Tap the board to stop the rotation and *Everyone's numbers* offers a sort: by name, by big-three total, or by kilos added. It stays alphabetical while rotating so members can find themselves.
 
 ### Screens by device
 Under 1100px wide — every phone, and an iPad in either orientation — the board renders its touch layout: a single scrolling list, large tap targets and a full-size number pad. Tablets get two columns of member cards and a bigger keypad. At 1100px and up (laptops, the gym TV) the fixed 1920×1080 stage is scaled to fit instead.

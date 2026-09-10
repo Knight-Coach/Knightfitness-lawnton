@@ -23,7 +23,7 @@ const L = K.LIMITS;
 const PAGE = (() => {
   const q = new URLSearchParams(window.location.search);
   return {
-    rotateSeconds: K.clampRotate(q.get('rotate') || L.rotateDefault),
+    rotateParam: q.has('rotate') ? K.clampRotate(q.get('rotate')) : null,
     demo: q.get('demo') === '1',
     coach: q.get('coach') === '1'
   };
@@ -57,7 +57,7 @@ function initState() {
     view: 0, rotating: true, elapsed: 0,
     prog: 'all', club: 'all',
     sel: null, picker: false, me: null, meAt: 0, mq: '',
-    edit: false, imp: false, q: '', impText: '', histOpen: false,
+    edit: false, imp: false, q: '', impText: '', histOpen: false, rosterSort: 'name',
     bulk: false, bulkText: '', bulkProg: 'g1', bulkSimilar: false, bulkMsg: '', copied: 0,
     data: loadData(),
     settings: K.normaliseSettings(store.json(KEYS.settings)),
@@ -90,15 +90,19 @@ function FiveRMBoard() {
 
   /* ---------- Derived data ---------- */
   const members = useMemo(() => K.buildMembers(s.data), [s.data]);
-  const views = useMemo(() => K.buildViews(s.data, s.club, s.prog), [s.data, s.club, s.prog]);
+  const views = useMemo(() => K.buildViews(s.data, s.club, s.prog, s.settings), [s.data, s.club, s.prog, s.settings]);
   const clubs = useMemo(() => K.clubsPresent(s.data), [s.data]);
   const v = views[Math.min(s.view, views.length - 1)] || views[0];
   const st = s.settings;
-  const dur = PAGE.rotateSeconds * 1000;
+  const rotateSeconds = K.effectiveRotate(s.settings, PAGE.rotateParam);
+  const dur = rotateSeconds * 1000;
   const twoClubs = clubs.length > 1;
   const clubScope = v.club || (s.club === 'all' ? null : s.club);
   const filtered = useMemo(() => K.scopeMembers(members, clubScope, s.prog), [members, clubScope, s.prog]);
   const publicMembers = useMemo(() => members.filter(K.hasNumbers), [members]);
+  // The crews view compares crews, so it ignores the crew filter but keeps the club one.
+  const clubScoped = useMemo(() => K.scopeMembers(members, clubScope, 'all'), [members, clubScope]);
+  const setRosterSort = id => { markIdle(); patch({ rosterSort: id, rotating: false }); };
   const locked = !!st.lock;
   const linked = !!(st.sheets || '').trim();
   const sheetLocked = linked && !(st.api || '').trim();
@@ -591,7 +595,7 @@ function FiveRMBoard() {
 
     const tick = setInterval(() => {
       const cur = stateRef.current;
-      const d = PAGE.rotateSeconds * 1000;
+      const d = K.effectiveRotate(cur.settings, PAGE.rotateParam) * 1000;
       if (cur.settings.norotate) { if (cur.rotating) patch({ rotating: false }); return; }
       if (!cur.rotating) {
         if (!cur.edit && !cur.imp && !cur.sess && Date.now() - idleRef.current > L.idleResumeMs) {
@@ -601,7 +605,7 @@ function FiveRMBoard() {
       }
       const e = cur.elapsed + 200;
       if (e >= d) {
-        const n = K.buildViews(cur.data, cur.club, cur.prog).length;
+        const n = K.buildViews(cur.data, cur.club, cur.prog, cur.settings).length;
         patch({ view: (cur.view + 1) % n, elapsed: 0 });
       } else patch({ elapsed: e });
     }, 200);
@@ -683,7 +687,7 @@ function FiveRMBoard() {
               </div>
               <div className="tv-head__controls">
                 <div className="chip-row">
-                  {K.NAV_SPEC.map(spec => (
+                  {K.enabledViews(st).map(key => K.viewSpec(key)).map(spec => (
                     <div key={spec.label} className={cx('chip', K.viewMatches(v, spec) && 'chip--on')} onClick={() => go(K.navIndex(views, spec))}>{spec.label}</div>
                   ))}
                 </div>
@@ -705,9 +709,11 @@ function FiveRMBoard() {
             <main className="tv-content">
               {v.kind === 'board' && <LeaderboardView {...shared} lift={v.lift} activeCrew={activeCrew} />}
               {v.kind === 'movers' && <MoversView {...shared} />}
+              {v.kind === 'gains' && <GainsView {...shared} />}
+              {v.kind === 'crews' && <CrewsView {...shared} clubScoped={clubScoped} />}
               {v.kind === 'pbs' && <PbsView {...shared} />}
               {v.kind === 'miles' && <MilestonesView {...shared} />}
-              {v.kind === 'roster' && <RosterView {...shared} page={v.page} />}
+              {v.kind === 'roster' && <RosterView {...shared} page={v.page} onSort={setRosterSort} />}
             </main>
 
             <footer className="tv-foot">
@@ -798,7 +804,7 @@ function FiveRMBoard() {
           onField={field} onMeta={meta} onBulk={openBulk} onApplyBulk={applyBulk} onCopyLink={copyCoachLink} onRemove={removeMember} onMerge={mergeRows}
           onApplyImport={applyImport} onRollForward={rollForward} onReset={resetSeed} onRestore={restore} onExport={exportBackup}
           onTestConnection={testConnection}
-          rotateSeconds={PAGE.rotateSeconds}
+          rotateSeconds={rotateSeconds}
         />
       )}
     </React.Fragment>
@@ -887,6 +893,77 @@ function MoversView({ filtered, open }) {
   );
 }
 
+// Movers ranks one lift by percentage, which favours light starting numbers.
+// This ranks the work: kilos added across all three.
+function GainsView({ filtered, open, crewColor, isMe }) {
+  const rows = K.topGainers(filtered);
+  return (
+    <div className="view">
+      <ViewHead title="💪 Most kilos added" sub="Squat, bench and deadlift added up" wide />
+      {!rows.length && <div className="empty-card">No gains yet — these appear once a round has been tested against the last one.</div>}
+      <div className="lb-grid">
+        {rows.map((r, i) => {
+          const you = isMe(r.m.name);
+          return (
+            <div key={r.m.name} className={cx('lb-row', you && 'lb-row--you')} style={{ borderLeftColor: crewColor(r.m), animationDelay: (i * 0.015) + 's' }} onClick={open(r.m)}>
+              <div className={cx('lb-row__rank', i === 0 ? 'lb-row__rank--gold' : i < 3 ? 'lb-row__rank--red' : 'lb-row__rank--grey')}>{K.rankLabel(r.rank)}</div>
+              <div className="lb-row__body">
+                <div className="lb-row__nameRow">
+                  <div className="lb-row__name truncate">{r.m.name}</div>
+                  {you && <div className="lb-row__you">that's you</div>}
+                </div>
+                <div className="lb-row__meta">{r.detail}</div>
+              </div>
+              <div className="lb-row__value">
+                <div className="lb-row__num lb-row__num--up">{r.label}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function CrewsView({ clubScoped }) {
+  const cs = K.crewStandings(clubScoped);
+  return (
+    <div className="view">
+      <ViewHead
+        title="🏆 Crew standings"
+        sub={cs.by === 'gains' ? 'Ranked by kilos added this round' : 'Ranked by average big three · gains show after the next test'}
+        wide
+      />
+      {!cs.rows.length && <div className="empty-card">No crew has numbers yet. Set each member's class in Coach mode.</div>}
+      <div className="cr-grid">
+        {cs.rows.map((c, i) => (
+          <div key={c.id} className="cr-card" style={{ borderTopColor: c.color, animationDelay: (i * 0.04) + 's' }}>
+            <div className="cr-card__head">
+              <div className="cr-card__rank">{K.rankLabel(c.rank)}</div>
+              <div className="cr-card__name">{c.label}</div>
+            </div>
+            <div className="cr-card__stats">
+              <div className="cr-stat">
+                <div className="cr-stat__num cr-stat__num--up">{c.gained > 0 ? '+' + K.fmt(c.gained) : '—'}</div>
+                <div className="cr-stat__label">kg added</div>
+              </div>
+              <div className="cr-stat">
+                <div className="cr-stat__num">{c.pbs || '—'}</div>
+                <div className="cr-stat__label">new PBs</div>
+              </div>
+              <div className="cr-stat">
+                <div className="cr-stat__num">{c.avgTotal ? K.fmt(Math.round(c.avgTotal)) : '—'}</div>
+                <div className="cr-stat__label">average total</div>
+              </div>
+            </div>
+            <div className="cr-card__foot">{c.tested === 1 ? '1 member tested' : c.tested + ' members tested'}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function PbsView({ filtered, open, crewColor }) {
   const p = K.pbs(filtered);
   return (
@@ -944,11 +1021,25 @@ function MilestonesView({ filtered, openQuiet }) {
   );
 }
 
-function RosterView({ s, filtered, page, open, crewColor }) {
-  const r = K.roster(filtered, page, !s.rotating);
+function RosterView({ s, filtered, page, open, crewColor, onSort }) {
+  const r = K.roster(K.sortMembers(filtered, s.rosterSort), page, !s.rotating);
   return (
     <div className="view view--roster">
-      <ViewHead title="Everyone's numbers" sub={r.sub} wide />
+      <ViewHead
+        title="Everyone's numbers" sub={r.sub} wide
+        right={s.rotating ? null : (
+          <div className="sort-row">
+            <div className="sort-row__label">Sort by</div>
+            {K.ROSTER_SORTS.map(so => (
+              <div
+                key={so.id}
+                className={cx('chip chip--sort', s.rosterSort === so.id && 'chip--on')}
+                onClick={e => { e.stopPropagation(); onSort(so.id); }}
+              >{so.label}</div>
+            ))}
+          </div>
+        )}
+      />
       <div className="ro-heads">
         {[1, 2, 3].map(i => (
           <div key={i} className="ro-head"><div>Name</div><div className="r">SQ</div><div className="r">BP</div><div className="r">DL</div><div className="r">Total</div></div>
@@ -1458,9 +1549,41 @@ function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onS
           </div>
           <div className="coach__field">
             <div className="coach__label">Rotating board</div>
-            <div className="cbtn cbtn--toggle" onClick={rotateToggle}>{st.norotate ? 'Turn rotation on' : 'Turn rotation off'}</div>
-            <div className="coach__small">{st.norotate ? 'Auto-rotate is off — the board stays on the view you pick' : 'Auto-rotate is on — views change every ' + rotateSeconds + ' seconds'}</div>
+            <div className="coach__rotRow">
+              <div className="cbtn cbtn--toggle" onClick={rotateToggle}>{st.norotate ? 'Turn rotation on' : 'Turn rotation off'}</div>
+              <select
+                className="erow__select coach__speed" value={String(st.rotate || K.LIMITS.rotateDefault)}
+                onChange={e => setSetting('rotate', parseInt(e.target.value, 10))}
+                disabled={!!st.norotate} aria-label="Seconds per view"
+              >
+                {K.ROTATE_CHOICES.map(n => <option key={n} value={n}>{n} seconds each</option>)}
+              </select>
+            </div>
+            <div className="coach__small">
+              {st.norotate
+                ? 'Auto-rotate is off — the board stays on the view you pick.'
+                : 'Views change every ' + rotateSeconds + ' seconds.'}
+              {PAGE.rotateParam ? ' This screen is set to ' + PAGE.rotateParam + 's by its own link.' : ''}
+            </div>
           </div>
+        </div>
+
+        <div className="coach__section">
+          <div className="coach__rowBetween">
+            <div className="coach__label">Views on the board</div>
+            <div className="coach__msg">{K.enabledViews(st).length} of {K.ALL_VIEW_KEYS.length} showing</div>
+          </div>
+          <div className="coach__views">
+            {K.VIEW_SPECS.map(sp => {
+              const on = K.viewEnabled(st, sp.key);
+              return (
+                <div key={sp.key} className={cx('chip chip--view', on && 'chip--on')} onClick={() => setSetting('views', K.toggleView(st, sp.key))}>
+                  <span className="coach__box">{on ? '☑' : '☐'}</span>{sp.label}
+                </div>
+              );
+            })}
+          </div>
+          <div className="coach__msg">Switch off anything you do not want in the rotation. The chips along the top of the board follow this too, and the last one on cannot be switched off.</div>
         </div>
 
         <div className="coach__section">

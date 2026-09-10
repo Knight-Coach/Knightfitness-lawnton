@@ -113,7 +113,7 @@ input, select, textarea, button { font-family: inherit; }
 .tv-head__club { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 1; letter-spacing: -0.8px; }
 .tv-head__board { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1; color: var(--tertiary); }
 .tv-head__controls { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex: none; }
-.chip-row { display: flex; align-items: center; justify-content: flex-end; flex-wrap: nowrap; gap: 10px; }
+.chip-row { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px; }
 
 .chip {
   flex: none; white-space: nowrap; padding: 11px 18px; border-radius: 999px;
@@ -240,6 +240,32 @@ input, select, textarea, button { font-family: inherit; }
 .ro-row__val--up { color: var(--success-32); }
 .ro-row__val--none { color: var(--disabled); }
 .ro-row__total { font-family: var(--display); font-size: 20px; font-weight: 800; text-align: right; color: var(--red-42); }
+
+/* ---------------------------------------------------------------- */
+/* Crew standings                                                     */
+/* ---------------------------------------------------------------- */
+
+/* Centred rather than top-aligned: the gym has up to seven crews, so the grid is
+   rarely full and a part-filled block reads better centred on a TV. */
+.cr-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: min-content; gap: 20px; align-content: center; }
+.cr-card { background: var(--card); border: 1px solid var(--border); border-top-width: 5px; border-top-style: solid; border-radius: 16px; padding: 24px 26px; display: flex; flex-direction: column; gap: 18px; box-shadow: var(--shadow-card); animation: slideUp 0.4s ease-out both; }
+.cr-card__head { display: flex; align-items: baseline; gap: 12px; }
+.cr-card__rank { font-family: var(--display); font-weight: 800; font-size: 24px; color: var(--soft-3); }
+.cr-card__name { font-family: var(--display); font-weight: 800; font-size: 26px; letter-spacing: -0.4px; }
+.cr-card__stats { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.cr-stat { display: flex; flex-direction: column; gap: 2px; }
+.cr-stat__num { font-family: var(--display); font-weight: 800; font-size: 30px; letter-spacing: -0.6px; }
+.cr-stat__num--up { color: var(--success-30); }
+.cr-stat__label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--secondary); }
+.cr-card__foot { font-size: 15px; font-weight: 600; color: var(--secondary); }
+
+/* Most kilos added reuses the leaderboard row, in green */
+.lb-row__num--up { color: var(--success-30); }
+
+/* Sorting the roster, offered once someone stops the rotation */
+.sort-row { display: flex; align-items: center; gap: 8px; flex: none; }
+.sort-row__label { font-size: 15px; font-weight: 600; color: var(--secondary); }
+.chip--sort { padding: 8px 16px; font-size: 15px; }
 
 /* ---------------------------------------------------------------- */
 /* Overlays on the stage (member card, picker)                        */
@@ -460,6 +486,11 @@ input, select, textarea, button { font-family: inherit; }
 .coach__bulkPick--on { color: var(--red-42); }
 .coach__box { font-size: 15px; line-height: 1.2; }
 .coach__input--link { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+.coach__rotRow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.coach__speed { width: auto; min-width: 150px; }
+.coach__speed:disabled { opacity: 0.5; }
+.coach__views { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip--view { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; font-size: 14px; }
 .coach__linkBox { display: flex; align-items: center; gap: 8px; }
 .coach__linkBox .coach__input { flex: 1; min-width: 0; }
 
