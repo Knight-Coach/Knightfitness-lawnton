@@ -177,14 +177,14 @@ describe('members', () => {
 });
 
 describe('views', () => {
-  test('one club: 4 boards, movers, pbs, milestones, roster pages from live count', () => {
+  test('one club: every view in order, roster pages from the live count', () => {
     const data = [];
     for (let i = 0; i < 95; i++) data.push(row('M' + String(i).padStart(3, '0'), ['100'], [], []));
     const v = K.buildViews(data, 'all', 'all');
-    assert.deepEqual(v.map(x => x.kind), ['board', 'board', 'board', 'board', 'movers', 'pbs', 'miles', 'roster', 'roster', 'roster']);
+    assert.deepEqual(v.map(x => x.key), ['total', 'sq', 'bp', 'dl', 'movers', 'gains', 'pbs', 'miles', 'crews', 'roster', 'roster', 'roster']);
     assert.deepEqual(v.slice(0, 4).map(x => x.lift), ['total', 'sq', 'bp', 'dl']);
-    assert.deepEqual(v.slice(7).map(x => x.page), [0, 1, 2]);
-    assert.ok(v.slice(7).every(x => x.club === 'mens'));
+    assert.deepEqual(v.slice(9).map(x => x.page), [0, 1, 2]);
+    assert.ok(v.slice(9).every(x => x.club === 'mens'));
   });
 
   test('two clubs double the boards and roster; a crew filter shrinks the roster', () => {
@@ -200,10 +200,10 @@ describe('views', () => {
 
   test('navIndex finds the first matching view', () => {
     const v = K.buildViews([row('A B', ['100'], [], [])], 'all', 'all');
-    assert.equal(K.navIndex(v, K.NAV_SPEC[0]), 0);
-    assert.equal(K.navIndex(v, K.NAV_SPEC[3]), 3);
-    assert.equal(K.navIndex(v, K.NAV_SPEC[7]), 7);
-    assert.equal(K.navIndex([], K.NAV_SPEC[7]), 0);
+    assert.equal(K.navIndex(v, K.viewSpec('total')), 0);
+    assert.equal(K.navIndex(v, K.viewSpec('dl')), 3);
+    assert.equal(K.navIndex(v, K.viewSpec('roster')), 9);
+    assert.equal(K.navIndex([], K.viewSpec('roster')), 0);
   });
 });
 
@@ -883,5 +883,167 @@ describe('layout breakpoints', () => {
     assert.equal(touch(1024), true, 'iPad landscape');
     assert.equal(touch(1366), false, 'laptop');
     assert.equal(touch(1920), false, 'gym TV');
+  });
+});
+
+describe('choosing which views run', () => {
+  const data = [row('A B', ['100'], [], [])];
+
+  test('the catalogue is ten views in rotation order', () => {
+    assert.deepEqual(K.ALL_VIEW_KEYS, ['total', 'sq', 'bp', 'dl', 'movers', 'gains', 'pbs', 'miles', 'crews', 'roster']);
+    assert.equal(K.viewSpec('crews').label, 'Crews');
+    assert.equal(K.viewSpec('gains').kind, 'gains');
+    assert.equal(K.viewSpec('sq').lift, 'sq');
+    assert.equal(K.viewSpec('nope'), null);
+  });
+
+  test('no stored choice means every view', () => {
+    assert.deepEqual(K.enabledViews({}), K.ALL_VIEW_KEYS);
+    assert.deepEqual(K.enabledViews({ views: [] }), K.ALL_VIEW_KEYS);
+    assert.deepEqual(K.enabledViews(null), K.ALL_VIEW_KEYS);
+    assert.equal(K.viewEnabled({}, 'miles'), true);
+  });
+
+  test('a stored choice narrows the rotation and keeps canonical order', () => {
+    const st = { views: ['crews', 'total'] };
+    assert.deepEqual(K.enabledViews(st), ['total', 'crews']);
+    assert.deepEqual(K.buildViews(data, 'all', 'all', st).map(x => x.key), ['total', 'crews']);
+    assert.equal(K.viewEnabled(st, 'movers'), false);
+  });
+
+  test('a board is never left blank', () => {
+    assert.deepEqual(K.enabledViews({ views: ['not-a-view'] }), ['total']);
+    assert.deepEqual(K.buildViews(data, 'all', 'all', { views: ['nope'] }).map(x => x.key), ['total']);
+    assert.deepEqual(K.toggleView({ views: ['total'] }, 'total'), ['total'], 'the last view cannot be turned off');
+  });
+
+  test('toggleView adds and removes, always in catalogue order', () => {
+    assert.deepEqual(K.toggleView({ views: ['total', 'crews'] }, 'crews'), ['total']);
+    assert.deepEqual(K.toggleView({ views: ['crews', 'total'] }, 'sq'), ['total', 'sq', 'crews']);
+    assert.equal(K.toggleView({}, 'miles').indexOf('miles'), -1, 'from all-on, toggling removes one');
+    assert.equal(K.toggleView({}, 'miles').length, K.ALL_VIEW_KEYS.length - 1);
+  });
+
+  test('rotation speed: URL override, then the coach setting, then the default', () => {
+    assert.equal(K.effectiveRotate({}, null), 14);
+    assert.equal(K.effectiveRotate({ rotate: 0 }, null), 14);
+    assert.equal(K.effectiveRotate({ rotate: 20 }, null), 20);
+    assert.equal(K.effectiveRotate({ rotate: 20 }, 30), 30);
+    assert.equal(K.effectiveRotate({ rotate: 999 }, null), 40, 'clamped');
+    assert.ok(K.ROTATE_CHOICES.indexOf(14) >= 0);
+  });
+
+  test('the choice survives a round trip through settings', () => {
+    const st = K.normaliseSettings({ views: ['total', 'roster', 'bogus'], rotate: '20' });
+    assert.deepEqual(st.views, ['total', 'roster'], 'unknown keys dropped');
+    assert.equal(st.rotate, 20);
+    assert.deepEqual(K.normaliseSettings({}).views, []);
+    assert.equal(K.normaliseSettings({ rotate: 'x' }).rotate, 0);
+    assert.equal(K.normaliseSettings({ rotate: -5 }).rotate, 0);
+  });
+});
+
+describe('crew standings', () => {
+  const data = [
+    row('Early One', ['100', '90'], ['60', '50'], ['120', '110'], { prog: 'g1' }),
+    row('Early Two', ['80'], ['50'], ['100'], { prog: 'g1' }),
+    row('Mid One', ['150', '150'], ['100', '90'], ['200', '200'], { prog: 'g2' }),
+    row('No Numbers', [], [], [], { prog: 'g3' })
+  ];
+  const all = K.scopeMembers(K.buildMembers(data), null, 'all');
+
+  test('one row per crew that has tested members, ranked by kilos added', () => {
+    const cs = K.crewStandings(all);
+    assert.equal(cs.by, 'gains');
+    assert.deepEqual(cs.rows.map(r => r.label), ['4:50 AM', '5:40 AM'], 'empty crews are left out');
+    assert.deepEqual(cs.rows.map(r => r.rank), [1, 2]);
+    const early = cs.rows[0];
+    assert.equal(early.tested, 2);
+    assert.equal(early.gained, 30, '10 on each lift');
+    assert.equal(early.pbs, 3);
+    assert.equal(early.avgTotal, 255, '(280 + 230) / 2');
+    assert.equal(cs.rows[1].gained, 10);
+    assert.equal(cs.rows[1].avgTotal, 450);
+    assert.equal(early.color, K.progColor('g1'));
+  });
+
+  test('before any round has gains it ranks by average big three instead', () => {
+    const fresh = [
+      row('A One', ['100'], ['60'], ['120'], { prog: 'g1' }),
+      row('B One', ['150'], ['100'], ['200'], { prog: 'g2' })
+    ];
+    const cs = K.crewStandings(K.scopeMembers(K.buildMembers(fresh), null, 'all'));
+    assert.equal(cs.by, 'average');
+    assert.deepEqual(cs.rows.map(r => r.label), ['5:40 AM', '4:50 AM']);
+    assert.ok(cs.rows.every(r => r.gained === 0 && r.pbs === 0));
+  });
+
+  test('a crew with numbers but no complete big three still counts', () => {
+    const partial = [row('Half Done', ['100'], [], [], { prog: 'g4' })];
+    const cs = K.crewStandings(K.scopeMembers(K.buildMembers(partial), null, 'all'));
+    assert.equal(cs.rows.length, 1);
+    assert.equal(cs.rows[0].tested, 1);
+    assert.equal(cs.rows[0].avgTotal, null);
+  });
+
+  test('no tested members at all gives no rows', () => {
+    assert.deepEqual(K.crewStandings([]).rows, []);
+  });
+});
+
+describe('most kilos added', () => {
+  const data = [
+    row('Big Mover', ['110', '100'], ['70', '60'], ['130', '120'], {}),
+    row('One Lift', ['150', '140'], ['100', '100'], ['200', '200'], {}),
+    row('Held Flat', ['100', '100'], ['60', '60'], ['120', '120'], {}),
+    row('First Timer', ['100'], ['60'], ['120'], {})
+  ];
+  const all = K.scopeMembers(K.buildMembers(data), null, 'all');
+
+  test('ranks by total kilos added, and says which lifts moved', () => {
+    const g = K.topGainers(all);
+    assert.deepEqual(g.map(x => x.m.name), ['Big Mover', 'One Lift']);
+    assert.deepEqual(g.map(x => x.rank), [1, 2]);
+    assert.equal(g[0].label, '+30 kg');
+    assert.equal(g[0].detail, 'Squat +10 · Bench +10 · Deadlift +10');
+    assert.equal(g[1].label, '+10 kg');
+    assert.equal(g[1].detail, 'Squat +10');
+  });
+
+  test('nobody who held or is untested appears', () => {
+    const names = K.topGainers(all).map(x => x.m.name);
+    assert.equal(names.indexOf('Held Flat'), -1);
+    assert.equal(names.indexOf('First Timer'), -1);
+    assert.deepEqual(K.topGainers([]), []);
+  });
+
+  test('caps at the leaderboard size', () => {
+    const many = [];
+    for (let i = 0; i < 30; i++) many.push(row('M' + String(i).padStart(2, '0'), [String(100 + i), '90'], [], []));
+    assert.equal(K.topGainers(K.scopeMembers(K.buildMembers(many), null, 'all')).length, K.LIMITS.leaderboard);
+  });
+});
+
+describe('roster sorting', () => {
+  const data = [
+    row('Charlie', ['80', '80'], ['50', '50'], ['100', '100'], {}),
+    row('Alice', ['100', '90'], ['60', '50'], ['120', '110'], {}),
+    row('Bravo', ['150'], ['100'], ['200'], {}),
+    row('Dana', ['90'], [], [], {})
+  ];
+  const all = K.scopeMembers(K.buildMembers(data), null, 'all');
+
+  test('the three sorts', () => {
+    assert.deepEqual(K.ROSTER_SORTS.map(s => s.id), ['name', 'total', 'gain']);
+    assert.deepEqual(K.sortMembers(all, 'name').map(m => m.name), ['Alice', 'Bravo', 'Charlie', 'Dana']);
+    assert.deepEqual(K.sortMembers(all, 'total').map(m => m.name), ['Bravo', 'Alice', 'Charlie', 'Dana'], 'no total sorts last');
+    assert.deepEqual(K.sortMembers(all, 'gain').map(m => m.name), ['Alice', 'Bravo', 'Charlie', 'Dana'], 'ties fall back to name');
+  });
+
+  test('sorting does not mutate and an unknown sort leaves the order alone', () => {
+    const before = all.map(m => m.name);
+    K.sortMembers(all, 'total');
+    assert.deepEqual(all.map(m => m.name), before);
+    assert.deepEqual(K.sortMembers(all, 'whatever').map(m => m.name), before);
   });
 });

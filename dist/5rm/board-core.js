@@ -71,7 +71,10 @@
     outbox: 'kf5rm.outbox.v1'
   };
 
-  var DEFAULT_SETTINGS = { tested: '', next: '', sheets: '', api: '', pin: '', norotate: false, lock: false, viewPin: '4500' };
+  var DEFAULT_SETTINGS = { tested: '', next: '', sheets: '', api: '', pin: '', norotate: false, lock: false, viewPin: '4500', views: [], rotate: 0 };
+
+  // Seconds per view a coach can pick from in Coach mode.
+  var ROTATE_CHOICES = [8, 10, 14, 20, 30, 40];
 
   var LIMITS = {
     perPage: 45,          // roster rows per TV page (3 columns x 15 rows)
@@ -358,7 +361,9 @@
     if (!p || typeof p !== 'object') return Object.assign({}, DEFAULT_SETTINGS);
     return {
       tested: p.tested || '', next: p.next || '', sheets: p.sheets || '', api: p.api || '', pin: p.pin || '',
-      norotate: !!p.norotate, lock: !!p.lock, viewPin: p.viewPin === undefined ? DEFAULT_SETTINGS.viewPin : p.viewPin
+      norotate: !!p.norotate, lock: !!p.lock, viewPin: p.viewPin === undefined ? DEFAULT_SETTINGS.viewPin : p.viewPin,
+      views: Array.isArray(p.views) ? p.views.filter(function (k) { return ALL_VIEW_KEYS.indexOf(k) >= 0; }) : [],
+      rotate: parseInt(p.rotate, 10) > 0 ? parseInt(p.rotate, 10) : 0
     };
   }
 
@@ -429,37 +434,81 @@
   /* Rotation views                                                      */
   /* ------------------------------------------------------------------ */
 
-  function buildViews(data, club, prog) {
+  function buildViews(data, club, prog, settings) {
+    var on = enabledViews(settings);
+    var has = function (k) { return on.indexOf(k) >= 0; };
     var v = [];
     var clubs = club === 'all' ? clubsPresent(data) : [club];
     clubs.forEach(function (c) {
-      v.push({ kind: 'board', lift: 'total', club: c, label: 'Total' });
-      v.push({ kind: 'board', lift: 'sq', club: c, label: 'Squat' });
-      v.push({ kind: 'board', lift: 'bp', club: c, label: 'Bench' });
-      v.push({ kind: 'board', lift: 'dl', club: c, label: 'Deadlift' });
+      VIEW_SPECS.forEach(function (sp) {
+        if (sp.kind === 'board' && has(sp.key)) v.push({ key: sp.key, kind: 'board', lift: sp.lift, club: c, label: sp.label });
+      });
     });
-    v.push({ kind: 'movers', label: 'Movers' });
-    v.push({ kind: 'pbs', label: 'New PBs' });
-    v.push({ kind: 'miles', label: 'Milestones' });
-    clubs.forEach(function (c) {
-      var n = Math.max(1, Math.ceil(countIn(data, c, prog) / LIMITS.perPage));
-      for (var i = 0; i < n; i++) v.push({ kind: 'roster', page: i, club: c, label: 'Everyone' });
+    ['movers', 'gains', 'pbs', 'miles', 'crews'].forEach(function (k) {
+      if (has(k)) v.push({ key: k, kind: k, label: viewSpec(k).label });
     });
-    return v;
+    if (has('roster')) {
+      clubs.forEach(function (c) {
+        var n = Math.max(1, Math.ceil(countIn(data, c, prog) / LIMITS.perPage));
+        for (var i = 0; i < n; i++) v.push({ key: 'roster', kind: 'roster', page: i, club: c, label: 'Everyone' });
+      });
+    }
+    return v.length ? v : [{ key: 'total', kind: 'board', lift: 'total', club: clubs[0], label: 'Total' }];
   }
 
-  var NAV_SPEC = [
-    { kind: 'board', lift: 'total', label: 'Total' },
-    { kind: 'board', lift: 'sq', label: 'Squat' },
-    { kind: 'board', lift: 'bp', label: 'Bench' },
-    { kind: 'board', lift: 'dl', label: 'Deadlift' },
-    { kind: 'movers', label: 'Movers' },
-    { kind: 'pbs', label: 'New PBs' },
-    { kind: 'miles', label: 'Milestones' },
-    { kind: 'roster', label: 'Everyone' }
+  // Every view the board can show, in rotation order. A coach switches any of
+  // them off in Coach mode and both the chips and the rotation follow.
+  var VIEW_SPECS = [
+    { key: 'total', kind: 'board', lift: 'total', label: 'Total' },
+    { key: 'sq', kind: 'board', lift: 'sq', label: 'Squat' },
+    { key: 'bp', kind: 'board', lift: 'bp', label: 'Bench' },
+    { key: 'dl', kind: 'board', lift: 'dl', label: 'Deadlift' },
+    { key: 'movers', kind: 'movers', label: 'Movers' },
+    { key: 'gains', kind: 'gains', label: 'Gains' },
+    { key: 'pbs', kind: 'pbs', label: 'New PBs' },
+    { key: 'miles', kind: 'miles', label: 'Milestones' },
+    { key: 'crews', kind: 'crews', label: 'Crews' },
+    { key: 'roster', kind: 'roster', label: 'Everyone' }
   ];
 
+  var ALL_VIEW_KEYS = VIEW_SPECS.map(function (sp) { return sp.key; });
+
+  function viewSpec(key) {
+    for (var i = 0; i < VIEW_SPECS.length; i++) if (VIEW_SPECS[i].key === key) return VIEW_SPECS[i];
+    return null;
+  }
+
+  // No stored choice means every view. A choice that turns everything off falls
+  // back to the total board, so a screen is never left blank.
+  function enabledViews(settings) {
+    var want = (settings || {}).views;
+    if (!Array.isArray(want) || !want.length) return ALL_VIEW_KEYS.slice();
+    var on = ALL_VIEW_KEYS.filter(function (k) { return want.indexOf(k) >= 0; });
+    return on.length ? on : ['total'];
+  }
+
+  function viewEnabled(settings, key) {
+    return enabledViews(settings).indexOf(key) >= 0;
+  }
+
+  // Returns the new list, in canonical order. The last view on cannot be turned off.
+  function toggleView(settings, key) {
+    var on = enabledViews(settings);
+    var has = on.indexOf(key) >= 0;
+    if (has && on.length === 1) return on;
+    var next = has ? on.filter(function (k) { return k !== key; }) : on.concat([key]);
+    return ALL_VIEW_KEYS.filter(function (k) { return next.indexOf(k) >= 0; });
+  }
+
+  // Seconds per view: a URL override wins, then the coach's setting, then the default.
+  function effectiveRotate(settings, override) {
+    if (override) return clampRotate(override);
+    var st = (settings || {}).rotate;
+    return st ? clampRotate(st) : LIMITS.rotateDefault;
+  }
+
   function viewMatches(v, spec) {
+    if (spec && spec.key) return v.key === spec.key;
     return v.kind === spec.kind && (spec.kind !== 'board' || v.lift === spec.lift);
   }
 
@@ -557,6 +606,66 @@
           : 'Nobody within ' + LIMITS.nearKg + ' kg yet'
       };
     });
+  }
+
+  // Crew against crew. Takes the whole club rather than the current crew filter,
+  // since comparing crews is the point of the view.
+  function crewStandings(members) {
+    var rows = PROGRAMS.map(function (p) {
+      var inCrew = members.filter(function (m) { return m.prog === p.id && hasNumbers(m); });
+      var gained = 0, pbs = 0, sum = 0, withTotal = 0;
+      inCrew.forEach(function (m) {
+        LIFT_KEYS.forEach(function (k) {
+          var d = m.lifts[k];
+          if (d && d.gain > 0) { gained += d.gain; pbs++; }
+        });
+        if (m.total) { sum += m.total; withTotal++; }
+      });
+      return {
+        id: p.id, label: p.label, color: p.color,
+        tested: inCrew.length, gained: gained, pbs: pbs,
+        avgTotal: withTotal ? sum / withTotal : null
+      };
+    }).filter(function (c) { return c.tested > 0; });
+
+    var anyGain = rows.some(function (c) { return c.gained > 0; });
+    rows.sort(function (a, b) {
+      if (anyGain && b.gained !== a.gained) return b.gained - a.gained;
+      return (b.avgTotal || 0) - (a.avgTotal || 0);
+    });
+    return {
+      rows: rows.map(function (r, i) { return Object.assign({ rank: i + 1 }, r); }),
+      by: anyGain ? 'gains' : 'average'
+    };
+  }
+
+  // Most kilos added across the big three. Movers ranks a single lift by
+  // percentage, which favours light starting numbers; this ranks total work.
+  function topGainers(filtered) {
+    return filtered
+      .map(function (m) { var tg = totalGain(m); return { m: m, gain: tg.gain, any: tg.any }; })
+      .filter(function (x) { return x.any && x.gain > 0; })
+      .sort(function (a, b) { return b.gain - a.gain || a.m.name.localeCompare(b.m.name); })
+      .slice(0, LIMITS.leaderboard)
+      .map(function (x, i) {
+        var parts = LIFT_KEYS
+          .filter(function (k) { return x.m.lifts[k] && x.m.lifts[k].gain > 0; })
+          .map(function (k) { return lift(k).label + ' +' + fmt(x.m.lifts[k].gain); });
+        return { rank: i + 1, m: x.m, gain: x.gain, label: '+' + fmt(x.gain) + ' kg', detail: parts.join(' · ') };
+      });
+  }
+
+  var ROSTER_SORTS = [
+    { id: 'name', label: 'Name' },
+    { id: 'total', label: 'Total' },
+    { id: 'gain', label: 'Gain' }
+  ];
+
+  function sortMembers(list, sort) {
+    var out = list.slice();
+    if (sort === 'total') out.sort(function (a, b) { return (b.total || 0) - (a.total || 0) || a.name.localeCompare(b.name); });
+    else if (sort === 'gain') out.sort(function (a, b) { return totalGain(b).gain - totalGain(a).gain || a.name.localeCompare(b.name); });
+    return out;
   }
 
   function roster(filtered, page, scrollMode) {
@@ -1146,7 +1255,8 @@
     LIFT_KEYS: LIFT_KEYS, LIFTS: LIFTS, PROGRAMS: PROGRAMS, CLUBS: CLUBS, MILESTONES: MILESTONES,
     COLORS: COLORS, STORAGE_KEYS: STORAGE_KEYS, DEFAULT_SETTINGS: DEFAULT_SETTINGS, LIMITS: LIMITS,
     PLAUSIBLE_MAX: PLAUSIBLE_MAX, PLAUSIBLE_MIN: PLAUSIBLE_MIN, NEXT_WEEKS: NEXT_WEEKS,
-    NAV_SPEC: NAV_SPEC, KEYPAD: KEYPAD, NUMPAD: NUMPAD, WORKING_PCTS: WORKING_PCTS, ROSTER_RAW: ROSTER_RAW,
+    VIEW_SPECS: VIEW_SPECS, ALL_VIEW_KEYS: ALL_VIEW_KEYS, ROTATE_CHOICES: ROTATE_CHOICES, ROSTER_SORTS: ROSTER_SORTS,
+    KEYPAD: KEYPAD, NUMPAD: NUMPAD, WORKING_PCTS: WORKING_PCTS, ROSTER_RAW: ROSTER_RAW,
 
     hash: hash, num: num, fmt: fmt, todayIso: todayIso, dateLong: dateLong, dateShort: dateShort, timeShort: timeShort,
     daysTo: daysTo, agoLabel: agoLabel, cycleLabel: cycleLabel, initials: initials, clubLabel: clubLabel,
@@ -1158,8 +1268,10 @@
     buildMembers: buildMembers, hasNumbers: hasNumbers, liftValue: liftValue, totalGain: totalGain,
     clubsPresent: clubsPresent, countIn: countIn, scopeMembers: scopeMembers,
     buildViews: buildViews, viewMatches: viewMatches, navIndex: navIndex,
+    viewSpec: viewSpec, enabledViews: enabledViews, viewEnabled: viewEnabled, toggleView: toggleView, effectiveRotate: effectiveRotate,
 
     leaderboard: leaderboard, rankLabel: rankLabel, movers: movers, pbs: pbs, milestones: milestones, roster: roster,
+    crewStandings: crewStandings, topGainers: topGainers, sortMembers: sortMembers,
     sparkPoints: sparkPoints, workingWeights: workingWeights, memberLifts: memberLifts, memberSummary: memberSummary,
 
     lev: lev, looksSame: looksSame, findDuplicates: findDuplicates, mergeRows: mergeRows,
