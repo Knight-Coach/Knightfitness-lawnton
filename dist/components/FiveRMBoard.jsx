@@ -61,7 +61,7 @@ function initState() {
     saved: 0, persist: '', storeOk: true,
     syncMsg: '', lastSync: 0,
     mobile: false,
-    sess: null, undoLabel: '', apiMsg: '',
+    sess: null, undoLabel: '', apiMsg: '', apiState: '', apiTest: null,
     unlocked: false, pinOpen: false, pinDraft: '', pinAfter: '', pinErr: '',
     vDraft: '', vErr: '', viewOk: K.unlockValid(store.get(KEYS.unlock))
   };
@@ -158,10 +158,15 @@ function FiveRMBoard() {
     return true;
   };
 
+  const freshSession = prog => ({
+    mode: '', lift: '', active: 'sq', drafts: {}, cur: null, done: {}, q: '',
+    prog: prog || 'all', remainingOnly: false, confirm: null, dateAsked: false, dateStrip: false
+  });
+
   const openSession = () => {
     markIdle();
     if (!gate('sess')) return;
-    patch({ sess: { lift: '', idx: 0, draft: '', done: {}, q: '' }, edit: false, rotating: false, sel: null, picker: false });
+    patch(prev => ({ sess: freshSession(prev.prog), edit: false, rotating: false, sel: null, picker: false }));
   };
 
   const openCoach = () => {
@@ -175,7 +180,7 @@ function FiveRMBoard() {
     const r = K.codeStep(cur.pinDraft, k, cur.settings.pin || '', 'Wrong PIN');
     if (r.ok) {
       patch({ unlocked: true, pinOpen: false, pinDraft: '', pinErr: '' });
-      if (cur.pinAfter === 'sess') patch({ sess: { lift: '', idx: 0, draft: '', done: {}, q: '' }, edit: false, rotating: false, sel: null, picker: false });
+      if (cur.pinAfter === 'sess') patch({ sess: freshSession(cur.prog), edit: false, rotating: false, sel: null, picker: false });
       else patch({ edit: true, rotating: false, sel: null, picker: false });
       return;
     }
@@ -216,20 +221,43 @@ function FiveRMBoard() {
     const cur = stateRef.current;
     const api = (cur.settings.api || '').trim();
     if (!api) return;
-    fetch(api, { method: 'POST', body: JSON.stringify({ pin: cur.settings.pin || '', member: row }) })
+    fetch(api, { method: 'POST', body: K.saveBody(cur.settings.pin, row) })
       .then(r => r.text())
       .then(text => {
-        let res = null;
-        try { res = JSON.parse(text); } catch (e) { /* not JSON — treat as accepted */ }
-        if (res && res.ok === false) {
-          patch(prev => { const outbox = K.outboxRemove(prev.outbox, row.name); persistOutbox(outbox); return { apiMsg: 'The sheet refused the score (' + (res.error || 'error') + ') — check the coach PIN and tab names.', outbox }; });
-          return;
-        }
-        patch(prev => { const outbox = K.outboxRemove(prev.outbox, row.name); persistOutbox(outbox); return { apiMsg: 'Saved to the sheet · ' + K.timeShort(Date.now()), outbox }; });
+        const res = K.parseApiReply(text);
+        patch(prev => {
+          const outbox = K.outboxRemove(prev.outbox, row.name);
+          persistOutbox(outbox);
+          if (!res.ok) {
+            return { apiState: 'error', apiMsg: 'The sheet refused that score: ' + res.error + '. Check the coach PIN matches the script.', outbox };
+          }
+          return { apiState: outbox.length ? 'queued' : 'ok', apiMsg: 'Saved into the sheet · ' + K.timeShort(Date.now()), outbox };
+        });
       })
       .catch(() => {
-        patch(prev => { const outbox = K.outboxAdd(prev.outbox, row); persistOutbox(outbox); return { apiMsg: 'Saved on this device — sheet write failed, will retry on next save.', outbox }; });
+        patch(prev => {
+          const outbox = K.outboxAdd(prev.outbox, row);
+          persistOutbox(outbox);
+          return { apiState: 'queued', apiMsg: 'Could not reach the sheet. Saved on this device and queued to retry.', outbox };
+        });
       });
+  }, []);
+
+  // Verifies the save-back link and the coach PIN without writing a score.
+  const testConnection = useCallback(() => {
+    const cur = stateRef.current;
+    const api = (cur.settings.api || '').trim();
+    if (!api) { patch({ apiTest: { state: 'error', msg: 'Paste the save-back link first.' } }); return; }
+    patch({ apiTest: { state: 'checking', msg: 'Checking…' } });
+    fetch(api, { method: 'POST', body: K.pingBody(cur.settings.pin) })
+      .then(r => r.text())
+      .then(text => {
+        const res = K.parseApiReply(text);
+        patch({ apiTest: res.ok
+          ? { state: 'ok', msg: 'Connected. Scores entered on this board will write into the sheet.' }
+          : { state: 'error', msg: 'The script answered but refused: ' + res.error + '. Set COACH_PIN in the script to match the coach PIN here.' } });
+      })
+      .catch(() => patch({ apiTest: { state: 'error', msg: 'Could not reach that link. Check it ends in /exec and is deployed so anyone can run it.' } }));
   }, []);
 
   const flushOutbox = useCallback(exceptName => {
@@ -239,61 +267,157 @@ function FiveRMBoard() {
   }, [pushRemote]);
 
   /* ---------- Testing session ---------- */
-  const queue = useMemo(() => K.buildQueue(s.data, s.club), [s.data, s.club]);
-  const sessSet = p => patch(prev => ({ sess: Object.assign({}, prev.sess, p) }));
+  // The list a coach walks. Filtered to one crew, and optionally to whoever is
+  // still outstanding, so a 5:40 AM session is a dozen people and not the whole gym.
+  const sessScope = s.sess ? K.buildQueue(s.data, s.club, s.sess.prog) : [];
+  const sessList = s.sess ? K.sessionQueue(s.data, s.club, s.sess.prog, s.sess.done, s.sess.remainingOnly) : [];
+  const sessRow = s.sess && s.sess.cur !== null && s.sess.cur !== undefined ? s.data[s.sess.cur] : null;
 
+  const sessSet = p => patch(prev => ({ sess: Object.assign({}, prev.sess, typeof p === 'function' ? p(prev.sess) : p) }));
+
+  // Who to land on after handling `from`: the next in line, or whoever moved into
+  // their slot once they dropped out of a "still to do" list.
+  const nextCur = (before, after, from) => {
+    if (!after.length) return null;
+    const still = after.findIndex(x => x.i === from);
+    if (still >= 0) return after[Math.min(still + 1, after.length - 1)].i;
+    const was = before.findIndex(x => x.i === from);
+    return after[Math.min(Math.max(was, 0), after.length - 1)].i;
+  };
+
+  const startSession = (mode, liftKey) => {
+    const cur = stateRef.current;
+    const q = K.sessionQueue(cur.data, cur.club, cur.sess.prog, {}, false);
+    sessSet({ mode, lift: liftKey || '', active: liftKey || 'sq', drafts: {}, confirm: null, cur: q.length ? q[0].i : null });
+  };
+
+  const setSessCrew = prog => {
+    const cur = stateRef.current;
+    const q = K.sessionQueue(cur.data, cur.club, prog, cur.sess.done, cur.sess.remainingOnly);
+    sessSet({ prog, drafts: {}, confirm: null, q: '', cur: q.length ? q[0].i : null });
+  };
+
+  const toggleRemaining = () => {
+    const cur = stateRef.current;
+    const on = !cur.sess.remainingOnly;
+    const q = K.sessionQueue(cur.data, cur.club, cur.sess.prog, cur.sess.done, on);
+    const keep = q.some(x => x.i === cur.sess.cur);
+    sessSet({ remainingOnly: on, drafts: keep ? cur.sess.drafts : {}, confirm: null, cur: keep ? cur.sess.cur : (q.length ? q[0].i : null) });
+  };
+
+  const commitSave = () => {
+    const cur = stateRef.current;
+    const ss = cur.sess;
+    if (!ss || ss.cur === null || ss.cur === undefined) return;
+    const filled = K.draftsFilled(ss.drafts);
+    if (!filled.length) return;
+    const before = K.sessionQueue(cur.data, cur.club, ss.prog, ss.done, ss.remainingOnly);
+    undoRef.current = { data: K.clone(cur.data), cur: ss.cur, drafts: ss.drafts };
+    let data = cur.data;
+    filled.forEach(k => { data = K.recordScore(data, ss.cur, k, ss.drafts[k], K.todayIso()); });
+    save(data);
+    const name = (cur.data[ss.cur] || {}).name || '';
+    patch({ undoLabel: 'Undo ' + name + ' · ' + filled.map(k => K.lift(k).label + ' ' + ss.drafts[k] + ' kg').join(' · ') });
+    pushRemote(data[ss.cur]);
+    flushOutbox(name);
+    const done = Object.assign({}, ss.done, { [ss.cur]: 'done' });
+    const after = K.sessionQueue(data, cur.club, ss.prog, done, ss.remainingOnly);
+    const askDate = cur.settings.tested !== K.todayIso();
+    sessSet(prev => ({
+      done, drafts: {}, confirm: null,
+      cur: nextCur(before, after, ss.cur),
+      active: prev.mode === 'member' ? 'sq' : prev.active,
+      dateAsked: prev.dateAsked || askDate,
+      dateStrip: prev.dateAsked ? prev.dateStrip : askDate
+    }));
+  };
+
+  // First press checks the numbers; an unusual entry asks once before it goes in.
   const sessSave = () => {
     const cur = stateRef.current;
     const ss = cur.sess;
-    if (!ss || !ss.lift) return;
-    const q = K.buildQueue(cur.data, cur.club);
-    const item = q[Math.min(ss.idx, q.length - 1)];
-    if (!item || !ss.draft) return;
-    undoRef.current = { data: K.clone(cur.data), idx: ss.idx };
-    const data = K.recordScore(cur.data, item.i, ss.lift, ss.draft, K.todayIso());
-    save(data);
-    patch({ undoLabel: 'Undo ' + item.name + ' · ' + ss.draft + ' kg' });
-    pushRemote(data[item.i]);
-    flushOutbox(item.name);
-    sessSet({ done: Object.assign({}, ss.done, { [item.i]: 'done' }), draft: '', idx: Math.min(ss.idx + 1, q.length - 1) });
+    if (!ss || ss.cur === null || ss.cur === undefined) return;
+    if (!K.draftsFilled(ss.drafts).length) return;
+    if (!ss.confirm) {
+      const warnings = K.checkEntries(ss.drafts, cur.data[ss.cur]);
+      if (warnings.length) { sessSet({ confirm: warnings }); return; }
+    }
+    commitSave();
   };
+
+  const useSuggestion = w => sessSet(prev => {
+    const drafts = Object.assign({}, prev.drafts);
+    drafts[w.lift] = w.suggestion;
+    return { drafts, confirm: null, active: w.lift };
+  });
 
   const sessSkip = () => {
     const cur = stateRef.current;
     const ss = cur.sess;
-    if (!ss || !ss.lift) return;
-    const q = K.buildQueue(cur.data, cur.club);
-    const item = q[Math.min(ss.idx, q.length - 1)];
-    const done = item ? Object.assign({}, ss.done, { [item.i]: 'skip' }) : ss.done;
-    sessSet({ done, draft: '', idx: Math.min(ss.idx + 1, q.length - 1) });
+    if (!ss || ss.cur === null || ss.cur === undefined) return;
+    const before = K.sessionQueue(cur.data, cur.club, ss.prog, ss.done, ss.remainingOnly);
+    const done = Object.assign({}, ss.done, { [ss.cur]: 'skip' });
+    const after = K.sessionQueue(cur.data, cur.club, ss.prog, done, ss.remainingOnly);
+    sessSet({ done, drafts: {}, confirm: null, cur: nextCur(before, after, ss.cur) });
   };
 
   const sessBack = () => {
-    const ss = stateRef.current.sess;
+    const cur = stateRef.current;
+    const ss = cur.sess;
     if (!ss) return;
-    sessSet({ idx: Math.max(0, ss.idx - 1), draft: '' });
+    const q = K.sessionQueue(cur.data, cur.club, ss.prog, ss.done, ss.remainingOnly);
+    const pos = q.findIndex(x => x.i === ss.cur);
+    if (pos > 0) sessSet({ cur: q[pos - 1].i, drafts: {}, confirm: null });
   };
 
+  // Undo puts the numbers back and returns to that member with what was typed,
+  // so a wrong entry can be corrected rather than retyped from scratch.
   const sessUndo = () => {
     const u = undoRef.current;
     if (!u) return;
     undoRef.current = null;
     patch({ data: u.data, undoLabel: '' });
     if (!PAGE.demo) store.set(KEYS.members, JSON.stringify(u.data));
-    sessSet({ idx: u.idx, draft: '' });
+    sessSet(prev => {
+      const done = Object.assign({}, prev.done);
+      delete done[u.cur];
+      return { done, cur: u.cur, drafts: u.drafts || {}, confirm: null };
+    });
   };
 
   const sessClose = () => patch({ sess: null, rotating: true, elapsed: 0 });
 
-  const padKey = k => { const ss = stateRef.current.sess; if (ss) sessSet({ draft: K.padKey(ss.draft, k) }); };
+  const padKey = k => sessSet(prev => {
+    const drafts = Object.assign({}, prev.drafts);
+    drafts[prev.active] = K.padKey(drafts[prev.active], k);
+    return { drafts, confirm: null };
+  });
 
   const padAdd = n => {
     const cur = stateRef.current;
     const ss = cur.sess;
-    const q = K.buildQueue(cur.data, cur.club);
-    const item = q[Math.min(ss.idx, q.length - 1)];
-    const current = item ? ((cur.data[item.i] || {})[ss.lift] || {}).c : '';
-    sessSet({ draft: K.padAdd(ss.draft, current, n) });
+    const current = ((cur.data[ss.cur] || {})[ss.active] || {}).c || '';
+    sessSet(prev => {
+      const drafts = Object.assign({}, prev.drafts);
+      drafts[prev.active] = K.padAdd(drafts[prev.active], current, n);
+      return { drafts, confirm: null };
+    });
+  };
+
+  const setActive = k => sessSet({ active: k, confirm: null });
+
+  const cycleActive = dir => sessSet(prev => {
+    if (prev.mode !== 'member') return {};
+    const i = K.LIFT_KEYS.indexOf(prev.active);
+    return { active: K.LIFT_KEYS[(i + dir + K.LIFT_KEYS.length) % K.LIFT_KEYS.length], confirm: null };
+  });
+
+  // Offered after the first score of a session, where the coach already is.
+  const useTodayAsTested = () => {
+    const today = K.todayIso();
+    setSetting('tested', today);
+    if (K.nextNeedsUpdate(stateRef.current.settings)) setSetting('next', K.suggestNext(today));
+    sessSet({ dateStrip: false });
   };
 
   const addNamed = name => {
@@ -301,11 +425,12 @@ function FiveRMBoard() {
     const n = String(name || '').trim();
     if (!n) return;
     const club = cur.club === 'all' ? K.clubsPresent(cur.data)[0] : cur.club;
-    const data = K.addMember(cur.data, n, club);
+    const prog = cur.sess && cur.sess.prog !== 'all' ? cur.sess.prog : 'g1';
+    const data = K.setMeta(K.addMember(cur.data, n, club), cur.data.length, 'prog', prog);
     save(data);
     if (cur.sess) {
-      const idx = K.buildQueue(data, cur.club).findIndex(x => K.sameName(x.name, n));
-      sessSet({ q: '', draft: '', idx: idx < 0 ? 0 : idx });
+      const i = K.findByName(data, n);
+      sessSet({ q: '', drafts: {}, confirm: null, cur: i < 0 ? null : i });
     }
   };
 
@@ -321,7 +446,9 @@ function FiveRMBoard() {
   const removeMember = (i, name) => { if (window.confirm('Remove ' + name + ' from the board?')) save(K.removeMember(stateRef.current.data, i)); };
   const mergeRows = (keep, drop) => save(K.mergeRows(stateRef.current.data, keep, drop));
   const applyImport = () => {
-    const out = K.applyImport(stateRef.current.data, stateRef.current.impText);
+    const cur = stateRef.current;
+    const club = cur.club === 'all' ? K.clubsPresent(cur.data)[0] : cur.club;
+    const out = K.applyImport(cur.data, cur.impText, club);
     if (!out) return;
     save(out);
     patch({ imp: false, impText: '' });
@@ -372,7 +499,7 @@ function FiveRMBoard() {
   useEffect(() => { resize(); });
 
   // Latest handlers for the window-level keyboard listener.
-  apiRef.current = { padKey, sessSave, sessSkip, sessBack, sessClose };
+  apiRef.current = { padKey, sessSave, sessSkip, sessBack, sessClose, cycleActive };
 
   /* ---------- Mount: timers and listeners ---------- */
   useEffect(() => {
@@ -405,7 +532,7 @@ function FiveRMBoard() {
 
     const onKey = e => {
       const cur = stateRef.current;
-      if (!cur.sess || !cur.sess.lift) return;
+      if (!cur.sess || !cur.sess.mode) return;
       const tag = (e.target && e.target.tagName) || '';
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
         if (e.key === 'Enter' && e.target.blur) e.target.blur();
@@ -418,6 +545,8 @@ function FiveRMBoard() {
       else if (e.key === 'Enter') { a.sessSave(); e.preventDefault(); }
       else if (e.key === 'ArrowRight' || e.key === 'Tab') { a.sessSkip(); e.preventDefault(); }
       else if (e.key === 'ArrowLeft') { a.sessBack(); e.preventDefault(); }
+      else if (e.key === 'ArrowDown') { a.cycleActive(1); e.preventDefault(); }
+      else if (e.key === 'ArrowUp') { a.cycleActive(-1); e.preventDefault(); }
       else if (e.key === 'Escape') { a.sessClose(); }
     };
     window.addEventListener('keydown', onKey);
@@ -474,6 +603,11 @@ function FiveRMBoard() {
       ? 'Live from the gym sheet' + (s.lastSync ? ' · synced ' + K.timeShort(s.lastSync) : '')
       : (s.rotating ? 'Board rotating' : 'Exploring — resumes shortly');
   const selMember = s.sel ? members.find(x => x.name === s.sel) : null;
+  const boardAlert = !s.storeOk
+    ? 'This screen cannot save scores — tell a coach'
+    : s.outbox.length
+      ? (s.outbox.length === 1 ? '1 score still to reach the sheet' : s.outbox.length + ' scores still to reach the sheet')
+      : '';
 
   const setCrew = e => {
     if (locked) return;
@@ -540,8 +674,8 @@ function FiveRMBoard() {
 
             <footer className="tv-foot">
               <div className="tv-foot__status">
-                <div className="tv-foot__dot" style={{ background: s.rotating ? K.COLORS.success : K.COLORS.gold }} />
-                <div className="tv-foot__text">{statusLabel}</div>
+                <div className="tv-foot__dot" style={{ background: boardAlert ? K.COLORS.red : s.rotating ? K.COLORS.success : K.COLORS.gold }} />
+                <div className="tv-foot__text">{boardAlert || statusLabel}</div>
               </div>
               <div className="tv-foot__right">
                 <div className="tv-foot__text">{s.rotating ? 'Tap the screen to explore →' : 'Tap a name for the full card →'}</div>
@@ -572,15 +706,19 @@ function FiveRMBoard() {
 
       {s.sess && (
         <SessionScreen
-          s={s} queue={queue}
+          s={s} list={sessList} scope={sessScope} row={sessRow} dest={K.saveDestination(st)}
           onClose={sessClose}
-          onPick={key => sessSet({ lift: key, idx: 0, draft: '' })}
-          onSwitch={() => sessSet({ lift: '', draft: '' })}
+          onStart={startSession}
+          onSwitch={() => sessSet({ mode: '', lift: '', drafts: {}, confirm: null, q: '', done: {}, remainingOnly: false })}
+          onCrew={setSessCrew}
+          onRemaining={toggleRemaining}
           onQuery={q => sessSet({ q })}
-          onJump={i => sessSet({ idx: i, draft: '', q: '' })}
+          onJump={i => sessSet({ cur: i, drafts: {}, confirm: null, q: '' })}
           onAdd={() => addNamed(s.sess.q)}
-          onPad={padKey} onQuick={padAdd}
+          onActive={setActive} onPad={padKey} onQuick={padAdd}
           onBack={sessBack} onSkip={sessSkip} onSave={sessSave} onUndo={sessUndo}
+          onFix={() => sessSet({ confirm: null })} onSuggestion={useSuggestion}
+          onUseToday={useTodayAsTested} onDismissDate={() => sessSet({ dateStrip: false })}
         />
       )}
 
@@ -621,6 +759,7 @@ function FiveRMBoard() {
           onSync={() => syncNow(false)}
           onField={field} onMeta={meta} onAddMember={addMember} onRemove={removeMember} onMerge={mergeRows}
           onApplyImport={applyImport} onRollForward={rollForward} onReset={resetSeed} onRestore={restore} onExport={exportBackup}
+          onTestConnection={testConnection}
           rotateSeconds={PAGE.rotateSeconds}
         />
       )}
@@ -962,21 +1101,30 @@ function PhoneDetail({ m, raw, st, testedShort, onBack }) {
 /* Testing session (coach score entry)                                 */
 /* ================================================================== */
 
-function SessionScreen({ s, queue, onClose, onPick, onSwitch, onQuery, onJump, onAdd, onPad, onQuick, onBack, onSkip, onSave, onUndo }) {
+function SessionScreen({ s, list, scope, row, dest, onClose, onStart, onSwitch, onCrew, onRemaining, onQuery, onJump, onAdd, onActive, onPad, onQuick, onBack, onSkip, onSave, onUndo, onFix, onSuggestion, onUseToday, onDismissDate }) {
   const ss = s.sess;
-  const picking = !ss.lift;
-  let run = null;
-  if (!picking) {
-    const idx = Math.min(ss.idx, Math.max(0, queue.length - 1));
-    const item = queue[idx] || { name: '', i: 0 };
-    const row = s.data[item.i] || {};
-    const cell = row[ss.lift];
-    const doneN = Object.keys(ss.done || {}).length;
-    const liftDef = K.lift(ss.lift) || K.LIFTS[0];
-    const prog = K.sessionProgress(idx, queue.length, doneN);
-    const q = (ss.q || '').trim();
-    run = { idx, item, cell, liftDef, prog, q, matches: K.queueMatches(queue, q), canAdd: K.canAddName(queue, q) };
-  }
+  const setup = !ss.mode;
+  const memberMode = ss.mode === 'member';
+  const q = (ss.q || '').trim();
+  const doneN = Object.keys(ss.done || {}).length;
+  const pos = list.findIndex(x => x.i === ss.cur);
+  const prog = K.sessionProgress(Math.max(0, pos), list.length, doneN, scope.length, ss.remainingOnly);
+  const activeLift = K.lift(ss.active) || K.LIFTS[0];
+  const liftDef = K.lift(ss.lift) || K.LIFTS[0];
+  const crewDot = ss.prog === 'all' ? K.COLORS.neutralDot : K.progColor(ss.prog);
+  const suggestion = (ss.confirm || []).filter(w => w.suggestion)[0];
+  const filled = K.draftsFilled(ss.drafts).length;
+
+  const crewPill = (
+    <div className="crew-pill">
+      <div className="crew-pill__dot" style={{ background: crewDot }} />
+      <select className="crew-pill__select" value={ss.prog} onChange={e => onCrew(e.target.value)} aria-label="Crew">
+        <option value="all">All crews</option>
+        {K.PROGRAMS.map(p => <option key={p.id} value={p.id}>{p.label} crew</option>)}
+      </select>
+    </div>
+  );
+
   return (
     <div className="sess">
       <div className="sess__col">
@@ -985,69 +1133,158 @@ function SessionScreen({ s, queue, onClose, onPick, onSwitch, onQuery, onJump, o
           <div className="pill pill--white pill--finish" onClick={onClose}>Finish</div>
         </div>
 
-        {picking ? (
+        {setup ? (
           <div className="sess__pick">
-            <div className="sess__title">Which lift are you testing?</div>
-            <div className="sess__help">You'll work down the roster one member at a time. Skip anyone who isn't in today.</div>
+            <div className="sess__title">Who are you testing?</div>
+            <div className="sess__help">Pick the crew in front of you and the list stays short.</div>
+            {crewPill}
+            <div className="sess__count">{scope.length === 1 ? '1 member' : scope.length + ' members'} in this list</div>
+
+            <div className="sess__title sess__title--sub">And which lift?</div>
             {K.LIFTS.map(l => (
-              <div key={l.key} className="lift-card" style={{ borderLeftColor: l.color }} onClick={() => onPick(l.key)}>
+              <div key={l.key} className="lift-card" style={{ borderLeftColor: l.color }} onClick={() => onStart('lift', l.key)}>
                 <div className="lift-card__name">{l.label}</div>
-                <div className="lift-card__sub">{s.data.filter(r => ((r[l.key] || {}).c || '')).length} of {s.data.length} have a number</div>
+                <div className="lift-card__sub">{scope.filter(x => ((s.data[x.i] || {})[l.key] || {}).c).length} of {scope.length} have a number</div>
               </div>
             ))}
+            <div className="lift-card lift-card--all" onClick={() => onStart('member', '')}>
+              <div className="lift-card__name">All three lifts</div>
+              <div className="lift-card__sub">Enter squat, bench and deadlift while each member is in front of you</div>
+            </div>
           </div>
         ) : (
           <div className="sess__run">
-            <div className="sess__switch" style={{ color: run.liftDef.color }} onClick={onSwitch}>{run.liftDef.label} 5RM ▾</div>
+            <div className="sess__topRow">
+              <div className="sess__switch" style={{ color: memberMode ? K.COLORS.ink : liftDef.color }} onClick={onSwitch}>
+                {memberMode ? 'All three lifts' : liftDef.label + ' 5RM'} ▾
+              </div>
+              {crewPill}
+            </div>
 
             <input className="field" value={ss.q || ''} onChange={e => onQuery(e.target.value)} placeholder="Find a member, or type a new name" />
 
-            {!!run.q && (
+            {!!q && (
               <div className="sess__results">
                 <div className="sess__resultList">
-                  {run.matches.map(x => (
-                    <div key={x.i} className="sess__result" onClick={() => onJump(queue.findIndex(y => y.i === x.i))}>
+                  {K.queueMatches(scope, q).map(x => (
+                    <div key={x.i} className="sess__result" onClick={() => onJump(x.i)}>
                       <div className="sess__resultName">{x.name}</div>
                       <div className="sess__resultState">{ss.done[x.i] === 'done' ? 'entered' : ss.done[x.i] === 'skip' ? 'skipped' : ''}</div>
                     </div>
                   ))}
                 </div>
-                {run.canAdd && (
+                {K.canAddName(scope, q) && (
                   <div className="sess__add">
                     <div className="sess__addNote">Nobody on the roster matches that.</div>
-                    <div className="btn-outline-red" onClick={onAdd}>Add "{run.q}" to the roster</div>
+                    <div className="btn-outline-red" onClick={onAdd}>Add "{q}" to the roster</div>
                   </div>
                 )}
               </div>
             )}
 
-            <div className="sess__bar"><div className="sess__fill" style={{ width: run.prog.pct + '%' }} /></div>
-            <div className="sess__progress">{run.prog.label}</div>
-
-            <div className="sess-member">
-              <div className="sess-member__name">{run.item.name}</div>
-              <div className="sess-member__ctx">{K.sessionContext(run.cell)}</div>
-              <div className="sess-member__draftRow">
-                <div className={cx('sess-member__draft', !ss.draft && 'sess-member__draft--empty')}>{ss.draft || '—'}</div>
-                <div className="sess-member__unit">kg</div>
-              </div>
-              <div className="sess-member__quick">
-                {[2.5, 5, 10].map(n => <div key={n} className="quick" onClick={() => onQuick(n)}>+{n}</div>)}
+            <div className="sess__bar"><div className="sess__fill" style={{ width: prog.pct + '%' }} /></div>
+            <div className="sess__progressRow">
+              <div className="sess__progress">{prog.label}</div>
+              <div className={cx('sess__toggle', ss.remainingOnly && 'sess__toggle--on')} onClick={onRemaining}>
+                {ss.remainingOnly ? 'Showing what is left' : 'Show what is left'}
               </div>
             </div>
 
-            <div className="numpad">
-              {K.NUMPAD.map(k => <div key={k} className="numpad__key" onClick={() => onPad(k)}>{K.keyLabel(k)}</div>)}
+            {ss.dateStrip && (
+              <div className="sess__strip">
+                <div className="sess__stripText">
+                  Mark today as this round's test date?
+                  <span className="sess__stripSub">{s.settings.tested ? 'Currently ' + K.dateShort(s.settings.tested) + '.' : 'Not set yet.'} The next round is set twelve weeks out.</span>
+                </div>
+                <div className="sess__stripActions">
+                  <div className="btn btn--skip" onClick={onDismissDate}>Not now</div>
+                  <div className="btn btn--dark" onClick={onUseToday}>Use today</div>
+                </div>
+              </div>
+            )}
+
+            <div className={cx('sess__dest', s.apiState === 'error' && 'sess__dest--error', s.apiState === 'queued' && 'sess__dest--warn')}>
+              {s.apiState === 'error' || s.apiState === 'queued' ? s.apiMsg : dest.label}
             </div>
 
-            <div className="sess__actions">
-              <div className="btn btn--back" onClick={onBack}>Back</div>
-              <div className="btn btn--skip" onClick={onSkip}>Not today</div>
-              <div className="btn btn--save" onClick={onSave}>Save · next</div>
-            </div>
+            {row ? (
+              <React.Fragment>
+                <div className="sess-member">
+                  <div className="sess-member__name">{row.name}</div>
+                  {memberMode ? (
+                    <div className="sess-lifts">
+                      {K.LIFTS.map(l => {
+                        const v = ss.drafts[l.key] || '';
+                        return (
+                          <div key={l.key} className={cx('sess-lift', ss.active === l.key && 'sess-lift--on')} style={{ borderLeftColor: l.color }} onClick={() => onActive(l.key)}>
+                            <div className="sess-lift__label">
+                              <div className="sess-lift__name">{l.label}</div>
+                              <div className="sess-lift__ctx">{K.sessionContext(row[l.key])}</div>
+                            </div>
+                            <div className={cx('sess-lift__val', !v && 'sess-lift__val--empty')}>{v || '—'}<span className="sess-lift__unit">kg</span></div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <React.Fragment>
+                      <div className="sess-member__ctx">{K.sessionContext(row[ss.lift])}</div>
+                      <div className="sess-member__draftRow">
+                        <div className={cx('sess-member__draft', !ss.drafts[ss.active] && 'sess-member__draft--empty')}>{ss.drafts[ss.active] || '—'}</div>
+                        <div className="sess-member__unit">kg</div>
+                      </div>
+                    </React.Fragment>
+                  )}
+                  <div className="sess-member__quick">
+                    {memberMode && <div className="sess-member__quickLabel">{activeLift.label}</div>}
+                    {[2.5, 5, 10].map(n => <div key={n} className="quick" onClick={() => onQuick(n)}>+{n}</div>)}
+                  </div>
+                </div>
+
+                {!!ss.confirm && (
+                  <div className="sess__check">
+                    <div className="sess__checkText">
+                      {ss.confirm.map(w => <div key={w.lift}>{w.message}</div>)}
+                    </div>
+                    <div className="sess__checkActions">
+                      <div className="btn btn--skip" onClick={onFix}>Fix it</div>
+                      {suggestion && <div className="btn btn--dark" onClick={() => onSuggestion(suggestion)}>Use {suggestion.suggestion} kg</div>}
+                      <div className="btn btn--save" onClick={onSave}>Save anyway</div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="numpad">
+                  {K.NUMPAD.map(k => <div key={k} className="numpad__key" onClick={() => onPad(k)}>{K.keyLabel(k)}</div>)}
+                </div>
+
+                {!ss.confirm && (
+                  <div className="sess__actions">
+                    <div className="btn btn--back" onClick={onBack}>Back</div>
+                    <div className="btn btn--skip" onClick={onSkip}>Not today</div>
+                    <div className={cx('btn btn--save', !filled && 'btn--off')} onClick={onSave}>Save · next</div>
+                  </div>
+                )}
+              </React.Fragment>
+            ) : (
+              <div className="sess-member sess-member--empty">
+                <div className="sess-member__name">{scope.length ? 'All done' : 'Nobody in this crew'}</div>
+                <div className="sess-member__ctx">
+                  {scope.length
+                    ? 'Everyone on this list has a number in or is marked not today.'
+                    : 'Assign members to this crew in Coach mode, or pick another crew above.'}
+                </div>
+                <div className="sess__doneActions">
+                  {ss.remainingOnly && <div className="btn btn--skip" onClick={onRemaining}>Show everyone again</div>}
+                  <div className="btn btn--save" onClick={onClose}>Finish</div>
+                </div>
+              </div>
+            )}
+
             {!!s.undoLabel && <div className="undo" onClick={onUndo}>↩ {s.undoLabel}</div>}
-            <div className="sess__hint">On a laptop: type the number, Enter saves, → skips, ← goes back.</div>
-            <div className="sess__hint">{s.apiMsg}</div>
+            <div className="sess__hint">
+              On a laptop: type the number, Enter saves, → skips, ← goes back{memberMode ? ', ↑ ↓ picks the lift' : ''}.
+            </div>
           </div>
         )}
       </div>
@@ -1059,7 +1296,7 @@ function SessionScreen({ s, queue, onClose, onPick, onSwitch, onQuery, onJump, o
 /* Coach mode (data admin)                                             */
 /* ================================================================== */
 
-function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onSync, onField, onMeta, onAddMember, onRemove, onMerge, onApplyImport, onRollForward, onReset, onRestore, onExport, rotateSeconds }) {
+function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onSync, onField, onMeta, onAddMember, onRemove, onMerge, onApplyImport, onRollForward, onReset, onRestore, onExport, onTestConnection, rotateSeconds }) {
   const dupes = K.findDuplicates(s.data).slice(0, L.dupes);
   const dupeCount = K.findDuplicates(s.data).length;
   const rows = s.data
@@ -1111,8 +1348,8 @@ function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onS
 
         {s.imp && (
           <div className="coach__section coach__import">
-            <div className="coach__importText">Copy the rows straight out of the spreadsheet and paste them here — one member per line, in the order <strong>Name, Squat, Bench, Deadlift</strong> (optionally followed by their three previous 5RMs). Existing names are updated, new names are added. A previously exported backup file can be pasted here too.</div>
-            <textarea className="coach__textarea" value={s.impText} onChange={e => patch({ impText: e.target.value })} placeholder="Aaron Zimpel, 125, 75, 125" />
+            <div className="coach__importText">Copy the rows straight out of the spreadsheet and paste them here — one member per line, in the order <strong>Name, Squat, Bench, Deadlift</strong> (optionally followed by their three previous 5RMs). A crew in any column sets their class, so <strong>Keith Gray, 5:40 AM</strong> on its own assigns a crew without touching their numbers. Existing names are updated, new names are added. A previously exported backup file can be pasted here too.</div>
+            <textarea className="coach__textarea" value={s.impText} onChange={e => patch({ impText: e.target.value })} placeholder={'Aaron Zimpel, 125, 75, 125\nKeith Gray, 5:40 AM'} />
             <div className="coach__btnRow">
               <div className="cbtn cbtn--red" onClick={onApplyImport}>Apply</div>
               <div className="cbtn" onClick={() => patch({ imp: false })}>Cancel</div>
@@ -1124,12 +1361,24 @@ function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onS
           <div className="coach__field">
             <div className="coach__label">This round tested</div>
             <input className="coach__date" type="date" value={st.tested} onChange={e => setSetting('tested', e.target.value)} />
+            <div className="coach__quickRow">
+              <div className="coach__quick" onClick={() => setSetting('tested', K.todayIso())}>Today</div>
+            </div>
           </div>
           <div className="coach__field">
             <div className="coach__label">Next testing date</div>
             <input className="coach__date" type="date" value={st.next} onChange={e => setSetting('next', e.target.value)} />
+            <div className="coach__quickRow">
+              {[8, 12].map(w => (
+                <div key={w} className="coach__quick" onClick={() => setSetting('next', K.suggestNext(st.tested, w))}>+{w} weeks</div>
+              ))}
+            </div>
           </div>
-          <div className="coach__note">Both dates show in the board header — the next date counts down once it's within three weeks.</div>
+          <div className="coach__note">
+            {!st.tested && !st.next
+              ? 'Set these and the board tells members when they were tested and when the next round is. Until then its header stays blank.'
+              : 'Both dates show in the board header. The next date counts down once it is within three weeks.'}
+          </div>
           <div className="coach__field">
             <div className="coach__label">Member interaction</div>
             <div className="cbtn cbtn--toggle" onClick={lockToggle}>{st.lock ? 'Allow members to explore' : 'Lock to display only'}</div>
@@ -1162,6 +1411,12 @@ function CoachMode({ s, st, linked, sheetLocked, patch, setSetting, onClose, onS
               <div className="coach__label">Gym passcode (to view)</div>
               <input className="coach__input coach__input--code" value={st.viewPin} onChange={e => setSetting('viewPin', K.digitsOnly(e.target.value))} placeholder="4500" inputMode="numeric" />
             </div>
+          </div>
+          <div className="coach__btnRow coach__btnRow--test">
+            <div className="cbtn cbtn--outline" onClick={onTestConnection}>Test connection</div>
+            {s.apiTest && (
+              <div className={cx('coach__msg', s.apiTest.state === 'error' && 'coach__warn', s.apiTest.state === 'ok' && 'coach__ok')}>{s.apiTest.msg}</div>
+            )}
           </div>
           {!s.storeOk && <div className="coach__warn">This browser is blocking saved data (private browsing?) — scores will not persist here.</div>}
           {!!s.outbox.length && <div className="coach__warn">{s.outbox.length === 1 ? '1 score is' : s.outbox.length + ' scores are'} waiting to be written to the sheet — they retry automatically.</div>}

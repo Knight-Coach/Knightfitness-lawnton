@@ -16,6 +16,10 @@
  * After that, every score a coach enters on the board is written into this
  * sheet: the new number goes in the 5RM column and the number it replaced
  * moves into the "Previous 5RM" column.
+ *
+ * 7. Back in Coach mode, press "Test connection". It checks the link, the PIN
+ *    and the tab names below without writing anything, so a setup mistake
+ *    shows up now rather than midway through a testing session.
  */
 
 var COACH_PIN = '1984';
@@ -32,6 +36,13 @@ function doPost(e) {
     if (COACH_PIN && String(body.pin || '') !== String(COACH_PIN)) {
       return out({ ok: false, error: 'bad pin' });
     }
+    // "Test connection" from the board: verify the PIN and the tabs, write nothing.
+    if (body.ping) {
+      var missing = missingTabs();
+      if (missing.length) return out({ ok: false, error: 'no tab named ' + missing.join(' or ') });
+      return out({ ok: true, ping: true });
+    }
+
     var m = body.member;
     if (!m || !m.name) return out({ ok: false, error: 'no member' });
 
@@ -44,6 +55,16 @@ function doPost(e) {
   } catch (err) {
     return out({ ok: false, error: String(err) });
   }
+}
+
+// The configured tabs that do not exist in this spreadsheet.
+function missingTabs() {
+  var ss = SpreadsheetApp.getActive();
+  var missing = [];
+  Object.keys(TABS).forEach(function (key) {
+    if (!ss.getSheetByName(TABS[key])) missing.push('"' + TABS[key] + '"');
+  });
+  return missing;
 }
 
 function doGet() {

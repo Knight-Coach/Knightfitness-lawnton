@@ -71,17 +71,29 @@ A member-facing strength board for the gym TV, built from the *Knight Fitness 5R
 1. Open `/5rm` on the TV browser in kiosk / full-screen mode and enter the gym passcode (default **4500**).
 2. Tap **Coach mode** (bottom right). Set **This round tested** and **Next testing date** — they show in the header and the next date counts down inside three weeks.
 3. Set a **Coach PIN** so only staff can open *Enter scores* and *Coach mode*, and change the **Gym passcode** if you like.
-4. Assign each member's **Class** (crew timeslot) in the table — that drives the coloured left borders and the crew filter. The shipped roster has everyone on 4:50 AM until you change it.
+4. Assign each member's **Class** (crew timeslot). You can set them one at a time in the table, or far faster with **Paste from sheet**: one `Name, crew` per line, e.g. `Keith Gray, 5:40 AM`. A crew in any column is recognised (`4:50 AM`, `540am`, `6:30 PM crew`), and a line with only a name and a crew changes the class without touching their numbers. Crews drive the coloured left borders, the crew filter on the board, and the crew you pick when entering scores. The shipped roster has everyone on 4:50 AM until you change it.
 5. **Live link to your Google Sheet** (optional): in the sheet, *File → Share → Publish to web → Comma-separated values* for each lift tab and paste the links, one per line. The board merges by name every 10 minutes. If a tab's header just says "5RM" rather than "Squat 5RM", prefix the link with the lift: `squat=https://…`, `bench=https://…`, `deadlift=https://…`.
-6. **Save-back link** (optional, so scores entered on the board flow into the sheet): open the 5RM sheet → *Extensions → Apps Script*, paste `apps-script/knight-5rm-save-back.gs`, set `COACH_PIN` to the same PIN as step 3, check the `TABS` names match your tab names, then *Deploy → New deployment → Web app* (execute as you, access: anyone) and paste the `/exec` URL into Coach mode. Writes that fail (offline, wrong PIN) are queued on the device and retried automatically.
+6. **Save-back link** (optional, so scores entered on the board flow into the sheet): open the 5RM sheet → *Extensions → Apps Script*, paste `apps-script/knight-5rm-save-back.gs`, set `COACH_PIN` to the same PIN as step 3, check the `TABS` names match your tab names, then *Deploy → New deployment → Web app* (execute as you, access: anyone) and paste the `/exec` URL into Coach mode. Then press **Test connection**: it checks the link, the PIN and the tab names without writing anything, so a setup mistake surfaces now rather than midway through a testing session. Writes that fail (offline, wrong PIN) are queued on the device and retried automatically; the count of queued scores shows in Coach mode and on the board's footer.
 7. **Start new test round** copies every current number into "previous" and archives the round so the trend lines grow; then use **Enter scores** during testing.
 
-### Testing session keyboard shortcuts
-Digits and `.` type, Backspace deletes, Enter saves and moves on, → skips ("Not today"), ← goes back, Esc finishes.
+### Running a testing session
+Tap **Enter scores** (bottom right of the board, or top right on a phone).
+
+1. **Pick the crew in front of you.** The session defaults to whatever crew the board is filtered to. Choosing 5:40 AM makes the list a dozen people instead of the whole gym; you can change crew at any point during the session.
+2. **Pick what you are entering** — a single lift to walk the list once, or **All three lifts** to enter squat, bench and deadlift while each member is in front of you. Switching afterwards starts a fresh pass.
+3. **Work down the list.** Type the number and press *Save · next*. *Not today* skips someone. *Back* returns to the previous member. The undo pill after each save puts the numbers back **and** returns you to that member with what you typed still on screen, so a wrong entry is corrected rather than retyped.
+4. **Show what is left** filters the list to whoever has not been entered or skipped, which is what you want near the end of a session.
+5. **Unusual numbers are queried once.** Typing 1275 instead of 127.5, or a number far above or below someone's last, brings up a check with the likely number offered as a one-tap fix. It never blocks a save — a real but surprising lift goes in with *Save anyway*.
+6. **The first score of a session offers to date the round**, and sets the next round twelve weeks out if that date is missing or already past.
+
+The line under the progress bar always says where scores are going: into the gym sheet, or saved on this device only.
+
+**Keyboard** (a laptop during testing): digits and `.` type, Backspace deletes, Enter saves and moves on, → skips, ← goes back, ↑ ↓ pick the lift when entering all three, Esc finishes.
 
 ### Data notes
 - The shipped roster is the current numbers from the gym's spreadsheet at hand-over. Previous-round values are **not** seeded (the prototype's were placeholders), so *Movers*, *New PBs* and the ▲ gains fill in after the first roll-forward + test round or once a linked sheet supplies "Previous 5RM" columns.
 - Two clubs are modelled (Men's and Women's). Club filters appear automatically once any member has `club: "womens"` (via a JSON backup import or the sheet).
+- With no testing dates set the board's header line stays blank rather than showing a note meant for coaches. Set them in Coach mode, where **Today** and **+8 / +12 weeks** fill the fields in one tap.
 - Kilograms throughout; values are shown with at most two decimals and trailing zeros stripped.
 
 ## Important implementation notes
