@@ -127,6 +127,39 @@ Use **Paste from sheet** instead when you are importing numbers rather than name
 - With no testing dates set the board's header line stays blank rather than showing a note meant for coaches. Set them in Coach mode, where **Today** and **+8 / +12 weeks** fill the fields in one tap.
 - Kilograms throughout; values are shown with at most two decimals and trailing zeros stripped.
 
+### Where scores are saved, and when they are safe
+
+Two layers, and it matters which one you are relying on.
+
+**1. This browser, on this device.** Every score is written to `localStorage` the
+moment it is entered, plus again on tab close, page hide and app switch. Nothing
+is ever held only in memory. This layer is per-device: scores entered on a
+coach's phone are not on the gym TV, and clearing site data or using private
+browsing loses them (the board detects private browsing and says so).
+
+**2. The gym's Google Sheet.** Only if a save-back link is set in Coach mode. Use
+**Test connection** there to confirm the link and PIN before a session — with no
+link configured the board says *"Saved on this device only"* under the progress
+bar, and that is the honest description of what you have.
+
+When save-back is on, a score is queued **before** the request is sent and cleared
+only once the sheet confirms it:
+
+- Sheet unreachable → queued, retried every 60 seconds.
+- Sheet refuses (wrong PIN) → **stays** queued, with the reason on screen. Fix
+  the PIN and the queue drains itself; nothing is dropped.
+- Tab closed mid-request → still queued, sent on the next open.
+- While a score is queued, the ten-minute sheet sync will not write the sheet's
+  older number back over it. The sync message says how many were kept.
+
+The count of anything still in flight is on the coach screen and the board
+header. If it reads zero, the sheet has every score.
+
+**Longevity on an iPad or phone.** iOS clears a normal site's storage after about
+seven days without a visit. Add the board to the Home Screen (Share → Add to Home
+Screen) and it is exempt, which is worth doing on any device that only sees the
+gym once a week. Coach mode also offers a JSON export as a point-in-time backup.
+
 ## Important implementation notes
 
 ### Homepage rendering (recommended upgrade)
