@@ -102,6 +102,12 @@
     .pp-pillar img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0.6rem; margin-bottom: 1rem; display: block; }
     /* Community banner (relocated group photo) */
     .pp-crew-banner { max-width: 1100px; margin: 0 auto 2.5rem; border-radius: 1rem; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.28); }
+    /* Crew gallery */
+    .pp-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; margin-top: 1.5rem; }
+    @media (max-width: 780px) { .pp-gallery { grid-template-columns: repeat(2, 1fr); } }
+    .pp-gallery figure { position: relative; margin: 0; border-radius: 0.75rem; overflow: hidden; background: #e9e9e9; }
+    .pp-gallery img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+    .pp-gallery figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.4rem 0.9rem 0.8rem; font-size: 0.82rem; font-weight: 700; line-height: 1.35; color: #fff; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.82) 100%); text-shadow: 0 1px 8px rgba(0,0,0,0.55); }
     .pp-crew-banner img { width: 100%; display: block; }
     /* Embedded application form in CTA block */
     .pp-cta-block h2 .red { color: var(--kf-red); }
@@ -269,7 +275,7 @@
 
   <div class="pp-trustbar">
     <div class="pp-trustbar-inner">
-      <div class="pp-trust-item"><span class="pp-trust-stars">★★★★★</span> 5.0 on Google <span class="pp-trust-sub">· 350+ reviews</span></div>
+      <div class="pp-trust-item"><span class="pp-trust-stars">★★★★★</span> 5.0 on Google <span class="pp-trust-sub">· 365+ reviews</span></div>
       <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="10"/></svg>First Aid &amp; CPR Certified</div>
       <div class="pp-trust-item"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg>Fully Insured</div>
     </div>
@@ -304,7 +310,7 @@
     <div class="pp-stats-inner">
       <div><div class="pp-stat-num">300+</div><div class="pp-stat-label">North Brisbane women transformed</div></div>
       <div><div class="pp-stat-num">2,400kg</div><div class="pp-stat-label">Kilos lost combined</div></div>
-      <div><div class="pp-stat-num">350+</div><div class="pp-stat-label">Five-star reviews</div></div>
+      <div><div class="pp-stat-num">365+</div><div class="pp-stat-label">Five-star Google reviews</div></div>
       <div><div class="pp-stat-num">12+</div><div class="pp-stat-label">Years coaching women</div></div>
     </div>
   </section>
@@ -347,6 +353,22 @@
 
   <section class="pp-section" style="padding-top:0;">
     <div class="pp-crew-banner" style="margin:0 auto;"><img src="../assets/lov/womens/park-selfie-sm.jpg" alt="The Women's Club crew together at a community park session" loading="lazy"></div>
+  </section>
+
+  <section class="pp-section alt">
+    <div class="pp-section-inner">
+      <div class="pp-eyebrow">The Crew</div>
+      <h2>THIS IS WHO YOU'LL TRAIN NEXT TO.</h2>
+      <p style="color:var(--kf-gray-dark); max-width:720px;">Not models. Not athletes. Mums, nurses, teachers, shift workers and grandmothers from around Lawnton — every age, every size, every starting point, in the same room on the same morning.</p>
+      <div class="pp-gallery">
+        <figure><img src="../assets/lov/womens/crew-allages-sm.webp" alt="Women's Club members of all ages flexing together after a session" loading="lazy" decoding="async"><figcaption>Every age, every starting point.</figcaption></figure>
+        <figure><img src="../assets/lov/womens/crew-milestone-sm.webp" alt="The Women's Club crew celebrating a member hitting her goal" loading="lazy" decoding="async"><figcaption>Milestones get celebrated out loud.</figcaption></figure>
+        <figure><img src="../assets/lov/womens/crew-training-sm.webp" alt="A Knight Fitness coach guiding members through a barbell session" loading="lazy" decoding="async" style="object-position:center 34%;"><figcaption>A coach on the floor for every rep.</figcaption></figure>
+        <figure><img src="../assets/lov/womens/crew-redshirt-sm.webp" alt="Women's Club members gathered around a member holding up a red Knight Fitness shirt" loading="lazy" decoding="async"><figcaption>The crew turns up for one of their own.</figcaption></figure>
+        <figure><img src="../assets/lov/womens/crew-pink-sm.webp" alt="Women's Club members in pink flexing together at a themed session" loading="lazy" decoding="async"><figcaption>Themed sessions and a lot of laughing.</figcaption></figure>
+        <figure><img src="../assets/lov/womens/celebrate.webp" alt="Women's Club members celebrating together after training" loading="lazy" decoding="async"><figcaption>Strong looks good on you.</figcaption></figure>
+      </div>
+    </div>
   </section>
 
   <section class="pp-section alt">
@@ -419,7 +441,7 @@
     <div class="pp-section-inner">
       <div class="pp-eyebrow">Real Lawnton Women</div>
       <h2>RATED 5.0 BY LOCAL WOMEN.</h2>
-      <p style="color:var(--kf-gray-dark); max-width:640px;">Don't take our word for it — here's what the women of Lawnton are saying on Google.</p>
+      <p style="color:var(--kf-gray-dark); max-width:680px;">Don't take our word for it — every review below is a real one, left on Google by a real member. Names and all. <a href="/reviews" style="color:var(--kf-red); font-weight:700;">Read all 365+ reviews →</a></p>
 
       <div class="gr-widget">
         <header class="gr-header">
@@ -434,41 +456,56 @@
             <div class="gr-rating-big">5.0</div>
             <div>
               <div class="gr-stars" aria-label="5 out of 5 stars"><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg><svg width="16" height="16" viewBox="0 0 16 16" fill="#fbbc04"><path d="M8 0l2.47 5.01L16 5.9l-4 3.9.94 5.5L8 12.48 3.06 15.3l.94-5.5L0 5.9l5.53-.89z"/></svg></div>
-              <div class="gr-header-count">Based on 350 reviews</div>
+              <div class="gr-header-count">Based on 365+ reviews</div>
             </div>
           </div>
         </header>
 
         <div class="gr-carousel" id="gr-carousel">
           <article class="gr-card">
-            <div class="gr-card-head"><div class="gr-avatar" style="background:#9334e6;">M</div><div class="gr-card-author"><div class="gr-card-name">Megan R.</div><div class="gr-card-meta">Local Guide · 31 reviews</div></div></div>
-            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">2 weeks ago</span></div>
-            <p class="gr-card-text">Walked in terrified after years away from any gym. The coaches and the girls made me feel at home from session one. Down 8kg and actually excited to train now.</p>
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#7b61ff;">K</div><div class="gr-card-author"><div class="gr-card-name">Kellie Turner</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">22 weeks ago</span></div>
+            <p class="gr-card-text">First week in and I couldn't be happier. Returning to exercise after a near 10 year hiatus thanks to perimenopause and injury was a bit daunting but the Women's Club at Knight Fitness made it easy. Trainers are knowledgeable and supportive and quick to adapt to accommodate injuries with zero judgment. I'd give them 10 stars if I could.</p>
           </article>
           <article class="gr-card">
-            <div class="gr-card-head"><div class="gr-avatar" style="background:#1a73e8;">T</div><div class="gr-card-author"><div class="gr-card-name">Tania B.</div><div class="gr-card-meta">8 reviews</div></div></div>
-            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">1 month ago</span></div>
-            <p class="gr-card-text">Women's Club has been life-changing. No mirrors, no judgement, just proper coaching around my body and my schedule. Strongest and happiest I've felt in years.</p>
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#0288d1;">P</div><div class="gr-card-author"><div class="gr-card-name">Paula Laforgia</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">28 weeks ago</span></div>
+            <p class="gr-card-text">Knight Fitness is not your average gym... it's SO MUCH BETTER!! I have been participating in the women's club sessions 3 times a week and lost about 14kgs. Starting at a new gym can be quite intimidating but honestly, it really was not the case at Knight Fitness.</p>
           </article>
           <article class="gr-card">
-            <div class="gr-card-head"><div class="gr-avatar" style="background:#e8710a;">H</div><div class="gr-card-author"><div class="gr-card-name">Hayley S.</div><div class="gr-card-meta">Local Guide · 54 reviews</div></div></div>
-            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">1 month ago</span></div>
-            <p class="gr-card-text">The weekly check-ins keep me accountable like nothing else has. Two kids, full-time work, and I've finally stuck with something past the first month. Cannot recommend enough.</p>
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#e8710a;">C</div><div class="gr-card-author"><div class="gr-card-name">Catherine Kingston</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">43 weeks ago</span></div>
+            <p class="gr-card-text">Years ago I swore I would never be a member of a gym again. Step forward to age 50 and an advertisement for Knight Fitness popped up in my socials. I've now been a member for over a year and absolutely love it. The coaches are outstanding — they keep me motivated and challenge me without making me feel overwhelmed.</p>
           </article>
           <article class="gr-card">
-            <div class="gr-card-head"><div class="gr-avatar" style="background:#34a853;">D</div><div class="gr-card-author"><div class="gr-card-name">Donna W.</div><div class="gr-card-meta">12 reviews</div></div></div>
-            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">2 months ago</span></div>
-            <p class="gr-card-text">At 52 I assumed strength training wasn't for me. The coaches scaled everything to my body and now I deadlift more than I ever imagined. The community is the best part.</p>
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#34a853;">C</div><div class="gr-card-author"><div class="gr-card-name">Carlie Heaven</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">48 weeks ago</span></div>
+            <p class="gr-card-text">I started at Knight Fitness a year ago, having never stepped foot in a gym before — and to be honest, I was terrified. But from day one, the coaches and members made me feel so welcome and supported. I feel better than I have in years, both physically and mentally. If you're feeling nervous like I was, give it a go — you won't regret it!</p>
           </article>
           <article class="gr-card">
-            <div class="gr-card-head"><div class="gr-avatar" style="background:#d93025;">P</div><div class="gr-card-author"><div class="gr-card-name">Priya N.</div><div class="gr-card-meta">Local Guide · 23 reviews</div></div></div>
-            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">3 months ago</span></div>
-            <p class="gr-card-text">Tried every gym in Pine Rivers and this is the only one that stuck. They know my name, my goals and my injuries. It genuinely feels like a sisterhood, not a card-swipe gym.</p>
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#d93025;">S</div><div class="gr-card-author"><div class="gr-card-name">Sue</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">37 weeks ago</span></div>
+            <p class="gr-card-text">Joined Knight Fitness' 6 week challenge not really knowing what to expect in the Women's Classes. 4 weeks in loving it! Weekly coach check ins have kept me on track and feeling supported. Classes that are designed to suit everyone regardless of experience or if you have injuries. I can already feel and see a difference.</p>
           </article>
           <article class="gr-card">
-            <div class="gr-card-head"><div class="gr-avatar" style="background:#1e8e3e;">K</div><div class="gr-card-author"><div class="gr-card-name">Kel M.</div><div class="gr-card-meta">6 reviews</div></div></div>
-            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">4 months ago</span></div>
-            <p class="gr-card-text">Postnatal and zero confidence when I started. Twelve months on my back pain is gone and I'm lifting heavier than before the babies. The coaches genuinely care about you.</p>
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#1e8e3e;">L</div><div class="gr-card-author"><div class="gr-card-name">Louise Young</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">43 weeks ago</span></div>
+            <p class="gr-card-text">I joined Knight Fitness a few years ago as I was wanting to get fit, what I found was a community. Shortly after I joined women's club and I have loved working out alongside others whilst seeing my body become stronger! Exercises are adjusted if needed, whether it's due to mobility or injury, there's no judgement, just support!</p>
+          </article>
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#9334e6;">B</div><div class="gr-card-author"><div class="gr-card-name">Bec Casey</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">6 weeks ago</span></div>
+            <p class="gr-card-text">I've been training at Knight Fitness for the past 4 years, and in that time I've completed over 500 classes. I've achieved so many personal goals including reaching my goal weight and I genuinely couldn't have done it without the support here. It feels like a home away from home.</p>
+          </article>
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#1a73e8;">N</div><div class="gr-card-author"><div class="gr-card-name">Natalie Bridge</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">43 weeks ago</span></div>
+            <p class="gr-card-text">I hadn't exercised for well over 18 months so I was quite nervous getting back into a gym. There was no need to be. From my first session to now the coaches have made me feel welcome and supported. There's no judgement and for an over 40yo, I feel completely at ease working out in this positive space.</p>
+          </article>
+          <article class="gr-card">
+            <div class="gr-card-head"><div class="gr-avatar" style="background:#c2185b;">S</div><div class="gr-card-author"><div class="gr-card-name">Sharon Baker</div><div class="gr-card-meta">Verified Google review</div></div></div>
+            <div class="gr-card-rating"><span class="gr-stars">★★★★★</span><span class="gr-card-date">7 weeks ago</span></div>
+            <p class="gr-card-text">The staff at Knight Fitness are incredibly welcoming and inclusive. I was a total beginner with bad knees and they went out of their way to make sure I could participate. It's the kind of place where members actually encourage one another. I've been coming for 18 months now and I've never looked back.</p>
           </article>
         </div>
 
