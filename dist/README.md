@@ -23,6 +23,7 @@ Then open http://localhost:3000 (or :8000).
 index.html              Homepage (React via CDN + Babel, mounts components/AppContentV5.jsx)
 about.html              About & coaches
 contact.html            Contact + embedded enquiry form
+42-hard.html            42 Hard challenge landing page (standalone, /42-hard)
 programs/
   index.html            Programs overview
   bootcamp.html         Bootcamp program
@@ -40,6 +41,7 @@ components/
   lovable-home.css      Shared styles for homepage / about / contact
 assets/lov/...          Images (compressed) + the coach video
 assets/5rm/             Board logo + Inter / Plus Jakarta Sans woff2
+assets/42-hard/         42 Hard fonts, coach photo and share image
 assets/vendor/          Self-hosted React 18.3.1, ReactDOM, Babel standalone 7.29.0
 favicon.svg, apple-touch-icon.png, og-image.jpg
 robots.txt, sitemap.xml, 404.html, vercel.json
@@ -186,3 +188,53 @@ Each page has meta description, canonical, Open Graph + Twitter cards (`og-image
 - Red `#E31E24` (dark `#B71C1C`) · Black `#1A1A1A` · Greys `#F5F5F5` / `#666`
 - Display font: **Bebas Neue** · Body: **Lato** (both via Google Fonts)
 - Women's Club page adds a berry accent theme (`#C2185B` / `#7A1F4B`).
+
+## 42 Hard challenge page (`/42-hard`)
+
+A standalone, self-contained landing page for the members' six-week challenge.
+Share the link directly — it isn't linked from the site nav. `/42hard`,
+`/42-hard-challenge` and `/challenge` all redirect to it (see `vercel.json`).
+
+It deliberately ships **no framework**: plain HTML, one `<style>` block and one
+`<script>` block, self-hosted Inter / Plus Jakarta Sans, and a single
+third-party embed (the GoHighLevel registration form). Total page weight is
+about 56 KB of HTML plus ~140 KB of fonts and images.
+
+### Updating it each intake
+
+Everything that changes between challenges lives in the `CONFIG` object at the
+top of the page's `<script>`:
+
+| Key | What it does |
+| --- | --- |
+| `startISO` / `endISO` | Drives the live countdown and the "Day *n* of 42" state. Keep the `+10:00` offset — Brisbane is AEST year round. |
+| `totalDays` | The branded challenge length shown in the day counter. |
+| `spotsLeft` / `spotsTotal` | Fills every "*x* of *y* spots left" line, the progress meter and the sticky mobile bar. |
+| `closeDate` | Plain-English registration close date. |
+
+Dates and prices that appear in prose (the hero, facts strip, timeline, FAQ and
+footer) are written into the markup — search the file for `2 Nov` and `$350` if
+you're rolling the challenge over to a new year.
+
+> **Note:** 2 Nov – 12 Dec inclusive is 41 calendar days, so the live counter
+> reads "Day 41 of 42" on the final day. If you want a literal 42, push
+> `endISO` out to Sunday 13 December.
+
+### Countdown states
+The countdown block handles all three phases on its own — counting down before
+kickoff, "Day *n* of 42" while it runs, and a wrap-up message afterwards. It's
+hidden entirely if JavaScript doesn't run, and the rest of the page still reads
+fine without it.
+
+### Search indexing
+The page carries `<meta name="robots" content="noindex, follow">` and is kept
+out of `sitemap.xml`, so a finished challenge can't linger in Google results —
+same treatment as `womens-club.html`. Open Graph tags are still live, so link
+previews work when the URL is shared. Delete that one meta tag and add a
+`sitemap.xml` entry if you'd rather it ranked.
+
+### Assets are cached hard
+`vercel.json` serves everything under `/assets/` with a one-year immutable
+cache. Filenames there aren't content-hashed, so if you replace an image give it
+a **new filename** rather than overwriting the old one.
+
