@@ -198,7 +198,10 @@ Share the link directly — it isn't linked from the site nav. `/42hard`,
 It deliberately ships **no framework**: plain HTML, one `<style>` block and one
 `<script>` block, self-hosted Inter / Plus Jakarta Sans, and a single
 third-party embed (the GoHighLevel registration form). Total page weight is
-about 56 KB of HTML plus ~140 KB of fonts and images.
+about 50 KB of HTML plus ~140 KB of fonts and images.
+
+Sections, in order: hero + registration, ticker, facts strip, the daily five,
+prizes, coaches, FAQ, closing CTA.
 
 ### Updating it each intake
 
@@ -212,9 +215,9 @@ top of the page's `<script>`:
 | `spotsLeft` / `spotsTotal` | Fills every "*x* of *y* spots left" line, the progress meter and the sticky mobile bar. |
 | `closeDate` | Plain-English registration close date. |
 
-Dates and prices that appear in prose (the hero, facts strip, timeline, FAQ and
-footer) are written into the markup — search the file for `2 Nov` and `$350` if
-you're rolling the challenge over to a new year.
+Dates and prices that appear in prose (the hero, facts strip, FAQ and footer)
+are written into the markup — search the file for `2 Nov` and `$350` if you're
+rolling the challenge over to a new year.
 
 > **Note:** 2 Nov – 12 Dec inclusive is 41 calendar days, so the live counter
 > reads "Day 41 of 42" on the final day. If you want a literal 42, push

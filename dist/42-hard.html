@@ -337,39 +337,6 @@ button { font: inherit; }
 .prize-foot strong { color: #fff; }
 .sec-dark .eyebrow-gold { color: var(--gold-soft); }
 
-/* Included */
-.incl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin-top: 32px; }
-@media (min-width: 981px) { .incl-grid > :nth-child(5) { grid-column: span 2; } }
-.incl {
-  display: flex; gap: 14px; background: #fff; border: 1px solid var(--line);
-  border-radius: 14px; padding: 19px 20px; transition: border-color .2s, box-shadow .2s, transform .2s;
-}
-.incl:hover { border-color: hsl(356 73% 51% / 0.45); box-shadow: 0 14px 30px -18px rgb(0 0 0 / 0.35); transform: translateY(-2px); }
-.incl-tick {
-  flex: none; width: 30px; height: 30px; border-radius: 9px;
-  background: hsl(356 73% 51% / 0.12); color: var(--red);
-  display: grid; place-items: center; margin-top: 2px;
-}
-.incl-tick svg { width: 17px; height: 17px; }
-.incl h3 { font-size: 17px; }
-.incl p { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin-top: 5px; }
-
-/* Timeline */
-.tl { margin-top: 34px; position: relative; padding-left: 30px; }
-.tl::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(180deg, var(--red), hsl(356 73% 51% / 0.12)); }
-.tl-item { position: relative; padding-bottom: 28px; }
-.tl-item:last-child { padding-bottom: 0; }
-.tl-item::before {
-  content: ""; position: absolute; left: -30px; top: 6px; width: 16px; height: 16px;
-  border-radius: 999px; background: var(--navy); border: 3px solid var(--red);
-}
-.sec-light .tl-item::before, .sec-paper .tl-item::before { background: #fff; }
-.tl-when { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.16em; color: hsl(356 73% 45%); }
-.sec-dark .tl-when { color: var(--red-soft); }
-.tl-item h3 { font-size: 19px; margin-top: 5px; }
-.tl-item p { font-size: 14px; line-height: 1.6; color: var(--muted); margin-top: 6px; max-width: 46em; }
-.sec-dark .tl-item p { color: var(--muted-dk); }
-
 /* Coaches */
 .coach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(28px, 4vw, 44px); align-items: center; }
 .coach-img { border-radius: 18px; overflow: hidden; border: 1px solid hsl(220 13% 88%); box-shadow: 0 24px 48px -22px rgb(0 0 0 / 0.55); }
@@ -667,94 +634,6 @@ button { font: inherit; }
       <div class="prize-foot reveal">
         <span aria-hidden="true" style="font-size:22px">🎯</span>
         <p><strong>Everyone who signs up</strong> gets the exclusive 42 Hard challenge shirt — and if you finish all 42 days, your before-and-after goes on the wall at the gym.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ INCLUDED ============================ -->
-  <section class="sec sec-paper" id="included">
-    <div class="shell">
-      <div class="sec-head reveal">
-        <p class="eyebrow" style="color:hsl(356 73% 45%)">What's included</p>
-        <h2 class="sec-title">Everything you need for the six weeks</h2>
-        <p class="lede sec-intro">One price, everything in. This sits on top of the membership you already have — you're not replacing your sessions, you're adding the structure that makes them count.</p>
-      </div>
-
-      <div class="incl-grid">
-        <article class="incl reveal">
-          <span class="incl-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div>
-            <h3>Exclusive 42 Hard challenge shirt</h3>
-            <p>Members only, this challenge only. Not sold in the gym — you have to sign up to get one.</p>
-          </div>
-        </article>
-        <article class="incl reveal">
-          <span class="incl-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div>
-            <h3>Before &amp; after body scans</h3>
-            <p>Week 1 and week 6, so your result is a number, not a feeling.</p>
-          </div>
-        </article>
-        <article class="incl reveal">
-          <span class="incl-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div>
-            <h3>Challenge programming</h3>
-            <p>Six weeks built to change your body, layered over the sessions you already do.</p>
-          </div>
-        </article>
-        <article class="incl reveal">
-          <span class="incl-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div>
-            <h3>Nutrition guide + macro targets</h3>
-            <p>Simple, Australian-supermarket food. No powders you have to import.</p>
-          </div>
-        </article>
-        <article class="incl reveal">
-          <span class="incl-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div>
-            <h3>Your own accountability coach</h3>
-            <p>One coach in your corner for the full 42 days, checking in weekly so the slide never becomes a write-off.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ TIMELINE ============================ -->
-  <section class="sec sec-light" id="how">
-    <div class="shell">
-      <div class="sec-head reveal">
-        <p class="eyebrow" style="color:hsl(356 73% 45%)">How it runs</p>
-        <h2 class="sec-title">Six weeks, start to finish</h2>
-        <p class="lede sec-intro">You know the date it starts and the date it ends. Here's everything in between.</p>
-      </div>
-
-      <div class="tl">
-        <article class="tl-item reveal">
-          <p class="tl-when">Before you start</p>
-          <h3>Scan, photos and a plan</h3>
-          <p>Book your week-one scan and photos, collect your nutrition guide and set your targets with a coach.</p>
-        </article>
-        <article class="tl-item reveal">
-          <p class="tl-when">Mon 2 Nov</p>
-          <h3>Day 1 — 6:00 AM kickoff</h3>
-          <p>Full-gym launch session, rules briefing and the scoreboard goes live.</p>
-        </article>
-        <article class="tl-item reveal">
-          <p class="tl-when">Weeks 1–3</p>
-          <h3>Build the habit</h3>
-          <p>Daily check-ins, weekly coach catch-up. This is where most people quietly quit — we make that harder.</p>
-        </article>
-        <article class="tl-item reveal">
-          <p class="tl-when">Weeks 4–6</p>
-          <h3>Push the result</h3>
-          <p>Programming steps up, nutrition tightens, the leaderboard gets competitive.</p>
-        </article>
-        <article class="tl-item reveal">
-          <p class="tl-when">Sat 12 Dec</p>
-          <h3>Final scans + Christmas party</h3>
-          <p>Last scan and photos in the morning, winners announced that night at the KF Christmas party.</p>
-        </article>
       </div>
     </div>
   </section>
