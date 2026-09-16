@@ -290,21 +290,18 @@ button { font: inherit; }
 .fact small { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 4px; }
 
 /* Rules */
-.rules-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-top: 34px; }
-@media (max-width: 1080px) { .rules-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .rules-grid > :nth-child(4) { grid-column: span 2; } }
-@media (max-width: 760px)  { .rules-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rules-grid > :nth-child(4) { grid-column: auto; } .rules-grid > :nth-child(5) { grid-column: span 2; } }
-@media (max-width: 460px)  { .rules-grid { grid-template-columns: minmax(0, 1fr); } .rules-grid > :nth-child(5) { grid-column: auto; } }
+.rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 34px; }
 .rule {
   position: relative; background: var(--navy-card); border: 1px solid var(--wire);
-  border-radius: 16px; padding: 20px 18px; overflow: hidden;
+  border-radius: 16px; padding: 22px; overflow: hidden;
   transition: border-color .2s, transform .2s;
 }
 .rule:hover { border-color: hsl(356 73% 51% / 0.55); transform: translateY(-3px); }
 .rule-n {
-  font-family: var(--display); font-size: 56px; font-weight: 800; line-height: .8;
+  font-family: var(--display); font-size: 62px; font-weight: 800; line-height: .8;
   color: transparent; -webkit-text-stroke: 1.5px hsl(356 73% 51% / 0.55); letter-spacing: -0.05em;
 }
-.rule h3 { font-size: 18px; margin-top: 12px; }
+.rule h3 { font-size: 18.5px; margin-top: 14px; }
 .rule p { font-size: 13.5px; line-height: 1.6; color: var(--muted-dk); margin-top: 7px; }
 .rules-foot {
   display: flex; align-items: center; gap: 13px; flex-wrap: wrap; margin-top: 16px;
@@ -533,47 +530,37 @@ button { font: inherit; }
     </div>
   </section>
 
-  <!-- ============================ THE DAILY FIVE ============================ -->
+  <!-- ============================ HOW IT WORKS ============================ -->
   <section class="sec sec-dark" id="rules">
     <div class="grain" aria-hidden="true"></div>
     <div class="shell" style="position:relative">
       <div class="sec-head reveal">
-        <p class="eyebrow" style="color:var(--red-soft)">The daily five</p>
-        <h2 class="sec-title">Five things. Every single day. For 42 days.</h2>
-        <p class="lede sec-intro">No gimmicks and nothing you can't do around a job and a family. Five simple boxes you tick every day — and the whole thing is won or lost on whether you keep ticking them when the week gets messy.</p>
+        <p class="eyebrow" style="color:var(--red-soft)">How it works</p>
+        <h2 class="sec-title">A short daily checklist. Every day, for 42 days.</h2>
+        <p class="lede sec-intro">No gimmicks and nothing you can't do around a job and a family. A handful of simple boxes you tick every day — and the whole thing is won or lost on whether you keep ticking them when the week gets messy.</p>
       </div>
 
       <div class="rules-grid">
         <article class="rule reveal">
           <p class="rule-n" aria-hidden="true">1</p>
-          <h3>Train</h3>
-          <p>Get to your session. Non-negotiable, every day of the challenge.</p>
+          <h3>Move</h3>
+          <p>Get to your sessions, and keep moving on the days in between.</p>
         </article>
         <article class="rule reveal">
           <p class="rule-n" aria-hidden="true">2</p>
-          <h3>Hit your steps</h3>
-          <p>A daily step target you log — movement outside the gym counts.</p>
+          <h3>Fuel it properly</h3>
+          <p>Daily nutrition and hydration targets you can actually hit around real life.</p>
         </article>
         <article class="rule reveal">
           <p class="rule-n" aria-hidden="true">3</p>
-          <h3>Water</h3>
-          <p>Your daily water target, every day. No exceptions.</p>
-        </article>
-        <article class="rule reveal">
-          <p class="rule-n" aria-hidden="true">4</p>
-          <h3>Nutrition on track</h3>
-          <p>Stick to your macro targets and log what you eat.</p>
-        </article>
-        <article class="rule reveal">
-          <p class="rule-n" aria-hidden="true">5</p>
-          <h3>Daily check-in</h3>
-          <p>Log the day off and send it through so your coach can see it.</p>
+          <h3>Check in</h3>
+          <p>Log the day off so your coach can see how the week is really tracking.</p>
         </article>
       </div>
 
       <div class="rules-foot reveal">
         <span aria-hidden="true" style="font-size:22px">📋</span>
-        <p><strong>Every check-in feeds the live scoreboard.</strong> You'll see exactly where you sit against the rest of the gym — and so will your coach, before the slide turns into a write-off week.</p>
+        <p><strong>The exact daily targets get set with your coach and briefed at the kickoff session.</strong> They'll be the same for everyone, they'll be simple, and they're built to fit around work and family — not to take over your life.</p>
       </div>
     </div>
   </section>
@@ -680,7 +667,7 @@ button { font: inherit; }
   "@context": "https://schema.org",
   "@type": "Event",
   "name": "42 Hard — Knight Fitness Lawnton 6 Week Challenge",
-  "description": "A six-week members' fitness challenge at Knight Fitness Lawnton. Daily training, step, water, nutrition and check-in targets, before-and-after body scans, weekly coaching check-ins and $3,000 in cash prizes for the best transformations.",
+  "description": "A six-week members' fitness challenge at Knight Fitness Lawnton. A short daily checklist across training, nutrition and check-ins, before-and-after body scans, weekly coaching check-ins and $3,000 in cash prizes for the best transformations.",
   "startDate": "2026-11-02T06:00:00+10:00",
   "endDate": "2026-12-12T23:59:00+10:00",
   "eventStatus": "https://schema.org/EventScheduled",

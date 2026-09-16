@@ -200,8 +200,12 @@ It deliberately ships **no framework**: plain HTML, one `<style>` block and one
 third-party embed (the GoHighLevel registration form). Total page weight is
 about 45 KB of HTML plus ~140 KB of fonts and images.
 
-Sections, in order: hero + registration, ticker, facts strip, the daily five,
+Sections, in order: hero + registration, ticker, facts strip, how it works,
 prizes, coaches, closing CTA.
+
+The "how it works" section is deliberately non-specific about the daily
+habits — they aren't locked in yet, and the copy says the exact targets get
+briefed at the kickoff session. Tighten it once the rules are final.
 
 ### Updating it each intake
 
