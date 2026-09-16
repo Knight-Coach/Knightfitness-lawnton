@@ -255,9 +255,18 @@ button { font: inherit; }
 .ghl-wrap { margin-top: 16px; }
 .ghl-wrap iframe {
   width: 100%; height: 620px; border: none; border-radius: 12px; display: block;
-  opacity: 0; transition: opacity .3s ease, height .2s ease; background: var(--paper);
+  transition: opacity .3s ease, height .2s ease; background: var(--paper);
 }
-.ghl-wrap iframe.is-loaded { opacity: 1; }
+/* Narrow screens stack every field, so the form runs much taller than the 620px
+   GoHighLevel generates for desktop. Start tall enough to show the submit button
+   even if the auto-height message never arrives. */
+@media (max-width: 620px) { .ghl-wrap iframe { height: 1000px; } }
+/* Only fade in when scripting is available to fade it back — otherwise the form
+   would stay invisible forever. Mirrors the .js gate used by .reveal. */
+.js .ghl-wrap iframe { opacity: 0; }
+.js .ghl-wrap iframe.is-loaded { opacity: 1; }
+.ghl-fallback { font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 10px; }
+.ghl-fallback a { color: var(--red-dark); font-weight: 700; }
 .scarcity { margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--line); }
 .meter { height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; }
 .meter i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--red), var(--red-soft)); }
@@ -459,8 +468,16 @@ button { font: inherit; }
               data-layout-iframe-id="inline-0FAMUVKPH48B1AQR75Mu"
               data-form-id="0FAMUVKPH48B1AQR75Mu"
               title="42 Hard challenge registration form"
-              loading="lazy"
-              scrolling="no"></iframe>
+              loading="eager"></iframe>
+            <p class="ghl-fallback">Form not loading?
+              <a href="https://api.leadconnectorhq.com/widget/form/0FAMUVKPH48B1AQR75Mu"
+                 target="_blank" rel="noopener">Open the registration form in a new tab</a>.</p>
+            <noscript>
+              <p class="ghl-fallback">The form needs JavaScript.
+                <a href="https://api.leadconnectorhq.com/widget/form/0FAMUVKPH48B1AQR75Mu"
+                   target="_blank" rel="noopener">Open the registration form in a new tab</a>
+                or call <a href="tel:+61452519877">0452 519 877</a>.</p>
+            </noscript>
           </div>
 
           <div class="scarcity">
@@ -800,15 +817,22 @@ button { font: inherit; }
   /* ---------- GoHighLevel form: fade in + auto-height ---------- */
   var ghl = $('.ghl-wrap iframe');
   if (ghl) {
-    ghl.addEventListener('load', function () { ghl.classList.add('is-loaded'); });
-    if (ghl.complete) ghl.classList.add('is-loaded');
+    var reveal = function () { ghl.classList.add('is-loaded'); };
+    ghl.addEventListener('load', reveal);
+    // Iframes have no .complete, and a blocked or slow frame may never fire load.
+    // Show it regardless rather than leave an invisible form on the page.
+    setTimeout(reveal, 3000);
 
     window.addEventListener('message', function (e) {
       // Only trust height messages from the form's own origin.
       if (!/^https:\/\/([a-z0-9-]+\.)*leadconnectorhq\.com$/.test(e.origin)) return;
       var d = e.data;
+      if (typeof d === 'string') { try { d = JSON.parse(d); } catch (err) { return; } }
       var h = d && typeof d === 'object' && (d.height || (d.payload && d.payload.height));
-      if (h && Number(h) > 200 && Number(h) < 4000) ghl.style.height = Number(h) + 'px';
+      if (h && Number(h) > 200 && Number(h) < 4000) {
+        ghl.style.height = Number(h) + 'px';
+        reveal();
+      }
     });
   }
 
