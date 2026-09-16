@@ -208,6 +208,30 @@ aren't locked in yet and get briefed at the kickoff session. If a "how it
 works" section goes back in later, it belongs between the facts strip and
 the prizes.
 
+### The registration form embed
+
+The form is a GoHighLevel iframe. It is the only thing on the page that earns
+money, so it is built to stay visible even when the embed misbehaves:
+
+- **The iframe is visible by default.** The fade-in is gated behind the `.js`
+  class (same pattern as `.reveal`), and a 3s timer force-reveals it. An iframe
+  has no `.complete` property, and a blocked or slow frame may never fire
+  `load` — without those guards the form renders at `opacity: 0` forever.
+- **It starts tall enough to fit.** GoHighLevel's `data-height` (620px) is a
+  desktop measurement; at phone width every field stacks and the form runs
+  ~900px+. A media query gives it 1000px under 620px viewport so the submit
+  button is reachable before any auto-height message arrives.
+- **Auto-height accepts both object and JSON-string messages**, from
+  `leadconnectorhq.com` only. GoHighLevel's own `form_embed.js` normally does
+  the resizing, but it loads from `link.msgsndr.com`, which ad and tracker
+  blockers routinely block — so the page does not depend on it.
+- **There is always a direct link out** ("Form not loading?") plus a
+  `<noscript>` fallback with the gym's phone number, so the embed failing can
+  never cost a registration.
+
+Don't reintroduce `scrolling="no"` on the iframe: combined with a too-short
+height it silently clips the submit button with no way to scroll to it.
+
 ### Updating it each intake
 
 Everything that changes between challenges lives in the `CONFIG` object at the
