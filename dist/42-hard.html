@@ -289,28 +289,6 @@ button { font: inherit; }
 .fact b { display: block; font-family: var(--display); font-size: clamp(21px, 2.4vw, 27px); font-weight: 800; margin-top: 5px; letter-spacing: -0.03em; line-height: 1.05; }
 .fact small { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 4px; }
 
-/* Rules */
-.rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 34px; }
-.rule {
-  position: relative; background: var(--navy-card); border: 1px solid var(--wire);
-  border-radius: 16px; padding: 22px; overflow: hidden;
-  transition: border-color .2s, transform .2s;
-}
-.rule:hover { border-color: hsl(356 73% 51% / 0.55); transform: translateY(-3px); }
-.rule-n {
-  font-family: var(--display); font-size: 62px; font-weight: 800; line-height: .8;
-  color: transparent; -webkit-text-stroke: 1.5px hsl(356 73% 51% / 0.55); letter-spacing: -0.05em;
-}
-.rule h3 { font-size: 18.5px; margin-top: 14px; }
-.rule p { font-size: 13.5px; line-height: 1.6; color: var(--muted-dk); margin-top: 7px; }
-.rules-foot {
-  display: flex; align-items: center; gap: 13px; flex-wrap: wrap; margin-top: 16px;
-  background: hsl(356 73% 51% / 0.1); border: 1px solid hsl(356 73% 51% / 0.3);
-  border-radius: 16px; padding: 18px 22px;
-}
-.rules-foot p { font-size: 15px; line-height: 1.55; color: hsl(356 100% 92%); flex: 1; min-width: 240px; }
-.rules-foot strong { color: #fff; }
-
 /* Prizes */
 .prizes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); gap: 16px; margin-top: 32px; }
 .prize {
@@ -527,41 +505,6 @@ button { font: inherit; }
       <div class="fact"><p class="eyebrow">Finishes</p><b>Sat 12 Dec</b><small>Final scans in the morning</small></div>
       <div class="fact"><p class="eyebrow">Length</p><b>6 weeks</b><small>42 days, no days off</small></div>
       <div class="fact"><p class="eyebrow">Finale</p><b>Christmas party</b><small>Winners announced on the night</small></div>
-    </div>
-  </section>
-
-  <!-- ============================ HOW IT WORKS ============================ -->
-  <section class="sec sec-dark" id="rules">
-    <div class="grain" aria-hidden="true"></div>
-    <div class="shell" style="position:relative">
-      <div class="sec-head reveal">
-        <p class="eyebrow" style="color:var(--red-soft)">How it works</p>
-        <h2 class="sec-title">A short daily checklist. Every day, for 42 days.</h2>
-        <p class="lede sec-intro">No gimmicks and nothing you can't do around a job and a family. A handful of simple boxes you tick every day — and the whole thing is won or lost on whether you keep ticking them when the week gets messy.</p>
-      </div>
-
-      <div class="rules-grid">
-        <article class="rule reveal">
-          <p class="rule-n" aria-hidden="true">1</p>
-          <h3>Move</h3>
-          <p>Get to your sessions, and keep moving on the days in between.</p>
-        </article>
-        <article class="rule reveal">
-          <p class="rule-n" aria-hidden="true">2</p>
-          <h3>Fuel it properly</h3>
-          <p>Daily nutrition and hydration targets you can actually hit around real life.</p>
-        </article>
-        <article class="rule reveal">
-          <p class="rule-n" aria-hidden="true">3</p>
-          <h3>Check in</h3>
-          <p>Log the day off so your coach can see how the week is really tracking.</p>
-        </article>
-      </div>
-
-      <div class="rules-foot reveal">
-        <span aria-hidden="true" style="font-size:22px">📋</span>
-        <p><strong>The exact daily targets get set with your coach and briefed at the kickoff session.</strong> They'll be the same for everyone, they'll be simple, and they're built to fit around work and family — not to take over your life.</p>
-      </div>
     </div>
   </section>
 

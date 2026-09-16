@@ -198,14 +198,15 @@ Share the link directly — it isn't linked from the site nav. `/42hard`,
 It deliberately ships **no framework**: plain HTML, one `<style>` block and one
 `<script>` block, self-hosted Inter / Plus Jakarta Sans, and a single
 third-party embed (the GoHighLevel registration form). Total page weight is
-about 45 KB of HTML plus ~140 KB of fonts and images.
+about 41 KB of HTML plus ~140 KB of fonts and images.
 
-Sections, in order: hero + registration, ticker, facts strip, how it works,
-prizes, coaches, closing CTA.
+Sections, in order: hero + registration, ticker, facts strip, prizes,
+coaches, closing CTA.
 
-The "how it works" section is deliberately non-specific about the daily
-habits — they aren't locked in yet, and the copy says the exact targets get
-briefed at the kickoff session. Tighten it once the rules are final.
+The page deliberately says nothing about the daily habits or rules — they
+aren't locked in yet and get briefed at the kickoff session. If a "how it
+works" section goes back in later, it belongs between the facts strip and
+the prizes.
 
 ### Updating it each intake
 
