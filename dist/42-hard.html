@@ -273,7 +273,6 @@ button { font: inherit; }
 
 /* ---------- Sections ---------- */
 .sec { padding: clamp(52px, 7vw, 74px) var(--gut); }
-.sec-light { background: #fff; border-bottom: 1px solid var(--line); }
 .sec-paper { background: var(--paper); border-bottom: 1px solid var(--line); }
 .sec-dark { position: relative; overflow: hidden; background: var(--navy); color: #fff; }
 .sec-dark h2, .sec-dark h3 { color: #fff; }
@@ -341,22 +340,6 @@ button { font: inherit; }
 .coach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(28px, 4vw, 44px); align-items: center; }
 .coach-img { border-radius: 18px; overflow: hidden; border: 1px solid hsl(220 13% 88%); box-shadow: 0 24px 48px -22px rgb(0 0 0 / 0.55); }
 .coach-img img { width: 100%; height: auto; }
-
-/* FAQ */
-.faq { margin-top: 30px; max-width: 54em; }
-.faq details { background: #fff; border: 1px solid var(--line); border-radius: 13px; margin-bottom: 10px; transition: border-color .2s; }
-.faq details[open] { border-color: hsl(356 73% 51% / 0.4); }
-.faq summary {
-  cursor: pointer; list-style: none; padding: 17px 20px; font-weight: 800; font-size: 15.5px;
-  display: flex; align-items: center; justify-content: space-between; gap: 14px; color: var(--ink);
-}
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after {
-  content: ""; flex: none; width: 11px; height: 11px; border-right: 2.5px solid var(--red);
-  border-bottom: 2.5px solid var(--red); transform: rotate(45deg) translate(-2px, -2px); transition: transform .2s;
-}
-.faq details[open] summary::after { transform: rotate(225deg) translate(-2px, -2px); }
-.faq .faq-a { padding: 0 20px 18px; font-size: 14.5px; line-height: 1.65; color: var(--muted); }
 
 /* Final CTA */
 .finale {
@@ -649,51 +632,6 @@ button { font: inherit; }
       </div>
       <div class="coach-img reveal">
         <img src="/assets/42-hard/coaches.webp" width="900" height="860" loading="lazy" decoding="async" alt="The four Knight Fitness Lawnton coaches in the gym, in black and red club polos">
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ FAQ ============================ -->
-  <section class="sec sec-light" id="faq">
-    <div class="shell">
-      <div class="sec-head reveal">
-        <p class="eyebrow" style="color:hsl(356 73% 45%)">Before you sign up</p>
-        <h2 class="sec-title">The questions we always get</h2>
-      </div>
-
-      <div class="faq reveal">
-        <details>
-          <summary>Do I need to already be fit to do this?</summary>
-          <div class="faq-a">No. The prizes are judged on how much you change over the six weeks, not on where you start — so the person who walks in the least fit has exactly the same shot at the $1,000 as anyone else.</div>
-        </details>
-        <details>
-          <summary>What does it actually cost?</summary>
-          <div class="faq-a">$350 for members and $700 for non-members. That covers the programming, both body scans, the nutrition guide and macro targets, your accountability coach for the full 42 days, and the exclusive challenge shirt.</div>
-        </details>
-        <details>
-          <summary>Can I bring a friend who isn't a member?</summary>
-          <div class="faq-a">Yes — they sign up at the non-member rate of $700 and get everything a member does. Put their name through the same form.</div>
-        </details>
-        <details>
-          <summary>How much extra time does it take?</summary>
-          <div class="faq-a">The training is the sessions you already come to. On top of that it's your step target, your water, logging your food, and a daily check-in that takes about a minute. There's one coach catch-up each week.</div>
-        </details>
-        <details>
-          <summary>What do I need to do before day one?</summary>
-          <div class="faq-a">Book in your week-one scan and photos, grab your nutrition guide and sit down with a coach to set your targets. Do that before Monday 2 November and you start day one ready to go.</div>
-        </details>
-        <details>
-          <summary>When do I find out if I've won?</summary>
-          <div class="faq-a">Final scans and photos are on the morning of Saturday 12 December, and the winners are announced that night at the Knight Fitness Christmas party.</div>
-        </details>
-        <details>
-          <summary>What happens if I miss a day?</summary>
-          <div class="faq-a">Life happens, and your coach would much rather you tell them than go quiet. The full scoring and how missed days are handled gets covered in the rules briefing at the 6:00 AM kickoff on day one — if you want the detail before you commit, grab any coach in the gym and ask.</div>
-        </details>
-        <details>
-          <summary>How do I pay?</summary>
-          <div class="faq-a">Put your details through the registration form on this page and we'll sort payment with you in the gym. Your spot isn't locked in until that's done, and spots are capped.</div>
-        </details>
       </div>
     </div>
   </section>
