@@ -208,6 +208,13 @@ aren't locked in yet and get briefed at the kickoff session. If a "how it
 works" section goes back in later, it belongs between the facts strip and
 the prizes.
 
+The page has no footer nav on purpose: it's a single-purpose landing page
+shared by direct link, and every outbound link is a way to leave without
+registering. The spots-left count appears once, beside the form — repeating
+it in the closing CTA and the sticky bar made it read as manufactured
+scarcity. Prize ranking is carried by the gold border and gold amount rather
+than medal emoji. Keep it that way unless there's a reason not to.
+
 ### The registration form embed
 
 The form is a GoHighLevel iframe. It is the only thing on the page that earns

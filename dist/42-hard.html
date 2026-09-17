@@ -135,15 +135,6 @@ button { font: inherit; }
 
 /* ---------- Shared bits ---------- */
 .eyebrow { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.17em; }
-.pill {
-  display: inline-flex; align-items: center; gap: 9px; border-radius: 999px;
-  padding: 8px 16px; font-size: 11px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: 0.15em;
-}
-.pill-red { background: hsl(356 73% 51% / 0.16); border: 1px solid hsl(356 73% 51% / 0.5); color: var(--red-pale); }
-.pill-red .dot { background: var(--red-soft); }
-.pill-glass { background: hsl(224 71% 4% / 0.3); border: 1px solid hsl(0 0% 100% / 0.35); color: #fff; }
-.pill-glass .dot { background: #fff; }
 .lede { font-size: clamp(15.5px, 1.6vw, 17px); line-height: 1.65; text-wrap: pretty; }
 .grain { position: absolute; inset: 0; pointer-events: none;
   background-image: repeating-linear-gradient(115deg, hsl(0 0% 100% / 0.03) 0 2px, transparent 2px 34px); }
@@ -182,8 +173,10 @@ button { font: inherit; }
 
 .kicker {
   font-family: var(--display); font-size: clamp(13px, 1.7vw, 18px); font-weight: 800;
-  text-transform: uppercase; letter-spacing: 0.28em; color: var(--red-soft); margin-top: 30px;
+  text-transform: uppercase; letter-spacing: 0.28em; color: var(--red-soft); margin-top: 0;
 }
+/* At phone width 0.28em tracking breaks this onto two ragged lines. */
+@media (max-width: 620px) { .kicker { letter-spacing: 0.16em; } }
 .wordmark {
   font-size: clamp(60px, 12vw, 128px); line-height: .82; color: #fff;
   margin: 10px 0 0; letter-spacing: -0.055em;
@@ -306,7 +299,6 @@ button { font: inherit; }
 }
 .prize:hover { transform: translateY(-3px); border-color: hsl(45 93% 47% / 0.5); border-top-color: var(--gold-soft); }
 .prize-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.prize-medal { font-size: 27px; line-height: 1; }
 .prize-amt { font-family: var(--display); font-size: clamp(28px, 4vw, 34px); font-weight: 800; color: var(--gold-soft); line-height: 1; letter-spacing: -0.03em; }
 .prize .eyebrow { color: hsl(45 93% 62%); margin-top: 17px; display: block; letter-spacing: 0.15em; }
 .prize h3 { font-size: 18.5px; margin-top: 5px; }
@@ -334,16 +326,13 @@ button { font: inherit; }
 }
 .finale .ghost42 { right: -4vw; top: -8vw; font-size: 38vw; -webkit-text-stroke: 2px hsl(0 0% 100% / 0.13); }
 .finale-in { position: relative; max-width: 860px; margin: 0 auto; }
-.finale h2 { font-size: clamp(32px, 6vw, 60px); margin-top: 22px; line-height: .99; letter-spacing: -0.04em; }
+.finale h2 { font-size: clamp(32px, 6vw, 60px); line-height: .99; letter-spacing: -0.04em; }
 .finale p { font-size: clamp(16px, 2vw, 17.5px); line-height: 1.6; color: hsl(356 100% 93%); margin-top: 18px; }
 
 /* Footer */
 .ftr { background: hsl(224 71% 3%); border-top: 1px solid hsl(0 0% 100% / 0.08); padding: 32px var(--gut) calc(32px + env(safe-area-inset-bottom, 0px)); color: hsl(220 14% 60%); }
 .ftr-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
 .ftr img { height: 34px; width: auto; }
-.ftr-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
-.ftr-links a { color: hsl(220 14% 74%); font-size: 13.5px; font-weight: 600; }
-.ftr-links a:hover { color: #fff; }
 .ftr-meta { font-size: 12.5px; line-height: 1.6; }
 .ftr-meta a { color: hsl(220 14% 74%); }
 .ftr-meta a:hover { color: #fff; }
@@ -390,11 +379,6 @@ button { font: inherit; }
 
     <div class="shell hero-grid">
       <div class="hero-anim">
-        <p class="pill pill-red">
-          <span class="dot" aria-hidden="true"></span>
-          Members only · final challenge of the year
-        </p>
-
         <p class="kicker">The final challenge of the year</p>
         <h1 class="wordmark">42<span>&nbsp;HARD</span></h1>
 
@@ -411,7 +395,7 @@ button { font: inherit; }
 
         <p class="promise">42 days. No days off. Walk into the Christmas party as a different human.</p>
 
-        <p class="lede">Six weeks, finishing on the day of the <strong>Knight Fitness Christmas party</strong>. You already train here — this is the six weeks where it actually shows. Weekly check-ins, a live scoreboard, and <strong>$3,000 in cash prizes</strong> on the line.</p>
+        <p class="lede">Six weeks, finishing on the day of the <strong>Knight Fitness Christmas party</strong>. You already train here, and this is the six weeks where it actually shows. Weekly check-ins, a live scoreboard, and <strong>$3,000 in cash prizes</strong> on the line.</p>
 
         <div class="hero-cta">
           <a class="btn btn-red" href="#signup">Sign me up</a>
@@ -487,7 +471,7 @@ button { font: inherit; }
             <p>
               <span class="dot" aria-hidden="true"></span>
               <span><strong><span data-spots="left">24</span> of <span data-spots="total">60</span> spots left.</strong>
-              Registration closes <span data-close-date>Wednesday 28 October</span> — or when the spots are gone.</span>
+              Registration closes <span data-close-date>Wednesday 28 October</span>, or when the spots are gone.</span>
             </p>
           </div>
         </div>
@@ -529,32 +513,32 @@ button { font: inherit; }
   <section class="sec sec-dark" id="prizes" style="background-image:radial-gradient(820px 420px at 12% -10%, hsl(356 73% 51% / 0.2), transparent 70%)">
     <div class="shell" style="position:relative">
       <div class="sec-head reveal">
-        <p class="eyebrow eyebrow-gold">🏆 Prizes</p>
+        <p class="eyebrow eyebrow-gold">Prizes</p>
         <h2 class="sec-title"><span style="color:var(--red-soft)">$3,000</span> in cash for the best transformations</h2>
-        <p class="lede sec-intro">First and second place, male and female. Judged on before-and-after scans, photos and the effort you put in across all 42 days — not on who was already the fittest in the room. Winners announced live at the Christmas party.</p>
+        <p class="lede sec-intro">First and second place, male and female. Judged on before-and-after scans, photos and the effort you put in across all 42 days, not on who was already the fittest in the room. Winners announced live at the Christmas party.</p>
       </div>
 
       <div class="prizes-grid">
         <article class="prize reveal">
-          <div class="prize-top"><span class="prize-medal" aria-hidden="true">🥇</span><span class="prize-amt">$1,000</span></div>
+          <div class="prize-top"><span class="prize-amt">$1,000</span></div>
           <p class="eyebrow">1st — male</p>
           <h3>Best male transformation</h3>
           <p>Biggest overall change across scans, photos and coach scoring.</p>
         </article>
         <article class="prize reveal">
-          <div class="prize-top"><span class="prize-medal" aria-hidden="true">🥇</span><span class="prize-amt">$1,000</span></div>
+          <div class="prize-top"><span class="prize-amt">$1,000</span></div>
           <p class="eyebrow">1st — female</p>
           <h3>Best female transformation</h3>
           <p>Judged on the change you made, not where you started.</p>
         </article>
         <article class="prize reveal">
-          <div class="prize-top"><span class="prize-medal" aria-hidden="true">🥈</span><span class="prize-amt">$500</span></div>
+          <div class="prize-top"><span class="prize-amt">$500</span></div>
           <p class="eyebrow">2nd — male</p>
           <h3>Runner up</h3>
           <p>Second biggest transformation on the men's side.</p>
         </article>
         <article class="prize reveal">
-          <div class="prize-top"><span class="prize-medal" aria-hidden="true">🥈</span><span class="prize-amt">$500</span></div>
+          <div class="prize-top"><span class="prize-amt">$500</span></div>
           <p class="eyebrow">2nd — female</p>
           <h3>Runner up</h3>
           <p>Second biggest transformation on the women's side.</p>
@@ -562,8 +546,7 @@ button { font: inherit; }
       </div>
 
       <div class="prize-foot reveal">
-        <span aria-hidden="true" style="font-size:22px">🎯</span>
-        <p><strong>Everyone who signs up</strong> gets the exclusive 42 Hard challenge shirt — and if you finish all 42 days, your before-and-after goes on the wall at the gym.</p>
+        <p><strong>Everyone who signs up</strong> gets the exclusive 42 Hard challenge shirt. Finish all 42 days and your before-and-after goes on the wall at the gym.</p>
       </div>
     </div>
   </section>
@@ -574,7 +557,7 @@ button { font: inherit; }
       <div class="reveal">
         <p class="eyebrow" style="color:hsl(356 73% 45%)">Your coaches</p>
         <h2 class="sec-title">The team in your corner</h2>
-        <p class="lede sec-intro">The same coaches you already train with — running the sessions, doing your scans and checking in on you every week for all 42 days. You won't be doing this on your own.</p>
+        <p class="lede sec-intro">The same coaches you already train with. They run the sessions, do your scans, and check in on you every week for all 42 days. You won't be doing this on your own.</p>
         <p style="margin-top:26px"><a class="btn btn-red" href="#signup">Sign me up</a></p>
       </div>
       <div class="coach-img reveal">
@@ -588,9 +571,8 @@ button { font: inherit; }
     <div class="grain" aria-hidden="true"></div>
     <div class="ghost42" aria-hidden="true">42</div>
     <div class="finale-in">
-      <p class="pill pill-glass"><span class="dot" aria-hidden="true"></span>Only <span data-spots="left">24</span> spots left</p>
       <h2>Six weeks from now you've either done it, or you're explaining why you didn't.</h2>
-      <p>Registration closes <span data-close-date>Wednesday 28 October</span> — or when the spots are gone. Kickoff is Monday 2 November, 6:00 AM.</p>
+      <p>Registration closes <span data-close-date>Wednesday 28 October</span>, or when the spots are gone. Kickoff is Monday 2 November, 6:00 AM.</p>
       <p style="margin-top:32px"><a class="btn btn-white btn-lg" href="#signup">Sign up for 42 Hard</a></p>
     </div>
   </section>
@@ -600,13 +582,6 @@ button { font: inherit; }
 <footer class="ftr">
   <div class="shell ftr-in">
     <img src="/assets/lov/logo-light.webp" width="1200" height="420" alt="Knight Fitness Lawnton">
-    <nav class="ftr-links" aria-label="Knight Fitness Lawnton">
-      <a href="/">Home</a>
-      <a href="/programs">Programs</a>
-      <a href="/reviews">Reviews</a>
-      <a href="/about">About &amp; Coaches</a>
-      <a href="/contact">Contact</a>
-    </nav>
     <div class="ftr-meta">
       <p>664 Gympie Road, Lawnton QLD 4501 · <a href="tel:+61452519877">0452 519 877</a></p>
       <p style="margin-top:4px">42 Hard · 2 Nov – 12 Dec 2026 · Knight Fitness Lawnton</p>
@@ -617,7 +592,7 @@ button { font: inherit; }
 <div class="dock" id="dock">
   <div class="dock-txt">
     <b>42 Hard · $350 members</b>
-    <span><span data-spots="left">24</span> spots left · starts Mon 2 Nov</span>
+    <span>Starts Mon 2 Nov</span>
   </div>
   <a class="btn btn-red btn-sm" href="#signup">Sign up</a>
 </div>
