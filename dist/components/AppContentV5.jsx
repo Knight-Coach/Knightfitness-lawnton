@@ -130,24 +130,23 @@ function getInitials(name) {
   return name.split(" ").filter(Boolean).map((n) => n[0]).slice(0, 2).join("").toUpperCase();
 }
 
-/* Live GoHighLevel contact form embed */
-function GhlContactForm({ light = false }) {
+/* The enquiry form (Knight Admin's /form/enquiry): the lead lands in Slack with the right coach tagged.
+   It sizes itself by postMessage; only messages from this frame, from its own origin, are believed. */
+const ENQUIRY_FORM_URL = "https://knight-agent.vercel.app/form/enquiry?embed=1&site=lawnton";
+
+function EnquiryForm({ light = false }) {
   const [loaded, setLoaded] = useState(false);
   const [height, setHeight] = useState(640);
+  const frameRef = useRef(null);
 
   useEffect(() => {
-    if (!document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]')) {
-      const s = document.createElement("script");
-      s.src = "https://link.msgsndr.com/js/form_embed.js";
-      s.async = true;
-      document.body.appendChild(s);
-    }
+    const origin = new URL(ENQUIRY_FORM_URL).origin;
     const onMessage = (e) => {
       const data = e.data;
-      if (!data) return;
-      const h = typeof data === "object" && (data.height || (data.payload && data.payload.height))
-        ? Number(data.height || data.payload.height) : null;
-      if (h && h > 200 && h < 4000) setHeight(h);
+      if (!data || typeof data !== "object" || data.type !== "kf-form") return;
+      if (e.origin !== origin || !frameRef.current || e.source !== frameRef.current.contentWindow) return;
+      const h = Number(data.height);
+      if (h > 200 && h < 4000) setHeight(Math.ceil(h));
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
@@ -168,22 +167,12 @@ function GhlContactForm({ light = false }) {
           </div>
         )}
         <iframe
-          src="https://api.leadconnectorhq.com/widget/form/cRJglov44iSE5XqhpcpI"
-          style={{ width: "100%", height: height, minHeight: 540, border: "none", borderRadius: 12, display: "block", opacity: loaded ? 1 : 0, transition: "opacity 280ms ease, height 220ms ease" }}
-          id="inline-cRJglov44iSE5XqhpcpI"
-          data-layout="{'id':'INLINE'}"
-          data-trigger-type="alwaysShow"
-          data-trigger-value=""
-          data-activation-type="alwaysActivated"
-          data-activation-value=""
-          data-deactivation-type="neverDeactivate"
-          data-deactivation-value=""
-          data-form-name="Contact Us Form Lawnton"
-          data-height={String(height)}
-          data-layout-iframe-id="inline-cRJglov44iSE5XqhpcpI"
-          data-form-id="cRJglov44iSE5XqhpcpI"
-          title="Contact Us Form Lawnton"
-          scrolling="no"
+          ref={frameRef}
+          src={ENQUIRY_FORM_URL}
+          style={{ width: "100%", height: height, border: "none", borderRadius: 12, display: "block", opacity: loaded ? 1 : 0, transition: "opacity 280ms ease, height 220ms ease" }}
+          id="kf-enquiry-home"
+          title="Get in touch"
+          loading="lazy"
           onLoad={() => setLoaded(true)}
         />
       </div>
@@ -313,7 +302,7 @@ function AppContent() {
             <div className="hero-form-eyebrow">No Pressure · No Contracts</div>
             <h2 className="hero-form-title">GET IN TOUCH</h2>
             <p className="hero-form-sub">Drop us a message and a coach will reach out to learn about your goals and find the right fit.</p>
-            <GhlContactForm light />
+            <EnquiryForm light />
           </div>
         </div>
       </section>
@@ -666,7 +655,7 @@ function AppContent() {
                 <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "1.6rem", letterSpacing: "0.04em", marginBottom: "0.4rem" }}>SEND US A MESSAGE</div>
                 <p style={{ color: "var(--kf-gray-dark)", fontSize: "0.95rem", lineHeight: 1.55 }}>Whether you have a question, need support, or just want to chat about where you're at — we're here to listen.</p>
               </div>
-              <GhlContactForm light />
+              <EnquiryForm light />
             </div>
             <div className="contact-info">
               <div className="contact-info-item"><div className="contact-info-label">Address</div><div className="contact-info-value">664 Gympie Road<br />Lawnton QLD 4501</div></div>

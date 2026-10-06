@@ -541,16 +541,11 @@
     <p>Ready to start your transformation? Fill out the form below and a coach will be in touch — no pressure, no contracts.</p>
     <div class="pp-cta-form">
       <iframe
-        src="https://api.leadconnectorhq.com/widget/form/cRJglov44iSE5XqhpcpI"
-        id="inline-cRJglov44iSE5XqhpcpI-womens"
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-form-name="Contact Us Form Lawnton"
-        data-height="600"
-        data-layout-iframe-id="inline-cRJglov44iSE5XqhpcpI-womens"
-        data-form-id="cRJglov44iSE5XqhpcpI"
-        title="Apply for Women's Club"
-        scrolling="no"></iframe>
+              src="https://knight-agent.vercel.app/form/enquiry?embed=1&amp;site=lawnton&amp;program=womens-club"
+              id="kf-enquiry-womens"
+              data-kf-form
+              title="Apply for Women&#39;s Club"
+              loading="lazy"></iframe>
     </div>
     <div class="pp-cta-fine">No pressure · No contracts · A coach will be in touch within 1 business day.</div>
   </section>
@@ -599,17 +594,7 @@
       });
     });
 
-    // GHL application form: fade in on load + auto-height
-    (function () {
-      var f = document.querySelector('.pp-cta-form iframe');
-      if (!f) return;
-      f.addEventListener('load', function () { f.classList.add('loaded'); });
-      window.addEventListener('message', function (e) {
-        var d = e.data;
-        var h = d && typeof d === 'object' && (d.height || (d.payload && d.payload.height));
-        if (h && Number(h) > 200 && Number(h) < 4000) f.style.height = Number(h) + 'px';
-      });
-    })();
+    // The application form fades in and sizes itself: /components/enquiry-form.js
 
     // Google reviews carousel dots (mobile)
     (function () {
@@ -638,7 +623,7 @@
     })();
   </script>
 
-  <script src="https://link.msgsndr.com/js/form_embed.js" async></script>
+  <script src="/components/enquiry-form.js?v=1" defer></script>
 
   <script src="/programs/nav.js" defer></script>
 </body>

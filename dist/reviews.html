@@ -508,21 +508,11 @@
       </div>
       <div class="ghl-frame-wrap">
         <iframe
-          src="https://api.leadconnectorhq.com/widget/form/cRJglov44iSE5XqhpcpI"
-          id="inline-rv-form"
-          data-layout="{'id':'INLINE'}"
-          data-trigger-type="alwaysShow"
-          data-trigger-value=""
-          data-activation-type="alwaysActivated"
-          data-activation-value=""
-          data-deactivation-type="neverDeactivate"
-          data-deactivation-value=""
-          data-form-name="Contact Us Form Lawnton"
-          data-height="640"
-          data-layout-iframe-id="inline-rv-form"
-          data-form-id="cRJglov44iSE5XqhpcpI"
-          title="Contact Knight Fitness Lawnton"
-          scrolling="no"></iframe>
+              src="https://knight-agent.vercel.app/form/enquiry?embed=1&amp;site=lawnton"
+              id="kf-enquiry-reviews"
+              data-kf-form
+              title="Get in touch"
+              loading="lazy"></iframe>
       </div>
       <div class="ghl-form-foot"><span class="ghl-dot"></span> Secure form · We reply within 1 business day</div>
     </div>
@@ -553,18 +543,9 @@
     </div>
   </footer>
 
-  <script src="https://link.msgsndr.com/js/form_embed.js" async></script>
+  <script src="/components/enquiry-form.js?v=1" defer></script>
   <script>
-    // GHL iframe fade-in + auto-height
-    var ghl = document.querySelector('.ghl-frame-wrap iframe');
-    if (ghl) {
-      ghl.addEventListener('load', function() { ghl.classList.add('loaded'); });
-      window.addEventListener('message', function(e) {
-        var d = e.data;
-        var h = d && typeof d === 'object' && (d.height || (d.payload && d.payload.height));
-        if (h && Number(h) > 200 && Number(h) < 4000) ghl.style.height = Number(h) + 'px';
-      });
-    }
+    // The enquiry form fades in and sizes itself: components/enquiry-form.js
 
     // Fix sticky search bar top to sit below nav
     function fixSearchTop() {
