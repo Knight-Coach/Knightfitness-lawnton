@@ -119,6 +119,7 @@
     /* ===== WOMEN'S CLUB COLOUR THEME + TIGHTENING ===== */
     :root {
       --w-accent: #C2185B;   /* berry */
+      --kf-launcher-bg: #C2185B;
       --w-accent2: #7A1F4B;  /* deep plum */
       --w-blush: #FBF2F4;    /* soft warm section bg */
       --w-grad: linear-gradient(135deg, #E31E24 0%, #C2185B 100%);
@@ -238,7 +239,7 @@
         <a href="/#schedule">Schedule</a>
         <a href="/reviews">Reviews</a>
         <a href="/about">About &amp; Coaches</a>
-        <a class="nav-cta" href="/contact">Contact us</a>
+        <a class="nav-cta" href="/contact?program=womens-club" data-kf-open>Contact us</a>
       </div>
       <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -258,7 +259,7 @@
       <a href="/#schedule">Schedule</a>
       <a href="/reviews">Reviews</a>
       <a href="/about">About &amp; Coaches</a>
-      <a class="nav-cta" href="/contact">Contact us</a>
+      <a class="nav-cta" href="/contact?program=womens-club" data-kf-open>Contact us</a>
     </div>
   </div>
 
@@ -623,7 +624,7 @@
     })();
   </script>
 
-  <script src="/components/enquiry-form.js?v=1" defer></script>
+  <script src="/components/enquiry-form.js?v=2" data-program="womens-club" data-launcher defer></script>
 
   <script src="/programs/nav.js" defer></script>
 </body>
