@@ -175,7 +175,11 @@ gym once a week. Coach mode also offers a JSON export as a point-in-time backup.
 The JSX has been left **uncompiled on purpose** so it stays readable and editable.
 
 ### Third-party embeds (need internet; not part of this repo)
-- **Enquiry form** — GoHighLevel/LeadConnector iframe (`api.leadconnectorhq.com`) on `contact.html` and the program pages. Loader: `https://link.msgsndr.com/js/form_embed.js`.
+- **Enquiry form** — Knight Admin's own form, `https://knight-agent.vercel.app/form/enquiry?embed=1&site=lawnton[&program=…]`, in an iframe on the homepage, `contact.html`, `reviews.html` and the Men's and Women's Club pages. Each enquiry is posted in Slack (#new-trialists) with the lead card in its thread tagging the coach for that program and gym (the `lead_routing` setting in Knight Admin), counted in the sales pipeline, and written to the HighLevel contact with the tags `website-enquiry` and `enquiry-<program>`.
+  - `program` pre-picks the program: `womens-club`, `mens-club`, `bootcamp`, `young-knights`. A page opened with `?program=…` (the Bootcamp page links to `/contact?program=bootcamp`) passes it on.
+  - `components/enquiry-form.js` sizes the frame to the form (it posts its height) and scrolls back to it once sent. The homepage's React form does the same in `AppContentV5.jsx`. `.js` files are cached for a year (`vercel.json`), so bump `?v=` on its `<script>` tags when it changes.
+  - Knight Admin only lets the form be framed by `https://www.knightfitness-lawnton.com.au` and `https://knightfitness-lawnton.com.au` (the form's `embed_origins`). A preview deployment on another domain shows an empty frame: test on the live domain, or add the preview's address to `embed_origins`.
+- **Women's Club landing page booking** — still the HighLevel booking calendar (`api.leadconnectorhq.com/widget/booking/…`) on `womens-club.html`; bookings are read by Knight Admin from HighLevel.
 - **Map** — Google Maps embed iframe on the homepage.
 
 ### Assets
