@@ -15,7 +15,7 @@
  * - The script tag's data-launcher adds a "Message us" button pinned to the
  *   bottom of the screen (hidden while the page's own form is in view).
  *
- *   <script src="/components/enquiry-form.js?v=2" data-program="bootcamp" data-launcher defer></script>
+ *   <script src="/components/enquiry-form.js?v=3" data-program="bootcamp" data-launcher defer></script>
  *
  * Works for frames added later too (the homepage's React form): the message
  * handler finds the frame by the window that sent it, and the sheet listens
@@ -73,6 +73,12 @@
       frame.style.height = Math.ceil(h) + 'px';
     }
     if (d.submitted) {
+      // Conversion: one GA4 generate_lead + Meta Lead per sent enquiry (see /assets/kf-tracking.js).
+      if (!frame.__kfLeadSent && window.kfTrackLead) {
+        frame.__kfLeadSent = true;
+        var q = null; try { q = new URL(frame.getAttribute('src'), window.location.href).searchParams; } catch (e) {}
+        window.kfTrackLead({ site: (q && q.get('site')) || 'lawnton', source: (q && q.get('src')) || location.pathname });
+      }
       if (frame.hasAttribute('data-kf-sheet')) { sheetBody.scrollTop = 0; return; }
       // To the frame's top, clear of the sticky nav. Not scrollIntoView: the frame is still animating
       // its height down (CSS transition), so centring it would aim at the old, taller frame.

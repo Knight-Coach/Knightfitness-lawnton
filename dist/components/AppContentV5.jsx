@@ -169,6 +169,7 @@ function EnquiryForm({ light = false }) {
         <iframe
           ref={frameRef}
           src={ENQUIRY_FORM_URL}
+          data-kf-form=""
           style={{ width: "100%", height: height, border: "none", borderRadius: 12, display: "block", opacity: loaded ? 1 : 0, transition: "opacity 280ms ease, height 220ms ease" }}
           id="kf-enquiry-home"
           title="Get in touch"
