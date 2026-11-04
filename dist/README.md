@@ -20,7 +20,7 @@ Then open http://localhost:3000 (or :8000).
 
 ## Structure
 ```
-index.html              Homepage (React via CDN + Babel, mounts components/AppContentV5.jsx)
+index.html              Homepage (prerendered HTML + precompiled React, no in-browser Babel)
 about.html              About & coaches
 contact.html            Contact + embedded enquiry form
 42-hard.html            42 Hard challenge landing page (standalone, /42-hard)
@@ -36,7 +36,7 @@ programs/
   board-core.js         Board logic (pure functions, unit-tested from ../tests)
   board.css             Board styles + self-hosted font faces
 components/
-  AppContentV5.jsx      Homepage React app (JSX, transpiled in-browser by Babel)
+  AppContentV5.jsx      Homepage source. Edit it, then `npm run build:home` (writes index.html + assets/home-app.js)
   FiveRMBoard.jsx       5RM Board React app (JSX, transpiled in-browser by Babel)
   lovable-home.css      Shared styles for homepage / about / contact
 assets/lov/...          Images (compressed) + the coach video
@@ -59,7 +59,7 @@ tests/board-core.test.mjs             Unit tests for 5rm/board-core.js (`npm tes
 A member-facing strength board for the gym TV, built from the *Knight Fitness 5RM Board* design handoff. It shows squat, bench and deadlift 5RM numbers, progress since the last test, leaderboards, biggest movers, most kilos added, new PBs, milestone clubs, crew standings and the full roster, and gives coaches a phone-friendly score-entry flow plus a data admin panel. It is `noindex` and not in the sitemap: it sits behind a gym passcode.
 
 ### How it is built
-- `5rm.html` mounts `components/FiveRMBoard.jsx` with the same React 18 + Babel-in-browser pattern as the homepage, but with React, ReactDOM and Babel **self-hosted** from `assets/vendor/` and the fonts from `assets/5rm/fonts/`, so a kiosk TV never depends on a CDN at render time.
+- `5rm.html` mounts `components/FiveRMBoard.jsx` with React 18 + Babel-in-browser, **self-hosted** from `assets/vendor/`, and the fonts from `assets/5rm/fonts/`, so a kiosk TV never depends on a CDN at render time. The public homepage does not use this pattern.
 - All calculations (parsing the Google Sheet CSV, ranking, movers, PBs, milestone clubs, roster paging, member-card trends, duplicate detection, import/merge/roll-forward) live in `5rm/board-core.js` as pure functions. `npm test` runs 58 unit tests against it with Node's built-in runner.
 - `5rm/board.css` carries the design tokens (colours, type scale, radii, shadows) as CSS custom properties; only per-item values (crew colour, bar widths) are set inline.
 - The TV layout is a fixed 1920×1080 stage scaled to fit the viewport (`--tv-scale`); under 760px wide the phone layout renders instead.
@@ -164,15 +164,14 @@ gym once a week. Coach mode also offers a JSON export as a point-in-time backup.
 
 ## Important implementation notes
 
-### Homepage rendering (recommended upgrade)
-`index.html` currently loads **React 18 (production) + Babel Standalone from a CDN** and transpiles `components/AppContentV5.jsx` **in the browser** at runtime (the same libraries are self-hosted in `assets/vendor/` for the 5RM Board, so the homepage could point there too). This works, but Babel-in-the-browser adds ~1s to first paint and a large script download.
+### Homepage rendering
+`index.html` ships the rendered page (headings, offer, reviews, the enquiry iframe) and hydrates it with self-hosted React 18. `components/AppContentV5.jsx` is still the file you edit. After a change, from the repo root:
 
-**Recommended:** migrate the homepage to a real build (Vite or similar):
-1. `npm create vite@latest` (React template).
-2. Move `AppContentV5.jsx` in as a component; keep the other static HTML pages as-is (or port them too).
-3. Build to static output and deploy that. This removes the CDN React + Babel `<script>` tags and pre-compiles the JSX.
+```bash
+npm run build:home
+```
 
-The JSX has been left **uncompiled on purpose** so it stays readable and editable.
+That recompiles `dist/assets/home-app.js` and rewrites the `#root` markup. Commit both. Vercel serves `dist/` as static files and does not run this step. The 5RM Board still transpiles its own JSX in the browser, on purpose, from the self-hosted copy in `assets/vendor/`.
 
 ### Third-party embeds (need internet; not part of this repo)
 - **Enquiry form** — Knight Admin's own form, `https://knight-agent.vercel.app/form/enquiry?embed=1&site=lawnton[&program=…]`, in an iframe on the homepage, `contact.html`, `reviews.html` and the Men's and Women's Club pages. Each enquiry is posted in Slack (#new-trialists) with the lead card in its thread tagging the coach for that program and gym (the `lead_routing` setting in Knight Admin), counted in the sales pipeline, and written to the HighLevel contact with the tags `website-enquiry` and `enquiry-<program>`.

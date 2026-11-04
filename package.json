@@ -2,12 +2,18 @@
   "name": "knightfitness-lawnton",
   "version": "1.0.0",
   "private": true,
-  "description": "Knight Fitness Lawnton static site (dist/) — no build step. `npm test` runs the 5RM Board logic tests.",
+  "description": "Knight Fitness Lawnton static site (dist/). `npm test` runs the board tests and checks the prerendered homepage. `npm run build:home` rebuilds that page after editing AppContentV5.jsx. Vercel serves dist/ as static files; it does not need a build command.",
   "scripts": {
     "test": "node --test \"tests/**/*.test.mjs\"",
-    "serve": "npx --yes serve dist"
+    "serve": "npx --yes serve dist",
+    "build:home": "node scripts/prerender-home.mjs"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
