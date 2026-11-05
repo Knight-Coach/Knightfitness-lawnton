@@ -49,11 +49,8 @@
   ]
 }
 </script>
-<script src="/assets/womens-club/fb1b0011.js"></script>
 </head>
 <body>
-<x-dc>
-<helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <style>/* cyrillic-ext */
@@ -629,8 +626,6 @@
   }
 </style>
 <script src="/assets/womens-club/af4c2777.js" type="text/javascript"></script>
-<script src="/assets/womens-club/d8c8d334.js"></script>
-</helmet>
 
 <div style="width:100%;overflow-x:hidden;background:hsl(220 14% 96%);">
 
@@ -651,7 +646,7 @@
     <div style="position:relative;max-width:780px;margin:0 auto;text-align:center;">
       <div style="display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:9999px;background:hsl(0 72% 52% / 0.18);border:1px solid hsl(0 80% 70% / 0.45);backdrop-filter:blur(4px);margin-bottom:22px;">
         <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:hsl(0 85% 62%);box-shadow:0 0 0 4px hsl(0 85% 62% / 0.25);animation:kf-pulse 2s ease-in-out infinite;"></span>
-        <span style="font-size:12px;font-weight:800;letter-spacing:0.06em;color:#fff;">Only {{ spotsLeft }} intro spots left this month</span>
+        <span style="font-size:12px;font-weight:800;letter-spacing:0.06em;color:#fff;">Only 6 intro spots left this month</span>
       </div>
       <p style="margin:0 0 16px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:hsl(330 80% 82%);">North Brisbane · Women 30+ · Women-only</p>
       <h1 style="margin:0 0 18px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(36px,8.4vw,66px);line-height:1.02;letter-spacing:-0.03em;color:#fff;text-wrap:balance;text-shadow:0 2px 26px rgba(0,0,0,0.5);">Drop fat, get strong,<br>and feel like <span style="background:linear-gradient(135deg,hsl(330 90% 72%),hsl(18 95% 68%));-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic;">you</span> again.</h1>
@@ -1879,154 +1874,7 @@
   </footer>
 
 </div>
-</x-dc>
-<script type="text/x-dc" data-dc-script="" data-props="{&quot;spotsLeft&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:30}}">
-class Component extends DCLogic {
-  renderVals() {
-    return { spotsLeft: this.props.spotsLeft ?? 6 };
-  }
-  componentDidMount() {
-    const bar = document.getElementById('kfStickyCta');
-    const booking = document.getElementById('booking');
-    if (!bar) return;
-    const update = () => {
-      const past = window.scrollY > 480;
-      let bookingVisible = false;
-      if (booking) {
-        const r = booking.getBoundingClientRect();
-        bookingVisible = r.top < window.innerHeight * 0.9 && r.bottom > 80;
-      }
-      const nearBottom = (window.innerHeight + window.scrollY) > (document.body.scrollHeight - 150);
-      bar.style.transform = (past && !bookingVisible && !nearBottom) ? 'translateY(0)' : 'translateY(140%)';
-    };
-    this._onScroll = update;
-    window.addEventListener('scroll', update, { passive: true });
-
-    // --- Click-to-play video testimonials ---
-    document.querySelectorAll('[data-yt]').forEach((el) => {
-      const play = () => {
-        const id = el.getAttribute('data-yt');
-        if (el.dataset.loaded) return;
-        el.dataset.loaded = '1';
-        const src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&origin=' + encodeURIComponent(location.origin);
-        el.innerHTML = '<div style="position:relative;width:100%;aspect-ratio:16/9;"><iframe src="' + src + '" title="Women\'s Club testimonial" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
-      };
-      el.addEventListener('click', play);
-      el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); } });
-    });
-
-    // --- Qualification quiz ---
-    const quiz = document.getElementById('kfQuiz');
-    if (quiz) {
-      const steps = Array.from(quiz.querySelectorAll('[data-quiz-step]'));
-      const result = quiz.querySelector('[data-quiz-result]');
-      const dots = Array.from(quiz.querySelectorAll('[data-quiz-dot]'));
-      let cur = 0;
-      const paint = (i) => {
-        dots.forEach((d, idx) => { d.style.background = idx <= i ? 'hsl(330 81% 60%)' : 'hsl(330 40% 85%)'; });
-      };
-      quiz.querySelectorAll('[data-quiz-advance]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          steps[cur].style.display = 'none';
-          cur++;
-          if (cur < steps.length) {
-            steps[cur].style.display = 'block';
-            paint(cur);
-          } else {
-            if (result) result.style.display = 'block';
-            paint(steps.length - 1);
-          }
-        });
-      });
-    }
-
-    // --- Coach Hannah video play-button overlay ---
-    const hv = document.getElementById('kfHannahVideo');
-    const hp = document.getElementById('kfHannahPlay');
-    if (hv && hp) {
-      hp.addEventListener('click', () => { if (hv.dataset.lazysrc && !hv.src) { hv.src = hv.dataset.lazysrc; } hv.play(); });
-      hv.addEventListener('play', () => { hp.style.display = 'none'; });
-      hv.addEventListener('pause', () => { hp.style.display = 'flex'; });
-      hv.addEventListener('ended', () => { hp.style.display = 'flex'; });
-    }
-    window.addEventListener('resize', update);
-    update();
-
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // --- Count-up stats ---
-    const fmt = (n, comma) => comma ? Math.round(n).toLocaleString('en-US') : String(Math.round(n));
-    const runCount = (el) => {
-      const target = parseFloat(el.getAttribute('data-kf-count'));
-      const suffix = el.getAttribute('data-kf-suffix') || '';
-      const comma = el.getAttribute('data-kf-comma') === '1';
-      if (reduce) { el.textContent = fmt(target, comma) + suffix; return; }
-      const dur = 1400, t0 = performance.now();
-      const tick = (now) => {
-        const p = Math.min(1, (now - t0) / dur);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = fmt(target * eased, comma) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    };
-    const counters = Array.from(document.querySelectorAll('[data-kf-count]'));
-    if ('IntersectionObserver' in window && counters.length) {
-      const co = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) { runCount(e.target); co.unobserve(e.target); }
-        });
-      }, { threshold: 0.5 });
-      counters.forEach((el) => co.observe(el));
-    }
-
-    // --- Scroll reveal (slide-up) ---
-    const sections = Array.from(document.querySelectorAll('section'));
-    const revealTargets = sections.slice(1); // keep hero visible
-    if (!reduce && 'IntersectionObserver' in window) {
-      revealTargets.forEach((el) => {
-        el.setAttribute('data-kf-reveal', '');
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(22px)';
-        el.style.transition = 'opacity .6s ease-out, transform .6s ease-out';
-      });
-      const ro = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.style.opacity = '1';
-            e.target.style.transform = 'none';
-            ro.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-      revealTargets.forEach((el) => ro.observe(el));
-      // safety: reveal everything after 2.5s no matter what
-      this._revealSafety = setTimeout(() => {
-        revealTargets.forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
-      }, 2500);
-    }
-
-    // --- Play videos only while in view ---
-    const vids = Array.from(document.querySelectorAll('video[autoplay]'));
-    if ('IntersectionObserver' in window && vids.length) {
-      const vo = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) { const p = e.target.play(); if (p && p.catch) p.catch(() => {}); }
-          else { e.target.pause(); }
-        });
-      }, { threshold: 0.25 });
-      vids.forEach((v) => vo.observe(v));
-    }
-  }
-  componentWillUnmount() {
-    if (this._onScroll) {
-      window.removeEventListener('scroll', this._onScroll);
-      window.removeEventListener('resize', this._onScroll);
-    }
-    if (this._revealSafety) clearTimeout(this._revealSafety);
-  }
-}
-</script>
+<script src="/assets/womens-club-page.js?v=1" defer></script>
 
 
 </body></html>

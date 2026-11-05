@@ -171,7 +171,7 @@ gym once a week. Coach mode also offers a JSON export as a point-in-time backup.
 npm run build:home
 ```
 
-That recompiles `dist/assets/home-app.js` and rewrites the `#root` markup. Commit both. Vercel serves `dist/` as static files and does not run this step. The 5RM Board still transpiles its own JSX in the browser, on purpose, from the self-hosted copy in `assets/vendor/`.
+That recompiles `dist/assets/home-app.js` and rewrites the `#root` markup. Commit both. Vercel serves `dist/` as static files and does not run this step. Every other public page is already ordinary HTML. The Women's Club page no longer boots the old in-browser React runtime; its quiz, videos and sticky bar live in `assets/womens-club-page.js`. The 5RM Board (`/5rm`, `noindex`) still transpiles its own JSX in the browser, on purpose, from the self-hosted copy in `assets/vendor/`.
 
 ### Third-party embeds (need internet; not part of this repo)
 - **Enquiry form** — Knight Admin's own form, `https://knight-agent.vercel.app/form/enquiry?embed=1&site=lawnton[&program=…]`, in an iframe on the homepage, `contact.html`, `reviews.html` and the Men's and Women's Club pages. Each enquiry is posted in Slack (#new-trialists) with the lead card in its thread tagging the coach for that program and gym (the `lead_routing` setting in Knight Admin), counted in the sales pipeline, and written to the HighLevel contact with the tags `website-enquiry` and `enquiry-<program>`.
