@@ -17,19 +17,19 @@ const programNav = [
 ];
 
 const transformationsRow1 = [
-  "assets/lov/results/real-7kg-woman-v2.jpg",
-  "assets/lov/results/real-11kg-man.jpg",
-  "assets/lov/results/real-6kg-woman.jpg",
-  "assets/lov/results/real-12kg-man.jpg",
-  "assets/lov/results/result-14kg-woman-sm.jpg",
+  "assets/lov/results/real-7kg-woman-v2-440.webp",
+  "assets/lov/results/real-11kg-man-440.webp",
+  "assets/lov/results/real-6kg-woman-440.webp",
+  "assets/lov/results/real-12kg-man-440.webp",
+  "assets/lov/results/result-14kg-woman-sm-440.webp",
 ];
 const transformationsRow2 = [
-  "assets/lov/results/real-20kg-man.jpg",
-  "assets/lov/results/result-7kg-woman-sm.jpg",
-  "assets/lov/results/real-10kg-man.jpg",
-  "assets/lov/results/result-22kg-man-sm.jpg",
-  "assets/lov/results/real-11kg-6weeks.jpg",
-  "assets/lov/results/real-7kg-6weeks.jpg",
+  "assets/lov/results/real-20kg-man-440.webp",
+  "assets/lov/results/result-7kg-woman-sm-440.webp",
+  "assets/lov/results/real-10kg-man-440.webp",
+  "assets/lov/results/result-22kg-man-sm-440.webp",
+  "assets/lov/results/real-11kg-6weeks-440.webp",
+  "assets/lov/results/real-7kg-6weeks-440.webp",
 ];
 
 const pillars = [
@@ -184,12 +184,146 @@ function EnquiryForm({ light = false }) {
   );
 }
 
+/* ---------- Reviews carousel ----------
+   Auto-scrolls as a marquee (paused on hover/focus). Any control, an arrow key,
+   or prefers-reduced-motion switches it to a manual, swipeable carousel: one
+   row, no duplicate cards, Previous/Next buttons, and a polite live region
+   announcing which review is showing. */
+
+function ReviewCard({ review, label, hidden }) {
+  return (
+    <div className="google-review" role={hidden ? undefined : "group"} aria-roledescription={hidden ? undefined : "slide"} aria-label={hidden ? undefined : label} aria-hidden={hidden ? "true" : undefined}>
+      <div className="review-header">
+        <div className="review-avatar" aria-hidden="true">{getInitials(review.name)}</div>
+        <div style={{ flex: 1 }}>
+          <div className="review-info">
+            <div className="review-name">{review.name}</div>
+            <div className="review-stars"><span aria-hidden="true">★★★★★</span><span className="sr-only">5 out of 5 stars</span></div>
+            <div className="review-date">{review.date}</div>
+          </div>
+        </div>
+        <GoogleLogo />
+      </div>
+      <p className="review-text">{review.text}</p>
+    </div>
+  );
+}
+
+function ReviewCarousel({ rows, label }) {
+  const all = rows.reduce((acc, r) => acc.concat(r), []);
+  const [manual, setManual] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [announce, setAnnounce] = useState("");
+  // Where a button/key asked to go. Kept apart from `index` (which follows swipes) so that
+  // the scroll listener updating `index` mid-animation can't restart the scroll.
+  const [target, setTarget] = useState(null);
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) setManual(true);
+  }, []);
+
+  useEffect(() => {
+    if (!manual || !trackRef.current || !target) return;
+    const track = trackRef.current;
+    const card = track.children[target.i];
+    if (!card) return;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    track.scrollTo({ left: card.offsetLeft - track.offsetLeft - (track.clientWidth - card.offsetWidth) / 2, behavior: reduce ? "auto" : "smooth" });
+  }, [target, manual]);
+
+  const show = (i) => {
+    const next = (i + all.length) % all.length;
+    setManual(true);
+    setIndex(next);
+    setTarget({ i: next, at: Date.now() });
+    setAnnounce(`Review ${next + 1} of ${all.length}, from ${all[next].name}`);
+  };
+  const go = (dir) => show(index + dir);
+  const onKeyDown = (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+    else if (e.key === "Home") { e.preventDefault(); show(0); }
+    else if (e.key === "End") { e.preventDefault(); show(all.length - 1); }
+  };
+  // Keep the dot in step when someone swipes the manual track.
+  const onScroll = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const center = track.scrollLeft + track.clientWidth / 2;
+    let best = 0, min = Infinity;
+    Array.prototype.forEach.call(track.children, (c, i) => {
+      const d = Math.abs(c.offsetLeft - track.offsetLeft + c.offsetWidth / 2 - center);
+      if (d < min) { min = d; best = i; }
+    });
+    if (best !== index) setIndex(best);
+  };
+
+  return (
+    <div className={`reviews-carousel ${manual ? "is-manual" : ""}`} role="region" aria-roledescription="carousel" aria-label={label} onKeyDown={onKeyDown}>
+      <div className="carousel-controls">
+        <button type="button" className="carousel-btn" onClick={() => go(-1)} aria-label="Previous review">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+        </button>
+        <button type="button" className="carousel-btn carousel-btn--toggle" onClick={() => { setManual((m) => !m); setAnnounce(""); }} aria-pressed={manual ? "true" : "false"}>
+          {manual ? "Auto-scroll" : "Pause"}<span className="sr-only"> reviews</span>
+        </button>
+        <button type="button" className="carousel-btn" onClick={() => go(1)} aria-label="Next review">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" aria-hidden="true"><path d="M9 18l6-6-6-6" /></svg>
+        </button>
+      </div>
+      {manual ? (
+        <div className="reviews-manual" ref={trackRef} tabIndex={0} aria-label={`${label}: use the arrow keys to move between reviews`} onScroll={onScroll}>
+          {all.map((review, i) => <ReviewCard key={i} review={review} label={`${i + 1} of ${all.length}`} />)}
+        </div>
+      ) : (
+        <div className="reviews-marquee">
+          {rows.map((row, rowIdx) => (
+            <div key={rowIdx} className={`marquee-track ${rowIdx === 1 ? "reverse" : ""}`}>
+              {[...row, ...row].map((review, i) => (
+                <ReviewCard key={i} review={review} hidden={i >= row.length} label={`${rowIdx * rows[0].length + i + 1} of ${all.length}`} />
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+      <p className="sr-only" aria-live="polite" aria-atomic="true">{announce}</p>
+    </div>
+  );
+}
+
+/* Results photos marquee: decorative motion with a Pause control (WCAG 2.2.2). */
+function ResultsMarquee({ rows }) {
+  const [paused, setPaused] = useState(false);
+  return (
+    <div className={`results-marquee-wrap ${paused ? "is-paused" : ""}`}>
+      <div className="carousel-controls carousel-controls--end">
+        <button type="button" className="carousel-btn carousel-btn--toggle" onClick={() => setPaused((p) => !p)} aria-pressed={paused ? "true" : "false"}>
+          {paused ? "Play" : "Pause"}<span className="sr-only"> member results slideshow</span>
+        </button>
+      </div>
+      {rows.map((row, r) => (
+        <div key={r} className={`transformations-marquee ${r === 1 ? "transformations-marquee--reverse" : ""}`}>
+          <div className="transformations-track">
+            {[...row, ...row].map((src, i) => (
+              <div key={`row${r}-${i}`} className="transform-card" aria-hidden={i >= row.length ? "true" : undefined}>
+                <img loading="lazy" decoding="async" width="440" height="550" src={src} alt={i >= row.length ? "" : `Knight Fitness member result ${(i % row.length) + 1 + r * rows[0].length}`} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ---------- Main page ---------- */
 
 function AppContent() {
   const [scrolled, setScrolled] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [stickyHidden, setStickyHidden] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = mobileNavOpen ? "hidden" : "";
@@ -206,7 +340,15 @@ function AppContent() {
     }, { threshold: 0.15 });
     document.querySelectorAll(".stat-item, .program-card, .google-review, .section-header").forEach((el) => observer.observe(el));
 
-    return () => { window.removeEventListener("scroll", onScroll); observer.disconnect(); };
+    // The sticky "Get in touch" bar steps aside over the contact form and the footer.
+    const covered = new Set();
+    const stickyObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) covered.add(e.target); else covered.delete(e.target); });
+      setStickyHidden(covered.size > 0);
+    });
+    document.querySelectorAll("#contact .contact-form-wrap, footer").forEach((el) => stickyObserver.observe(el));
+
+    return () => { window.removeEventListener("scroll", onScroll); observer.disconnect(); stickyObserver.disconnect(); };
   }, []);
 
   const cellValue = (v) => (v === true ? "✓" : v === false ? "—" : v);
@@ -221,7 +363,7 @@ function AppContent() {
       <nav className={`nav-wrapper ${scrolled ? "scrolled" : ""}`} id="main-nav">
         <div className="nav-container">
           <a href="#top" aria-label="Knight Fitness Lawnton home" className="nav-logo">
-            <img loading="eager" decoding="async" src={scrolled ? "assets/lov/logo-dark.webp" : "assets/lov/logo-light.webp"} alt="Knight Fitness Lawnton" className="logo" />
+            <img loading="eager" fetchpriority="high" decoding="async" src={scrolled ? "assets/lov/logo-dark-360.webp" : "assets/lov/logo-light-360.webp"} alt="Knight Fitness Lawnton" className="logo" width="360" height="126" />
           </a>
           <div className="nav-links">
             <div className="nav-dropdown">
@@ -265,10 +407,10 @@ function AppContent() {
       {/* HERO */}
       <section className="hero-fullbleed" id="top">
         <div className="hero-bg">
-          <img loading="eager" fetchpriority="high" decoding="async" src="assets/lov/hero.webp" alt="Knight Fitness Lawnton community" />
+          <img loading="eager" fetchpriority="high" decoding="async" src="assets/lov/hero.webp" srcSet="assets/lov/hero-640.webp 640w, assets/lov/hero-1024.webp 1024w, assets/lov/hero.webp 1400w" sizes="(max-width: 700px) 120vw, 100vw" width="1400" height="1400" alt="Knight Fitness Lawnton community" />
         </div>
         <div className="hero-overlay" />
-        <div className="hero-content-wrapper hero-grid">
+        <div className="hero-content-wrapper hero-grid hero-grid--single">
           <div className="hero-text">
             <div className="hero-rating">
               <span className="hero-stars" aria-hidden="true">★★★★★</span>
@@ -299,12 +441,11 @@ function AppContent() {
             <div className="hero-cta-microcopy">60-second booking · No card required · Reply by SMS within an hour</div>
           </div>
 
-          <div className="hero-form-card" id="get-in-touch">
-            <div className="hero-form-eyebrow">No Pressure · No Contracts</div>
-            <h2 className="hero-form-title">GET IN TOUCH</h2>
-            <p className="hero-form-sub">Drop us a message and a coach will reach out to learn about your goals and find the right fit.</p>
-            <EnquiryForm light />
-          </div>
+          <ul className="hero-next" aria-label="What happens when you get in touch">
+            <li><span className="hero-next-num" aria-hidden="true">1</span><span><strong>Send a quick message</strong> or call — it takes about a minute.</span></li>
+            <li><span className="hero-next-num" aria-hidden="true">2</span><span><strong>A coach gets back to you</strong>, usually the same day.</span></li>
+            <li><span className="hero-next-num" aria-hidden="true">3</span><span><strong>Come in and meet the crew.</strong> No pressure, no contracts.</span></li>
+          </ul>
         </div>
       </section>
 
@@ -343,7 +484,7 @@ function AppContent() {
             {pillars.map((p) => (
               <div key={p.num} className="pillar">
                 <div className="num">{p.num}</div>
-                <h4>{p.title}</h4>
+                <h3>{p.title}</h3>
                 <p>{p.body}</p>
               </div>
             ))}
@@ -363,7 +504,7 @@ function AppContent() {
             {programs.map((program, i) => (
               <div key={program.id} className="program-card" style={{ animationDelay: `${i * 0.15}s` }}>
                 <div className="program-image">
-                  <img loading="lazy" decoding="async" src={program.image} alt={program.title} />
+                  <img loading="lazy" decoding="async" src={program.image} srcSet={`${program.image.replace(/\.(webp|jpg)$/, "-640.webp")} 640w, ${program.image.replace(/\.(webp|jpg)$/, "-1024.webp")} 1024w`} sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 300px" width="640" height="470" alt={program.title} />
                 </div>
                 <div className="program-content">
                   <h3 className="program-title">{program.title}</h3>
@@ -460,24 +601,7 @@ function AppContent() {
             <h2 className="section-title">REAL LOCALS. REAL RESULTS.</h2>
             <p className="section-subtitle">Members who showed up consistently and trusted the process.</p>
           </div>
-          <div className="transformations-marquee">
-            <div className="transformations-track">
-              {[...transformationsRow1, ...transformationsRow1].map((src, i) => (
-                <div key={`row1-${i}`} className="transform-card">
-                  <img loading="lazy" decoding="async" src={src} alt={`Knight Fitness member result ${(i % transformationsRow1.length) + 1}`} />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="transformations-marquee transformations-marquee--reverse">
-            <div className="transformations-track">
-              {[...transformationsRow2, ...transformationsRow2].map((src, i) => (
-                <div key={`row2-${i}`} className="transform-card">
-                  <img loading="lazy" decoding="async" src={src} alt={`Knight Fitness member result ${(i % transformationsRow2.length) + 1}`} />
-                </div>
-              ))}
-            </div>
-          </div>
+          <ResultsMarquee rows={[transformationsRow1, transformationsRow2]} />
         </div>
       </section>
 
@@ -493,7 +617,7 @@ function AppContent() {
             {steps.map((s) => (
               <div key={s.num} className="step-card">
                 <div className="step-num">{s.num}</div>
-                <h4>{s.title}</h4>
+                <h3>{s.title}</h3>
                 <p>{s.body}</p>
               </div>
             ))}
@@ -580,6 +704,35 @@ function AppContent() {
         </div>
       </section>
 
+      {/* PRICING
+          TODO(owner): membership prices are not published yet. Replace the
+          "Ask about our current offers" placeholder below with the confirmed
+          prices per program. Do not add guessed or example prices. */}
+      <section id="pricing" className="section pricing-section" style={{ background: "white" }}>
+        <div className="container">
+          <div className="section-header">
+            <div className="section-eyebrow">MEMBERSHIP &amp; PRICING</div>
+            <h2 className="section-title">PRICING THAT FITS YOUR PROGRAM</h2>
+            <p className="section-subtitle">What you pay depends on the program and how often you train. Tell us what you're after and a coach will take you through the current options.</p>
+          </div>
+          <div className="pricing-card">
+            <div className="pricing-price" data-todo="pricing">
+              <span className="pricing-price-label">Current price</span>
+              <span className="pricing-price-value">Ask about our current offers</span>
+            </div>
+            <ul className="pricing-points">
+              <li>Bootcamp, Men's Club and Women's Club memberships</li>
+              <li>Every session coach-led, scaled to your level</li>
+              <li>No lock-in contracts</li>
+            </ul>
+            <div className="pricing-actions">
+              <a className="cta-primary" href="#contact">Ask about current offers<ArrowIcon /></a>
+              <a className="pricing-call" href="tel:+61452519877">or call 0452 519 877</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* REVIEWS */}
       <section className="section" style={{ background: "white" }}>
         <div className="container">
@@ -596,28 +749,7 @@ function AppContent() {
             </div>
           </div>
         </div>
-        <div className="reviews-marquee">
-          {[googleReviewsRow1, googleReviewsRow2].map((row, rowIdx) => (
-            <div key={rowIdx} className={`marquee-track ${rowIdx === 1 ? "reverse" : ""}`}>
-              {[...row, ...row].map((review, i) => (
-                <div key={i} className="google-review">
-                  <div className="review-header">
-                    <div className="review-avatar" aria-label={review.name} role="img">{getInitials(review.name)}</div>
-                    <div style={{ flex: 1 }}>
-                      <div className="review-info">
-                        <div className="review-name">{review.name}</div>
-                        <div className="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-                        <div className="review-date">{review.date}</div>
-                      </div>
-                    </div>
-                    <GoogleLogo />
-                  </div>
-                  <p className="review-text">{review.text}</p>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        <ReviewCarousel rows={[googleReviewsRow1, googleReviewsRow2]} label="Google reviews from Lawnton members" />
       </section>
 
       {/* FAQ */}
@@ -631,11 +763,13 @@ function AppContent() {
           <div className="faq-container">
             {faqs.map((faq, i) => (
               <div key={i} className={`faq-item ${openFaq === i ? "open" : ""}`}>
-                <div className="faq-question" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                  {faq.q}
-                  <span className="faq-toggle">+</span>
-                </div>
-                <div className="faq-answer"><div className="faq-answer-content">{faq.a}</div></div>
+                <h3 className="faq-heading">
+                  <button type="button" className="faq-question" id={`faq-q-${i}`} aria-expanded={openFaq === i ? "true" : "false"} aria-controls={`faq-a-${i}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                    {faq.q}
+                    <span className="faq-toggle" aria-hidden="true">+</span>
+                  </button>
+                </h3>
+                <div className="faq-answer" id={`faq-a-${i}`} role="region" aria-labelledby={`faq-q-${i}`} aria-hidden={openFaq === i ? undefined : "true"}><div className="faq-answer-content">{faq.a}</div></div>
               </div>
             ))}
           </div>
@@ -657,6 +791,7 @@ function AppContent() {
                 <p style={{ color: "var(--kf-gray-dark)", fontSize: "0.95rem", lineHeight: 1.55 }}>Whether you have a question, need support, or just want to chat about where you're at — we're here to listen.</p>
               </div>
               <EnquiryForm light />
+              <p className="form-privacy">We only use your details to reply to your enquiry. See our <a href="/privacy">privacy policy</a>.</p>
             </div>
             <div className="contact-info">
               <div className="contact-info-item"><div className="contact-info-label">Address</div><div className="contact-info-value">664 Gympie Road<br />Lawnton QLD 4501</div></div>
@@ -688,10 +823,10 @@ function AppContent() {
       <footer>
         <div className="container">
           <div className="footer-trust" aria-label="Accreditations and reviews">
-            <a className="trust-reviews" href="https://www.google.com/search?q=Knight+Fitness+Lawnton+reviews" target="_blank" rel="noopener noreferrer" aria-label="Read our Google reviews">
+            <a className="trust-reviews" href="https://www.google.com/search?q=Knight+Fitness+Lawnton+reviews" target="_blank" rel="noopener noreferrer">
               <div className="trust-reviews-google" aria-hidden="true">
                 <span style={{ color: "#4285F4" }}>G</span><span style={{ color: "#EA4335" }}>o</span><span style={{ color: "#FBBC05" }}>o</span><span style={{ color: "#4285F4" }}>g</span><span style={{ color: "#34A853" }}>l</span><span style={{ color: "#EA4335" }}>e</span>
-                <span style={{ color: "rgba(255,255,255,0.55)", marginLeft: "0.4rem", fontWeight: 500 }}>Reviews</span>
+                <span style={{ color: "rgba(255,255,255,0.7)", marginLeft: "0.4rem", fontWeight: 500 }}>Reviews</span>
               </div>
               <div className="trust-reviews-rating">
                 <div className="trust-stars" aria-hidden="true">
@@ -721,7 +856,7 @@ function AppContent() {
           </div>
           <div className="footer-grid">
             <div className="footer-col">
-              <img loading="lazy" decoding="async" src="assets/lov/logo-light.webp" alt="Knight Fitness" style={{ height: 40, marginBottom: "1rem" }} />
+              <img loading="lazy" decoding="async" src="assets/lov/logo-light-360.webp" alt="Knight Fitness" width="114" height="40" style={{ height: 40, width: "auto", marginBottom: "1rem" }} />
               <p style={{ marginBottom: "1rem" }}>Real coaching, real accountability, real community for Lawnton locals.</p>
               <div className="footer-socials" style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
                 <a href="https://www.instagram.com/knightfitnesslawnton/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
@@ -729,30 +864,31 @@ function AppContent() {
               </div>
             </div>
             <div className="footer-col">
-              <h4>Quick Links</h4>
+              <h2 className="footer-heading">Quick Links</h2>
               <a href="#programs">Programs</a>
               <a href="#schedule">Schedule</a>
+              <a href="#pricing">Pricing</a>
               <a href="reviews.html">Reviews</a>
               <a href="about.html">About &amp; Coaches</a>
               <a href="contact.html">Contact</a>
-              <a href="reviews.html">Reviews</a>
               <a href="#faq">FAQ</a>
+              <a href="/privacy">Privacy Policy</a>
             </div>
             <div className="footer-col">
-              <h4>Programs</h4>
+              <h2 className="footer-heading">Programs</h2>
               <a href="programs/bootcamp.html">Bootcamp</a>
               <a href="programs/mens.html">Men's Club</a>
               <a href="programs/womens.html">Women's Club</a>
               <a href="https://www.youngknights.com.au" target="_blank" rel="noopener noreferrer">Young Knights</a>
             </div>
             <div className="footer-col">
-              <h4>Visit Us</h4>
+              <h2 className="footer-heading">Visit Us</h2>
               <p><a href="https://www.google.com/maps/search/?api=1&query=Knight+Fitness+Lawnton+664+Gympie+Road" target="_blank" rel="noopener noreferrer">664 Gympie Road<br />Lawnton QLD 4501</a></p>
               <p><a href="tel:+61452519877">0452 519 877</a></p>
               <p><a href="mailto:info@knightfitness.com.au">info@knightfitness.com.au</a></p>
             </div>
             <div className="footer-col">
-              <h4>Opening Hours</h4>
+              <h2 className="footer-heading">Opening Hours</h2>
               <p style={{ margin: 0 }}>Mon – Thu</p>
               <p style={{ marginTop: 0 }}>4:50am – 7:15pm</p>
               <p style={{ margin: 0 }}>Friday</p>
@@ -764,22 +900,22 @@ function AppContent() {
             </div>
           </div>
           <div className="footer-bottom" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "center" }}>
-            <p style={{ margin: 0 }}>© 2026 Knight Fitness Lawnton. All Rights Reserved.</p>
-            <p style={{ margin: 0, opacity: 0.7 }}>Sister gym: <a href="https://knightfitness-morayfield.com.au/home" target="_blank" rel="noopener noreferrer">Knight Fitness Morayfield</a></p>
+            <p style={{ margin: 0 }}>© 2026 Knight Fitness Lawnton. All Rights Reserved. <a className="footer-bottom-link" href="/privacy">Privacy Policy</a></p>
+            <p style={{ margin: 0 }}>Sister gym: <a className="footer-bottom-link" href="https://knightfitness-morayfield.com.au/home" target="_blank" rel="noopener noreferrer">Knight Fitness Morayfield</a></p>
           </div>
         </div>
       </footer>
 
-      {/* STICKY MOBILE CTA */}
-      <div className="sticky-cta">
+      {/* STICKY MOBILE CTA (hidden while the contact form or the footer is on screen) */}
+      <div className={`sticky-cta ${stickyHidden ? "is-hidden" : ""}`} aria-hidden={stickyHidden ? "true" : undefined}>
         <div className="sticky-cta-info">
           <div className="sticky-cta-eyebrow">GET IN TOUCH</div>
           <div className="sticky-cta-text">No pressure. No contracts.</div>
         </div>
-        <a href="tel:+61452519877" className="sticky-cta-call" aria-label="Call us">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+        <a href="tel:+61452519877" className="sticky-cta-call" aria-label="Call us on 0452 519 877" tabIndex={stickyHidden ? -1 : undefined}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
         </a>
-        <a href="#contact" className="sticky-cta-btn" data-kf-open="">Contact us</a>
+        <a href="#contact" className="sticky-cta-btn" data-kf-open="" tabIndex={stickyHidden ? -1 : undefined}>Contact us</a>
       </div>
     </div>
   );

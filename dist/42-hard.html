@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
-  <script src="/assets/kf-tracking.js?v=1"></script>
+  <script src="/assets/kf-tracking.js?v=2" async></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>42 Hard | The Final Challenge of the Year | Knight Fitness Lawnton</title>
@@ -9,6 +9,7 @@
 <link rel="canonical" href="https://www.knightfitness-lawnton.com.au/42-hard">
 <meta name="theme-color" content="#0a0e1a">
 <meta name="robots" content="noindex, follow">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -59,7 +60,7 @@
   --gold-soft: hsl(45 93% 58%);
   --paper:     hsl(220 14% 96%);
   --line:      hsl(220 13% 91%);
-  --muted:     hsl(220 9% 46%);
+  --muted:     hsl(220 10% 38%);
   --muted-dk:  hsl(220 14% 74%);
   --ink:       hsl(224 71% 4%);
   --wire:      hsl(0 0% 100% / 0.1);
@@ -229,7 +230,7 @@ button { font: inherit; }
   scroll-margin-top: 90px;
 }
 .signup-head { background: var(--red); padding: 17px 24px; }
-.signup-head .eyebrow { color: hsl(356 100% 92%); }
+.signup-head .eyebrow { color: #fff; }
 .signup-head h2 { font-size: clamp(22px, 3vw, 26px); color: #fff; margin-top: 4px; }
 .signup-body { padding: 20px 24px 24px; }
 .prices { display: flex; gap: 10px; }
@@ -335,7 +336,7 @@ button { font: inherit; }
 .ftr-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
 .ftr img { height: 34px; width: auto; }
 .ftr-meta { font-size: 12.5px; line-height: 1.6; }
-.ftr-meta a { color: hsl(220 14% 74%); }
+.ftr-meta a { color: #fff; text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 44px; }
 .ftr-meta a:hover { color: #fff; }
 
 /* Sticky mobile CTA */
@@ -354,6 +355,8 @@ button { font: inherit; }
 .dock .btn { flex: none; }
 @media (min-width: 981px) { .dock { display: none; } }
 @media (max-width: 980px) { body { padding-bottom: 74px; } }
+:where(img[width][height]){height:auto;}
+:where(picture){display:contents;}
 </style>
 </head>
 <body>
@@ -363,7 +366,7 @@ button { font: inherit; }
 
 <header class="hdr">
   <a href="/" aria-label="Knight Fitness Lawnton home">
-    <img src="/assets/lov/logo-light.webp" width="1200" height="420" alt="Knight Fitness Lawnton">
+    <img src="/assets/lov/logo-light-360.webp" width="360" height="126" alt="Knight Fitness Lawnton" decoding="async">
   </a>
   <div class="hdr-right">
     <span class="hdr-when">Starts Mon 2 Nov</span>
@@ -464,6 +467,7 @@ button { font: inherit; }
                 or call <a href="tel:+61452519877">0452 519 877</a>.</p>
             </noscript>
           </div>
+          <p class="ghl-fallback">We only use your details for your challenge registration. See our <a href="/privacy">privacy policy</a>.</p>
 
           <div class="scarcity">
             <div class="meter" role="img" aria-label="36 of 60 spots already taken">
@@ -562,7 +566,7 @@ button { font: inherit; }
         <p style="margin-top:26px"><a class="btn btn-red" href="#signup">Sign me up</a></p>
       </div>
       <div class="coach-img reveal">
-        <img src="/assets/42-hard/coaches.webp" width="900" height="860" loading="lazy" decoding="async" alt="The four Knight Fitness Lawnton coaches in the gym, in black and red club polos">
+        <img src="/assets/42-hard/coaches.webp" width="900" height="860" loading="lazy" decoding="async" alt="The four Knight Fitness Lawnton coaches in the gym, in black and red club polos" srcset="/assets/42-hard/coaches-640.webp 640w, /assets/42-hard/coaches.webp 900w" sizes="(max-width: 700px) 100vw, 50vw">
       </div>
     </div>
   </section>
@@ -582,10 +586,11 @@ button { font: inherit; }
 
 <footer class="ftr">
   <div class="shell ftr-in">
-    <img src="/assets/lov/logo-light.webp" width="1200" height="420" alt="Knight Fitness Lawnton">
+    <img src="/assets/lov/logo-light-360.webp" width="360" height="126" alt="Knight Fitness Lawnton" decoding="async" loading="lazy">
     <div class="ftr-meta">
       <p>664 Gympie Road, Lawnton QLD 4501 · <a href="tel:+61452519877">0452 519 877</a></p>
       <p style="margin-top:4px">42 Hard · 2 Nov – 12 Dec 2026 · Knight Fitness Lawnton</p>
+      <p style="margin-top:4px"><a href="/privacy">Privacy policy</a></p>
     </div>
   </div>
 </footer>

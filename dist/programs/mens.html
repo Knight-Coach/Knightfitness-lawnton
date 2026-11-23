@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="/assets/kf-tracking.js?v=1"></script>
+  <script src="/assets/kf-tracking.js?v=2" async></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Men's Club | Knight Fitness Lawnton</title>
   <meta name="description" content="Men's Club at Knight Fitness Lawnton — semi-private coaching for men who want a clear plan, expert coaching and a crew that holds each other accountable.">
   <link rel="canonical" href="https://www.knightfitness-lawnton.com.au/programs/mens">
   <meta name="theme-color" content="#1A1A1A">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta property="og:type" content="website">
@@ -23,6 +24,9 @@
   <meta name="twitter:title" content="Men's Club | Knight Fitness Lawnton">
   <meta name="twitter:description" content="Men's Club at Knight Fitness Lawnton — semi-private coaching for men who want a clear plan, expert coaching and a crew that holds each other accountable.">
   <meta name="twitter:image" content="https://www.knightfitness-lawnton.com.au/og-image.jpg">
+  <link rel="preload" as="image" href="/assets/lov/mens/video/mens-hero-poster.webp" fetchpriority="high">
+  <link rel="preload" href="/assets/fonts/bebas-neue-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lato-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="program.css">
   <style>
     .pp-lead-sub { font-size: 1.15rem; font-weight: 700; color: var(--kf-black); max-width: 800px; margin-bottom: 1rem; }
@@ -86,7 +90,7 @@
     /* "What you won't find here" culture band */
     .pp-noband { background: var(--kf-black); color: #fff; padding: 4.5rem 2rem; text-align: center; }
     .pp-noband-inner { max-width: 1000px; margin: 0 auto; }
-    .pp-noband .pp-eyebrow { color: var(--kf-red); }
+    .pp-noband .pp-eyebrow { color: var(--kf-red-on-dark); }
     .pp-noband h2 { color: #fff; }
     .pp-noband-sub { color: rgba(255,255,255,0.72); max-width: 620px; margin: 0.75rem auto 0; line-height: 1.6; font-size: 1.02rem; }
     .pp-nolist { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.85rem; margin-top: 2rem; }
@@ -202,7 +206,8 @@
     .pp-sticky-cta.show { opacity: 1; visibility: visible; transform: none; }
     .pp-sticky-cta:hover { background: var(--kf-red-dark); transform: translateY(-2px); }
     .pp-sticky-cta svg { flex: none; }
-    @media (max-width: 600px) { .pp-sticky-cta { left: 1rem; right: 1rem; justify-content: center; bottom: 1rem; } }
+    .pp-sticky-cta { bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)); min-height: 48px; }
+    @media (max-width: 600px) { .pp-sticky-cta { right: 0.75rem; bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); } }
     /* Mid-page standout CTA band */
     .pp-midcta { position: relative; background: var(--gradient-red); color: #fff; text-align: center; padding: 4rem 2rem; overflow: hidden; }
     .pp-midcta::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12), transparent 55%); pointer-events: none; }
@@ -213,13 +218,104 @@
     .pp-midcta-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 42px rgba(0,0,0,0.36); }
     .pp-midcta-note { margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.85); }
   </style>
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "HealthClub",
+   "@id": "https://www.knightfitness-lawnton.com.au/",
+   "name": "Knight Fitness Lawnton",
+   "url": "https://www.knightfitness-lawnton.com.au/",
+   "image": "https://www.knightfitness-lawnton.com.au/og-image.jpg",
+   "logo": "https://www.knightfitness-lawnton.com.au/assets/lov/logo-dark.webp",
+   "telephone": "+61452519877",
+   "email": "info@knightfitness.com.au",
+   "priceRange": "$$",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "664 Gympie Road",
+    "addressLocality": "Lawnton",
+    "addressRegion": "QLD",
+    "postalCode": "4501",
+    "addressCountry": "AU"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -27.280437,
+    "longitude": 152.977289
+   },
+   "hasMap": "https://www.google.com/maps/search/?api=1&query=Knight+Fitness+Lawnton+664+Gympie+Road",
+   "openingHoursSpecification": [
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday"
+     ],
+     "opens": "04:50",
+     "closes": "19:15"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Friday",
+     "opens": "04:50",
+     "closes": "18:25"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Saturday",
+     "opens": "05:30",
+     "closes": "10:00"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Sunday",
+     "opens": "07:00",
+     "closes": "07:45"
+    }
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://www.knightfitness-lawnton.com.au/programs/mens#webpage",
+   "url": "https://www.knightfitness-lawnton.com.au/programs/mens",
+   "name": "Men's Club | Knight Fitness Lawnton",
+   "description": "Semi-private coaching for men at Knight Fitness Lawnton.",
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://www.knightfitness-lawnton.com.au/#website",
+    "url": "https://www.knightfitness-lawnton.com.au/",
+    "name": "Knight Fitness Lawnton"
+   },
+   "about": {
+    "@id": "https://www.knightfitness-lawnton.com.au/"
+   },
+   "inLanguage": "en-AU"
+  },
+  {
+   "@type": "Service",
+   "@id": "https://www.knightfitness-lawnton.com.au/programs/mens#service",
+   "name": "Men's Club",
+   "serviceType": "Group fitness coaching",
+   "provider": {
+    "@id": "https://www.knightfitness-lawnton.com.au/"
+   },
+   "areaServed": "Lawnton QLD and North Brisbane",
+   "url": "https://www.knightfitness-lawnton.com.au/programs/mens"
+  }
+ ]
+}
+  </script>
 </head>
 <body>
 
   <nav class="nav-wrapper" id="main-nav">
     <div class="nav-container">
       <a href="/" aria-label="Knight Fitness Lawnton home" class="nav-logo">
-        <img loading="eager" decoding="async" src="/assets/lov/logo-light.webp" alt="Knight Fitness Lawnton" class="logo" id="nav-logo-img">
+        <img loading="eager" decoding="async" src="/assets/lov/logo-light-360.webp" alt="Knight Fitness Lawnton" class="logo" id="nav-logo-img" width="360" height="126">
       </a>
       <div class="nav-links">
         <div class="nav-dropdown">
@@ -262,10 +358,15 @@
     </div>
   </div>
 
+  <main id="main">
   <header class="pp-hero">
     <div class="pp-hero-bg">
-      <video autoplay muted loop playsinline preload="auto" poster="../assets/lov/mens/group-sm.jpg" aria-label="Men's Club training at Knight Fitness Lawnton">
-        <source src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69ae877214ebc321d568b0f9.mp4" type="video/mp4">
+      <!-- Muted background loop (2.7MB at 720p, 1.6MB at 480p). No autoplay attribute and preload="none":
+           the poster paints first and the script below starts the loop after the page has loaded,
+           unless the visitor prefers reduced motion or has Data Saver on. -->
+      <video muted loop playsinline preload="none" data-bg-loop width="1280" height="720" poster="/assets/lov/mens/video/mens-hero-poster.webp" aria-hidden="true">
+        <source src="/assets/lov/mens/video/mens-hero-480.mp4" type="video/mp4" media="(max-width: 760px)">
+        <source src="/assets/lov/mens/video/mens-hero-720.mp4" type="video/mp4">
       </video>
     </div>
     <div class="pp-hero-content">
@@ -312,8 +413,8 @@
     <div class="pp-explainer-inner">
       <h2 class="pp-explainer-title"><span>HOW BUSY MEN OVER 30</span><span class="red">GET BACK IN SHAPE</span></h2>
       <div class="pp-explainer-video">
-        <video autoplay muted loop playsinline controls preload="auto" poster="../assets/lov/mens/group-sm.jpg" aria-label="How busy men over 30 get back in shape with Men's Club">
-          <source src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69ae311080d35963f56f8650.mp4" type="video/mp4">
+        <video playsinline controls preload="none" width="1280" height="720" poster="/assets/lov/mens/video/mens-story-busy-men-poster.webp" aria-label="How busy men over 30 get back in shape with Men's Club">
+          <source src="/assets/lov/mens/video/mens-story-busy-men-720.mp4" type="video/mp4">
         </video>
       </div>
     </div>
@@ -328,7 +429,7 @@
     </div>
   </section>
 
-  <section class="pp-feature" style="background-image:url('../assets/lov/bootcamp/red-shirts-outside-sm.jpg')">
+  <section class="pp-feature" style="background-image:url('../assets/lov/bootcamp/red-shirts-outside-sm.jpg');background-image:image-set(url('../assets/lov/bootcamp/red-shirts-outside-sm-1024.webp') type('image/webp'), url('../assets/lov/bootcamp/red-shirts-outside-sm.jpg') type('image/jpeg'))">
     <div class="pp-feature-content">
       <div class="pp-feature-eyebrow">No Egos · No BS</div>
       <h2>TRAIN WITH BLOKES<br>WHO GET IT.</h2>
@@ -342,20 +443,20 @@
     <p style="color:var(--kf-gray-dark); max-width:700px;">Don't take our word for it — hear what training here has actually done for blokes like you.</p>
     <div class="pp-video-wrap">
       <div class="pp-video">
-        <video poster="../assets/lov/mens/group-sm.jpg" preload="metadata" playsinline aria-label="Men's Club member story">
-          <source src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/65cf02da8a5944501f2a6c14.mp4" type="video/mp4">
+        <video poster="/assets/lov/mens/video/mens-member-story-poster.webp" preload="none" playsinline width="1280" height="720" aria-label="Men's Club member story">
+          <source src="/assets/lov/mens/video/mens-member-story-720.mp4" type="video/mp4">
         </video>
-        <button class="pp-video-overlay" aria-label="Play video: Men's Club member story">
+        <button class="pp-video-overlay" aria-label="Watch the story: Men's Club member video">
           <span class="pp-video-play"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span>
           <span class="pp-video-pill">Watch the story</span>
         </button>
       </div>
     </div>
     <div class="pp-vidwall">
-      <div class="pp-vidcard" data-vimeo="286262435" role="button" tabindex="0" aria-label="Play member testimonial"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
-      <div class="pp-vidcard" data-vimeo="282760998" role="button" tabindex="0" aria-label="Play member testimonial"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
-      <div class="pp-vidcard" data-vimeo="261375552" role="button" tabindex="0" aria-label="Play member testimonial"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
-      <div class="pp-vidcard" data-vimeo="287349941" role="button" tabindex="0" aria-label="Play member testimonial"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
+      <div class="pp-vidcard" data-vimeo="286262435" role="button" tabindex="0" aria-label="Watch their story: member testimonial video 1"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
+      <div class="pp-vidcard" data-vimeo="282760998" role="button" tabindex="0" aria-label="Watch their story: member testimonial video 2"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
+      <div class="pp-vidcard" data-vimeo="261375552" role="button" tabindex="0" aria-label="Watch their story: member testimonial video 3"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
+      <div class="pp-vidcard" data-vimeo="287349941" role="button" tabindex="0" aria-label="Watch their story: member testimonial video 4"><img class="pp-vidthumb" alt=""><div class="pp-vidcard-overlay"><span class="pp-vidcard-play"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.4-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"/></svg></span></div><div class="pp-vidcard-cap">Watch their story</div></div>
     </div>
   </section>
 
@@ -364,9 +465,9 @@
     <h2>HOW MEN'S CLUB WORKS.</h2>
     <p class="pp-lead-sub">Three pillars that make the difference between another failed attempt and a genuine transformation.</p>
     <div class="pp-pillars">
-      <div class="pp-pillar"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aea57480d35951e280561e.jpg" alt="Personal coaching at Men's Club Lawnton" loading="lazy"><h3>Personal Coaching</h3><p>One-on-one guidance tailored to your body, your goals, and your lifestyle. No cookie-cutter plans — just a coach who gives a damn.</p></div>
-      <div class="pp-pillar"><img src="../assets/lov/bootcamp/mens-club-group-sm.jpg" alt="Men's Club crew training together at Knight Fitness Lawnton" loading="lazy"><h3>Accountability</h3><p>We keep you honest. Weekly check-ins, progress tracking, and a coach in your corner making sure you never fall off the wagon.</p></div>
-      <div class="pp-pillar"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aea57480d359536b80561d.jpg" alt="Men's Club crew training together at Knight Fitness Lawnton" loading="lazy"><h3>Community &amp; Brotherhood</h3><p>Train alongside blokes who get it. The camaraderie, the banter, the brotherhood — this is what keeps you coming back.</p></div>
+      <div class="pp-pillar"><picture><source type="image/webp" srcset="/assets/lov/mens/coaching-480.webp 480w, /assets/lov/mens/coaching-800.webp 800w" sizes="(max-width: 820px) 92vw, 340px"><img src="/assets/lov/mens/coaching-800.jpg" alt="Personal coaching at Men's Club Lawnton" width="800" height="1067" loading="lazy" decoding="async"></picture><h3>Personal Coaching</h3><p>One-on-one guidance tailored to your body, your goals, and your lifestyle. No cookie-cutter plans — just a coach who gives a damn.</p></div>
+      <div class="pp-pillar"><picture><source type="image/webp" srcset="../assets/lov/bootcamp/mens-club-group-sm-640.webp 640w, ../assets/lov/bootcamp/mens-club-group-sm-1024.webp 1024w" sizes="(max-width: 820px) 92vw, 340px"><img src="../assets/lov/bootcamp/mens-club-group-sm.jpg" alt="Men's Club crew training together at Knight Fitness Lawnton" loading="lazy" width="1400" height="1050" decoding="async"></picture><h3>Accountability</h3><p>We keep you honest. Weekly check-ins, progress tracking, and a coach in your corner making sure you never fall off the wagon.</p></div>
+      <div class="pp-pillar"><picture><source type="image/webp" srcset="/assets/lov/mens/crew-training-480.webp 480w, /assets/lov/mens/crew-training-800.webp 800w" sizes="(max-width: 820px) 92vw, 340px"><img src="/assets/lov/mens/crew-training-800.jpg" alt="Men's Club crew training together at Knight Fitness Lawnton" width="800" height="600" loading="lazy" decoding="async"></picture><h3>Community &amp; Brotherhood</h3><p>Train alongside blokes who get it. The camaraderie, the banter, the brotherhood — this is what keeps you coming back.</p></div>
     </div>
   </section>
 
@@ -403,7 +504,7 @@
       <div class="pp-eyebrow">Due to Insane Demand</div>
       <h2>OUR MEN'S CLUB PROGRAM IS <span style="color: var(--kf-red);">EXPANDING IN LAWNTON</span></h2>
       <div class="pp-qualify-grid">
-        <div class="pp-qualify-img"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aea57414ebc37d676e37d3.png" alt="Men's Club Lawnton crew" loading="lazy"></div>
+        <div class="pp-qualify-img"><picture><source type="image/webp" srcset="/assets/lov/mens/crew-480.webp 480w, /assets/lov/mens/crew-940.webp 940w" sizes="(max-width: 800px) 92vw, 420px"><img src="/assets/lov/mens/crew-940.jpg" alt="Men's Club Lawnton crew" width="940" height="788" loading="lazy" decoding="async"></picture></div>
         <div>
           <h3 class="pp-qualify-h3">Do You Qualify?</h3>
           <div class="pp-checks">
@@ -452,7 +553,7 @@
   <section class="pp-section">
     <div class="pp-eyebrow">Weekly Timetable</div>
     <h2>PICK ANY 3 SESSIONS A WEEK.</h2>
-    <div class="pp-tt-wrap">
+    <div class="pp-tt-wrap" tabindex="0" role="region" aria-label="Weekly session timetable (scrolls sideways on small screens)">
       <table class="pp-tt">
         <thead>
           <tr><th>Day</th><th>AM Sessions</th><th>PM Sessions</th></tr>
@@ -476,18 +577,18 @@
       <div class="pp-eyebrow">Real Lawnton Blokes</div>
       <h2>LOCAL RESULTS, NOT STOCK PHOTOS.</h2>
       <div class="pp-results">
-        <div class="pp-result"><img src="../assets/lov/results/result-7kg-6weeks-a.webp" alt="Member down 7kg in 6 weeks" loading="lazy"><div class="pp-result-tag">7kg <span>in 6 weeks</span></div></div>
-        <div class="pp-result"><img src="../assets/lov/results/result-20kg.webp" alt="Member down 20kg of body fat" loading="lazy"><div class="pp-result-tag">20kg <span>of body fat</span></div></div>
-        <div class="pp-result"><img src="../assets/lov/results/result-12kg.webp" alt="Member down 12kg of body fat" loading="lazy"><div class="pp-result-tag">12kg <span>of body fat</span></div></div>
-        <div class="pp-result"><img src="../assets/lov/results/result-11kg.webp" alt="Member down 11kg of body fat" loading="lazy"><div class="pp-result-tag">11kg <span>of body fat</span></div></div>
-        <div class="pp-result"><img src="../assets/lov/results/result-10kg.webp" alt="Member down 10kg" loading="lazy"><div class="pp-result-tag">10kg <span>down</span></div></div>
-        <div class="pp-result"><img src="../assets/lov/results/result-7kg-6weeks-b.webp" alt="Member down 7kg in 6 weeks" loading="lazy"><div class="pp-result-tag">7kg <span>in 6 weeks</span></div></div>
-        <div class="pp-result"><img src="../assets/lov/results/result-7kg.webp" alt="Member down 7kg of body fat" loading="lazy"><div class="pp-result-tag">7kg <span>of body fat</span></div></div>
-        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef680d359459081c882.jpg" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
-        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef614ebc3c37c6fabdd.jpg" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
-        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef6e041da44bebf8d69.jpg" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
-        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef614ebc398646fabde.png" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
-        <div class="pp-result"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69aeaef66be28a70b615c99b.png" alt="Men's Club member transformation with whiteboard" loading="lazy"></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-7kg-6weeks-a.webp" alt="Member down 7kg in 6 weeks" loading="lazy" width="1400" height="1756" decoding="async" srcset="../assets/lov/results/result-7kg-6weeks-a-640.webp 640w, ../assets/lov/results/result-7kg-6weeks-a-1024.webp 1024w, ../assets/lov/results/result-7kg-6weeks-a.webp 1400w" sizes="(max-width: 700px) 50vw, 300px"><div class="pp-result-tag">7kg <span>in 6 weeks</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-20kg.webp" alt="Member down 20kg of body fat" loading="lazy" width="1400" height="1525" decoding="async" srcset="../assets/lov/results/result-20kg-640.webp 640w, ../assets/lov/results/result-20kg-1024.webp 1024w, ../assets/lov/results/result-20kg.webp 1400w" sizes="(max-width: 700px) 50vw, 300px"><div class="pp-result-tag">20kg <span>of body fat</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-12kg.webp" alt="Member down 12kg of body fat" loading="lazy" width="1400" height="1642" decoding="async" srcset="../assets/lov/results/result-12kg-640.webp 640w, ../assets/lov/results/result-12kg-1024.webp 1024w, ../assets/lov/results/result-12kg.webp 1400w" sizes="(max-width: 700px) 50vw, 300px"><div class="pp-result-tag">12kg <span>of body fat</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-11kg.webp" alt="Member down 11kg of body fat" loading="lazy" width="1400" height="1713" decoding="async"><div class="pp-result-tag">11kg <span>of body fat</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-10kg.webp" alt="Member down 10kg" loading="lazy" width="1400" height="1489" decoding="async" srcset="../assets/lov/results/result-10kg-640.webp 640w, ../assets/lov/results/result-10kg-1024.webp 1024w, ../assets/lov/results/result-10kg.webp 1400w" sizes="(max-width: 700px) 50vw, 300px"><div class="pp-result-tag">10kg <span>down</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-7kg-6weeks-b.webp" alt="Member down 7kg in 6 weeks" loading="lazy" width="1400" height="2014" decoding="async" srcset="../assets/lov/results/result-7kg-6weeks-b-640.webp 640w, ../assets/lov/results/result-7kg-6weeks-b-1024.webp 1024w, ../assets/lov/results/result-7kg-6weeks-b.webp 1400w" sizes="(max-width: 700px) 50vw, 300px"><div class="pp-result-tag">7kg <span>in 6 weeks</span></div></div>
+        <div class="pp-result"><img src="../assets/lov/results/result-7kg.webp" alt="Member down 7kg of body fat" loading="lazy" width="1400" height="2152" decoding="async" srcset="../assets/lov/results/result-7kg-640.webp 640w, ../assets/lov/results/result-7kg-1024.webp 1024w, ../assets/lov/results/result-7kg.webp 1400w" sizes="(max-width: 700px) 50vw, 300px"><div class="pp-result-tag">7kg <span>of body fat</span></div></div>
+        <div class="pp-result"><picture><source type="image/webp" srcset="/assets/lov/mens/result-whiteboard-1-480.webp 480w" sizes="(max-width: 700px) 46vw, 220px"><img src="/assets/lov/mens/result-whiteboard-1-480.jpg" alt="Men's Club member transformation with whiteboard" width="480" height="402" loading="lazy" decoding="async"></picture></div>
+        <div class="pp-result"><picture><source type="image/webp" srcset="/assets/lov/mens/result-whiteboard-2-480.webp 480w" sizes="(max-width: 700px) 46vw, 220px"><img src="/assets/lov/mens/result-whiteboard-2-480.jpg" alt="Men's Club member transformation with whiteboard" width="480" height="402" loading="lazy" decoding="async"></picture></div>
+        <div class="pp-result"><picture><source type="image/webp" srcset="/assets/lov/mens/result-whiteboard-3-480.webp 480w" sizes="(max-width: 700px) 46vw, 220px"><img src="/assets/lov/mens/result-whiteboard-3-480.jpg" alt="Men's Club member transformation with whiteboard" width="480" height="402" loading="lazy" decoding="async"></picture></div>
+        <div class="pp-result"><picture><source type="image/webp" srcset="/assets/lov/mens/result-whiteboard-4-480.webp 480w" sizes="(max-width: 700px) 46vw, 220px"><img src="/assets/lov/mens/result-whiteboard-4-480.jpg" alt="Men's Club member transformation with whiteboard" width="480" height="480" loading="lazy" decoding="async"></picture></div>
+        <div class="pp-result"><picture><source type="image/webp" srcset="/assets/lov/mens/result-whiteboard-5-480.webp 480w" sizes="(max-width: 700px) 46vw, 220px"><img src="/assets/lov/mens/result-whiteboard-5-480.jpg" alt="Men's Club member transformation with whiteboard" width="480" height="480" loading="lazy" decoding="async"></picture></div>
       </div>
     </div>
   </section>
@@ -529,7 +630,7 @@
         <span class="pp-no"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No Intimidation</span>
         <span class="pp-no"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No Bullshit</span>
       </div>
-      <div class="pp-noband-img"><img src="https://assets.cdn.filesafe.space/IvMkZnQnERVVx2H2R7Ua/media/69af918eddc8c7192ad14029.jpg" alt="The intimidating gym culture Men's Club rejects" loading="lazy"></div>
+      <div class="pp-noband-img"><picture><source type="image/webp" srcset="/assets/lov/mens/gym-culture-640.webp 640w, /assets/lov/mens/gym-culture-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 900px"><img src="/assets/lov/mens/gym-culture-1200.jpg" alt="The intimidating gym culture Men's Club rejects" width="1200" height="720" loading="lazy" decoding="async"></picture></div>
     </div>
   </section>
 
@@ -558,6 +659,7 @@
               loading="lazy"></iframe>
     </div>
     <div class="pp-cta-fine">No pressure · No contracts · A coach will be in touch within 1 business day.</div>
+    <p class="form-privacy">We only use your details to reply to your enquiry. See our <a href="/privacy">privacy policy</a>.</p>
   </section>
 
   <section class="pp-section">
@@ -582,12 +684,21 @@
       </a>
     </div>
   </section>
+  </main>
 
-  <footer class="pp-foot">
-    <p>664 Gympie Road, Lawnton QLD · <a href="tel:+61452519877">0452 519 877</a> · <a href="../index.html">Back to Home</a></p>
+    <footer class="kf-foot">
+    <div class="kf-foot-inner">
+      <p>© 2026 Knight Fitness Lawnton · 664 Gympie Road, Lawnton QLD 4501</p>
+      <ul aria-label="Contact and site links">
+        <li><a href="tel:+61452519877">0452 519 877</a></li>
+        <li><a href="mailto:info@knightfitness.com.au">info@knightfitness.com.au</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/privacy">Privacy policy</a></li>
+      </ul>
+    </div>
   </footer>
 
-  <a class="pp-sticky-cta" href="#apply" data-kf-open aria-label="Apply for Men's Club">Apply Now <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  <a class="pp-sticky-cta" href="#apply" data-kf-open>Apply Now<span class="sr-only"> for Men's Club</span> <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 
   <script>
     document.querySelectorAll('.pp-video').forEach(function (w) {
@@ -605,6 +716,25 @@
         v.currentTime = 0;
       });
     });
+
+    // Hero background loop: start it only once the page has loaded, and never for
+    // visitors who prefer reduced motion or have Data Saver on (the poster stays).
+    (function () {
+      var v = document.querySelector('video[data-bg-loop]');
+      if (!v) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var saveData = navigator.connection && navigator.connection.saveData;
+      if (reduce || saveData) return;
+      function start() {
+        setTimeout(function () {
+          v.preload = 'auto';
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        }, 600);
+      }
+      if (document.readyState === 'complete') start();
+      else window.addEventListener('load', start, { once: true });
+    })();
 
     // The application form fades in and sizes itself: /components/enquiry-form.js
 
@@ -713,7 +843,7 @@
     })();
   </script>
 
-  <script src="/components/enquiry-form.js?v=3" data-program="mens-club" defer></script>
+  <script src="/components/enquiry-form.js?v=4" data-program="mens-club" defer></script>
 
   <script src="/programs/nav.js" defer></script>
 </body>
