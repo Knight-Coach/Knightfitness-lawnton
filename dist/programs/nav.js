@@ -12,8 +12,8 @@
       nav.classList.toggle('scrolled', scrolled);
       if (logo) {
         logo.src = scrolled
-          ? '/assets/lov/logo-dark.webp'
-          : '/assets/lov/logo-light.webp';
+          ? '/assets/lov/logo-dark-360.webp'
+          : '/assets/lov/logo-light-360.webp';
       }
     }
     window.addEventListener('scroll', onScroll, { passive: true });

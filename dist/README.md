@@ -43,7 +43,12 @@ assets/lov/...          Images (compressed) + the coach video
 assets/5rm/             Board logo + Inter / Plus Jakarta Sans woff2
 assets/42-hard/         42 Hard fonts, coach photo and share image
 assets/vendor/          Self-hosted React 18.3.1, ReactDOM, Babel standalone 7.29.0
-favicon.svg, apple-touch-icon.png, og-image.jpg
+assets/fonts/            Self-hosted Bebas Neue, Lato, Anton (latin woff2; @font-face in the page CSS)
+assets/kf-tracking.js    GA4 + Meta Pixel, one lead per enquiry (see "Lead tracking" below)
+assets/kf-carousel.js    Accessible review carousels / marquees for the static pages
+favicon.ico, favicon.svg, apple-touch-icon.png, og-image.jpg
+privacy.html             Privacy policy (/privacy) — TODO: owner review
+thank-you.html           Post-enquiry confirmation (/thank-you; /message-received redirects here)
 robots.txt, sitemap.xml, 404.html, vercel.json
 ```
 
@@ -183,15 +188,21 @@ That recompiles `dist/assets/home-app.js` and rewrites the `#root` markup. Commi
 - **Women's Club landing page booking** — still the HighLevel booking calendar (`api.leadconnectorhq.com/widget/booking/…`) on `womens-club.html`; bookings are read by Knight Admin from HighLevel.
 - **Map** — Google Maps embed iframe on the homepage.
 
+### Lead tracking (GA4 `G-LPDJZ1128B`, Meta Pixel `408666429737807`)
+- `assets/kf-tracking.js` loads `async`. `gtag()`/`fbq()` queue immediately (page view included); the vendor libraries load after the page has loaded and the browser is idle, then replay the queue.
+- The enquiry form confirms inline. When it reports `{submitted: true}`, `enquiry-form.js` calls `kfTrackLead({…, eventId})` once per frame. `kfTrackLead` ignores a repeated `eventId` for the browser session, and passes it to Meta as `eventID`.
+- `/thank-you` is a plain confirmation page (noindex) and never fires a lead, so visiting or reloading it can't double-count. `/message-received`, `/thankyou` and `/thanks` redirect to it.
+
 ### Assets
-All photography lives under `assets/lov/`. Large source images were downscaled (~1100–1400px) and re-encoded to JPEG (q≈0.82) to cut page weight. The coach video `assets/lov/videos/womens-club-hannah.mp4` (~9 MB) is the largest file — consider hosting it on a CDN / streaming provider (e.g. Mux, Cloudflare Stream, or even YouTube) and embedding instead of shipping the MP4.
+All photography lives under `assets/lov/`. Large source images were downscaled (~1100–1400px) and re-encoded to JPEG (q≈0.82) to cut page weight. Big images also have WebP size variants next to them (`name-640.webp`, `name-1024.webp`, …) used through `srcset`/`<picture>` with the original as the fallback; every `<img>` has `width`/`height`. Men's Club videos are self-hosted in `assets/lov/mens/video/` (H.264, 720p/480p, `+faststart`, WebP posters); none autoplay except the muted 2.7 MB hero loop, which a script starts after page load (never with reduced motion or Data Saver). The coach video `assets/lov/videos/womens-club-hannah.mp4` (~9 MB) is the largest file — consider hosting it on a CDN / streaming provider (e.g. Mux, Cloudflare Stream, or even YouTube) and embedding instead of shipping the MP4.
 
 ### SEO
-Each page has meta description, canonical, Open Graph + Twitter cards (`og-image.jpg`, 1200×630). The homepage includes `HealthClub` JSON-LD (address, hours, phone, 5.0/350 rating). `sitemap.xml` and `robots.txt` reference `https://www.knightfitness.com.au` — update if the production domain differs.
+Each page has meta description, canonical, Open Graph + Twitter cards (`og-image.jpg`, 1200×630). The homepage includes `HealthClub` JSON-LD (address, hours, phone, rating); the other key pages carry the same `HealthClub` entity (same `@id`, geo `-27.280437, 152.977289`) plus a `WebPage` node. `sitemap.xml` and `robots.txt` reference `https://www.knightfitness-lawnton.com.au`; keep `<lastmod>` to the real date a page last changed.
 
 ## Brand tokens
 - Red `#E31E24` (dark `#B71C1C`) · Black `#1A1A1A` · Greys `#F5F5F5` / `#666`
-- Display font: **Bebas Neue** · Body: **Lato** (both via Google Fonts)
+- Red as **text** must use `--kf-red-text` `#C8161D` on light backgrounds or `--kf-red-on-dark` `#FF5A5F` on dark ones (`#E31E24` text fails WCAG AA on `#F5F5F5` and `#1A1A1A`).
+- Display font: **Bebas Neue** · Body: **Lato** (self-hosted in `assets/fonts/`)
 - Women's Club page adds a berry accent theme (`#C2185B` / `#7A1F4B`).
 
 ## 42 Hard challenge page (`/42-hard`)

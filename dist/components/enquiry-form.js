@@ -77,7 +77,9 @@
       if (!frame.__kfLeadSent && window.kfTrackLead) {
         frame.__kfLeadSent = true;
         var q = null; try { q = new URL(frame.getAttribute('src'), window.location.href).searchParams; } catch (e) {}
-        window.kfTrackLead({ site: (q && q.get('site')) || 'lawnton', source: (q && q.get('src')) || location.pathname });
+        // eventId: kf-tracking.js drops a repeat of the same id (and Meta dedupes on it).
+        var leadId = 'kf-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+        window.kfTrackLead({ site: (q && q.get('site')) || 'lawnton', source: (q && q.get('src')) || location.pathname, eventId: leadId });
       }
       if (frame.hasAttribute('data-kf-sheet')) { sheetBody.scrollTop = 0; return; }
       // To the frame's top, clear of the sticky nav. Not scrollIntoView: the frame is still animating
@@ -106,7 +108,8 @@
     '@media (min-width:700px){.kf-sheet{align-items:center}.kf-sheet-panel{border-radius:20px;max-height:88vh}}' +
     '.kf-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px 10px}' +
     '.kf-sheet-title{margin:0;font-family:"Bebas Neue",system-ui,sans-serif;font-weight:400;font-size:1.7rem;letter-spacing:.03em;color:#1A1A1A;line-height:1}' +
-    '.kf-sheet-sub{margin:4px 0 0;font:400 .9rem/1.4 Lato,system-ui,sans-serif;color:#666}' +
+    '.kf-sheet-sub{margin:4px 0 0;font:400 .9rem/1.4 Lato,system-ui,sans-serif;color:#595959}' +
+    '.kf-sheet-sub a{color:#1A1A1A;text-decoration:underline;text-underline-offset:2px;display:inline-block;padding:.35rem 0}' +
     '.kf-sheet-close{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:#fff;color:#1A1A1A;font-size:22px;line-height:1;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.12)}' +
     '.kf-sheet-close:focus-visible{outline:3px solid #E31E24;outline-offset:2px}' +
     '.kf-sheet-body{overflow:auto;-webkit-overflow-scrolling:touch;padding:0 12px calc(16px + env(safe-area-inset-bottom));flex:1 1 auto}' +
@@ -116,7 +119,10 @@
     '.kf-launcher{position:fixed;right:1.25rem;bottom:calc(1.25rem + env(safe-area-inset-bottom));z-index:900;display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:0;cursor:pointer;background:var(--kf-launcher-bg,#E31E24);color:#fff;font-family:"Bebas Neue",system-ui,sans-serif;font-size:1.25rem;letter-spacing:.05em;padding:.9rem 1.5rem;border-radius:999px;box-shadow:0 12px 32px rgba(0,0,0,.28);opacity:0;visibility:hidden;transform:translateY(18px);transition:opacity .3s ease,transform .3s ease,visibility .3s}' +
     '.kf-launcher.show{opacity:1;visibility:visible;transform:none}' +
     '.kf-launcher:focus-visible{outline:3px solid #1A1A1A;outline-offset:3px}' +
-    '@media (max-width:600px){.kf-launcher{left:1rem;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom))}}' +
+    /* Phones: a full-width bar at the bottom, and the footer gets matching padding so the end of the
+       page (footer links, small print) can always be scrolled clear of it. */
+    '@media (max-width:600px){.kf-launcher{left:.75rem;right:.75rem;bottom:calc(.6rem + env(safe-area-inset-bottom));font-size:1.15rem;padding:.75rem 1.1rem;min-height:50px}' +
+    'body.kf-has-launcher .kf-foot,body.kf-has-launcher>footer:last-of-type{padding-bottom:calc(5.25rem + env(safe-area-inset-bottom))}}' +
     '@media (prefers-reduced-motion:reduce){.kf-sheet,.kf-sheet-panel,.kf-launcher{transition:none}}';
 
   var sheet, sheetBody, sheetFrame, sheetProgram = null, lastFocus = null, launcher = null;
@@ -140,7 +146,7 @@
     sheet.innerHTML =
       '<div class="kf-sheet-panel">' +
         '<div class="kf-sheet-head"><div><h2 class="kf-sheet-title" id="kf-sheet-title">Send us a message</h2>' +
-        '<p class="kf-sheet-sub">A coach will be in touch, usually the same day.</p></div>' +
+        '<p class="kf-sheet-sub">A coach will be in touch, usually the same day. <a href="/privacy" target="_blank" rel="noopener">Privacy policy</a></p></div>' +
         '<button type="button" class="kf-sheet-close" aria-label="Close">&times;</button></div>' +
         '<div class="kf-sheet-body"></div>' +
       '</div>';
@@ -213,6 +219,7 @@
     launcher.setAttribute('data-kf-open', pageProgram);
     launcher.innerHTML = 'Message us <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>';
     document.body.appendChild(launcher);
+    document.body.classList.add('kf-has-launcher');
     var inline = frames().filter(function (f) { return !f.hasAttribute('data-kf-sheet'); });
     if (inline.length && window.IntersectionObserver) {
       var seen = new Set();
@@ -224,6 +231,7 @@
       inline.forEach(function (f) { io.observe(f); });
     }
     window.addEventListener('scroll', updateLauncher, { passive: true });
+    window.addEventListener('resize', updateLauncher);
     updateLauncher();
   }
 

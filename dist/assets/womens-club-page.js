@@ -32,7 +32,9 @@
   if (bar) {
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
-    update();
+    // First check after load: reading layout here, mid-parse, forced a full synchronous layout.
+    if (document.readyState === 'complete') requestAnimationFrame(update);
+    else window.addEventListener('load', function () { requestAnimationFrame(update); }, { once: true });
   }
 
   document.querySelectorAll('[data-yt]').forEach(function (el) {

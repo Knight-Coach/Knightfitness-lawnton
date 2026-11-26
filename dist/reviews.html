@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="/assets/kf-tracking.js?v=1"></script>
+  <script src="/assets/kf-tracking.js?v=2" async></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Member Reviews | Knight Fitness Lawnton — 5.0 · 365 Google Reviews</title>
   <meta name="description" content="Read real reviews from Knight Fitness Lawnton members. Rated 5.0 from 365+ Google reviews. Real people, real results, real community in North Brisbane.">
   <link rel="canonical" href="https://www.knightfitness-lawnton.com.au/reviews">
   <meta name="theme-color" content="#1A1A1A">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta property="og:type" content="website">
@@ -17,9 +18,8 @@
   <meta property="og:description" content="Read real reviews from Knight Fitness Lawnton members. Rated 5.0 from 365+ Google reviews.">
   <meta property="og:url" content="https://www.knightfitness-lawnton.com.au/reviews">
   <meta property="og:image" content="https://www.knightfitness-lawnton.com.au/og-image.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/bebas-neue-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lato-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="components/lovable-home.css">
   <style>
     :root { --accent: #E31E24; }
@@ -101,7 +101,7 @@
     }
     .rv-stat { text-align: center; color: white; }
     .rv-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.03em; line-height: 1; }
-    .rv-stat-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.88; margin-top: 0.2rem; }
+    .rv-stat-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; margin-top: 0.2rem; }
 
     /* ── FEATURED REVIEWS ── */
     .rv-featured {
@@ -112,7 +112,7 @@
     .rv-featured-label {
       text-align: center;
       font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--kf-red);
+      text-transform: uppercase; color: var(--kf-red-on-dark, #FF5A5F);
       margin-bottom: 0.6rem;
     }
     .rv-featured-title {
@@ -218,8 +218,8 @@
       transition: all 0.18s;
       white-space: nowrap;
     }
-    .rv-sort-btn.active, .rv-sort-btn:hover { border-color: var(--kf-red); color: var(--kf-red); background: rgba(227,30,36,0.05); }
-    .rv-count-label { font-size: 0.78rem; color: #999; font-weight: 600; flex: none; white-space: nowrap; }
+    .rv-sort-btn.active, .rv-sort-btn:hover { border-color: var(--kf-red); color: var(--kf-red-text, #C8161D); background: rgba(227,30,36,0.05); }
+    .rv-count-label { font-size: 0.78rem; color: #666; font-weight: 600; flex: none; white-space: nowrap; }
     @media (max-width: 640px) { .rv-sort-buttons { display: none; } }
 
     /* ── GRID ── */
@@ -249,7 +249,7 @@
     }
     .rv-card-meta { flex: 1; min-width: 0; }
     .rv-name { font-weight: 700; font-size: 0.86rem; color: var(--kf-black); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .rv-date { font-size: 0.7rem; color: #aaa; margin-top: 0.05rem; }
+    .rv-date { font-size: 0.7rem; color: #666; margin-top: 0.05rem; }
     .rv-card-rating { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.55rem; }
     .rv-stars { color: #FBBC05; font-size: 0.78rem; letter-spacing: 0.04em; }
     .rv-text { font-size: 0.845rem; line-height: 1.62; color: #444; }
@@ -344,6 +344,86 @@
     /* ── GOOGLE LOGO SVG ── */
     .g-logo { display: block; flex: none; }
   </style>
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "HealthClub",
+   "@id": "https://www.knightfitness-lawnton.com.au/",
+   "name": "Knight Fitness Lawnton",
+   "url": "https://www.knightfitness-lawnton.com.au/",
+   "image": "https://www.knightfitness-lawnton.com.au/og-image.jpg",
+   "logo": "https://www.knightfitness-lawnton.com.au/assets/lov/logo-dark.webp",
+   "telephone": "+61452519877",
+   "email": "info@knightfitness.com.au",
+   "priceRange": "$$",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "664 Gympie Road",
+    "addressLocality": "Lawnton",
+    "addressRegion": "QLD",
+    "postalCode": "4501",
+    "addressCountry": "AU"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -27.280437,
+    "longitude": 152.977289
+   },
+   "hasMap": "https://www.google.com/maps/search/?api=1&query=Knight+Fitness+Lawnton+664+Gympie+Road",
+   "openingHoursSpecification": [
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday"
+     ],
+     "opens": "04:50",
+     "closes": "19:15"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Friday",
+     "opens": "04:50",
+     "closes": "18:25"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Saturday",
+     "opens": "05:30",
+     "closes": "10:00"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Sunday",
+     "opens": "07:00",
+     "closes": "07:45"
+    }
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://www.knightfitness-lawnton.com.au/reviews#webpage",
+   "url": "https://www.knightfitness-lawnton.com.au/reviews",
+   "name": "Knight Fitness Lawnton reviews",
+   "description": "Google reviews from members of Knight Fitness Lawnton, a coaching gym in Lawnton, North Brisbane.",
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://www.knightfitness-lawnton.com.au/#website",
+    "url": "https://www.knightfitness-lawnton.com.au/",
+    "name": "Knight Fitness Lawnton"
+   },
+   "about": {
+    "@id": "https://www.knightfitness-lawnton.com.au/"
+   },
+   "inLanguage": "en-AU"
+  }
+ ]
+}
+  </script>
 </head>
 <body>
 
@@ -351,7 +431,7 @@
   <nav class="nav-wrapper" id="main-nav">
     <div class="nav-container">
       <a href="index.html" aria-label="Knight Fitness Lawnton home" class="nav-logo">
-        <img src="assets/lov/logo-light.webp" alt="Knight Fitness Lawnton" class="logo" id="nav-logo-img">
+        <img src="assets/lov/logo-light-360.webp" alt="Knight Fitness Lawnton" class="logo" id="nav-logo-img" width="360" height="126" decoding="async">
       </a>
       <div class="nav-links">
         <a href="programs/index.html">Programs</a>
@@ -376,6 +456,7 @@
     </div>
   </div>
 
+  <main id="main">
   <!-- HERO -->
   <section class="rv-hero">
     <div class="rv-hero-inner">
@@ -419,7 +500,7 @@
           <div class="rv-featured-quote">"</div>
           <p class="rv-featured-text">I started Knight Fitness at nearly 150kg, and now, around 60kg lighter, it's become an essential part of my daily routine. It's more than just a gym; it's a place where you can start your journey, push your limits, and quickly become part of a fun, supportive, and inspiring family.</p>
           <div class="rv-featured-author">
-            <div class="rv-featured-avatar" style="background:#34a853">GC</div>
+            <div class="rv-featured-avatar" style="background:#1e7e34">GC</div>
             <div>
               <div class="rv-featured-name">Graeme Collins</div>
               <div class="rv-featured-stars">★★★★★</div>
@@ -432,7 +513,7 @@
           <div class="rv-featured-quote">"</div>
           <p class="rv-featured-text">I had never been in a gym my entire life until I joined Knight Fitness. I've dropped over 30kg and maintained that over the years. A big part of that was thanks to Mark and the coaching staff and all the other great people I've met along the way.</p>
           <div class="rv-featured-author">
-            <div class="rv-featured-avatar" style="background:#1a73e8">LW</div>
+            <div class="rv-featured-avatar" style="background:#1967d2">LW</div>
             <div>
               <div class="rv-featured-name">Lee Wise</div>
               <div class="rv-featured-stars">★★★★★</div>
@@ -445,7 +526,7 @@
           <div class="rv-featured-quote">"</div>
           <p class="rv-featured-text">I've completed over 500 classes and reached my goal weight. The coaches truly have your best interests at heart. What really sets Knight Fitness apart is the community — it feels like a home away from home. I can't recommend it enough.</p>
           <div class="rv-featured-author">
-            <div class="rv-featured-avatar" style="background:#d93025">BC</div>
+            <div class="rv-featured-avatar" style="background:#c5221f">BC</div>
             <div>
               <div class="rv-featured-name">Bec Casey</div>
               <div class="rv-featured-stars">★★★★★</div>
@@ -503,7 +584,7 @@
   <section class="rv-form-section" id="rv-form">
     <div class="rv-form-inner">
       <div style="text-align:center; padding: 3.5rem 0 2rem;">
-        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--kf-red); margin-bottom:0.6rem;">GET STARTED</div>
+        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--kf-red-text, #C8161D); margin-bottom:0.6rem;">GET STARTED</div>
         <h2 style="font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:clamp(2rem,5vw,3rem); letter-spacing:0.03em; color:var(--kf-black); margin-bottom:0.75rem;">DROP US A MESSAGE</h2>
         <p style="color:var(--kf-gray-dark); font-size:0.95rem; line-height:1.55; max-width:480px; margin:0 auto;">A coach will reach out to learn about your goals and find the right program for you. No pressure, no hard sell.</p>
       </div>
@@ -516,6 +597,7 @@
               loading="lazy"></iframe>
       </div>
       <div class="ghl-form-foot"><span class="ghl-dot"></span> Secure form · We reply within 1 business day</div>
+      <p class="form-privacy">We only use your details to reply to your enquiry. See our <a href="/privacy">privacy policy</a>.</p>
     </div>
   </section>
 
@@ -533,18 +615,22 @@
       </a>
     </div>
   </div>
+  </main>
 
   <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-bottom" style="border-top: none; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;">
-        <p style="margin: 0;">© 2026 Knight Fitness Lawnton. All Rights Reserved.</p>
-        <p style="margin: 0;">664 Gympie Road, Lawnton QLD · <a href="tel:+61452519877" style="color: rgba(255,255,255,0.7); text-decoration: none;">0452 519 877</a> · <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">Back to Home</a></p>
-      </div>
+  <footer class="kf-foot">
+    <div class="kf-foot-inner">
+      <p>© 2026 Knight Fitness Lawnton · 664 Gympie Road, Lawnton QLD 4501</p>
+      <ul aria-label="Contact and site links">
+        <li><a href="tel:+61452519877">0452 519 877</a></li>
+        <li><a href="mailto:info@knightfitness.com.au">info@knightfitness.com.au</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/privacy">Privacy policy</a></li>
+      </ul>
     </div>
   </footer>
 
-  <script src="/components/enquiry-form.js?v=3" data-launcher defer></script>
+  <script src="/components/enquiry-form.js?v=4" data-launcher defer></script>
   <script>
     // The enquiry form fades in and sizes itself: components/enquiry-form.js
 
@@ -558,7 +644,8 @@
     window.addEventListener('resize', fixSearchTop);
 
     // Avatar helpers
-    var COLORS = ['#1a73e8','#e8710a','#9334e6','#34a853','#d93025','#1e8e3e','#f29900','#0077b6','#7b2d8b','#c45e00'];
+    // Avatar backgrounds: every one passes 4.5:1 with the white initials.
+    var COLORS = ['#1967d2','#b4590a','#9334e6','#1e7e34','#c5221f','#137333','#a15c00','#0077b6','#7b2d8b','#a14d00'];
     function avatarColor(name) {
       var h = 0;
       for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
@@ -771,7 +858,7 @@
     function onScroll() {
       var s = window.scrollY > 50;
       nav.classList.toggle('scrolled', s);
-      logo.src = s ? 'assets/lov/logo-dark.webp' : 'assets/lov/logo-light.webp';
+      logo.src = s ? 'assets/lov/logo-dark-360.webp' : 'assets/lov/logo-light-360.webp';
       fixSearchTop();
     }
     window.addEventListener('scroll', onScroll, { passive: true });

@@ -22,9 +22,38 @@
       "source": "/challenge",
       "destination": "/42-hard",
       "permanent": false
+    },
+    {
+      "source": "/message-received",
+      "destination": "/thank-you",
+      "permanent": false
+    },
+    {
+      "source": "/message-received.html",
+      "destination": "/thank-you",
+      "permanent": false
+    },
+    {
+      "source": "/thankyou",
+      "destination": "/thank-you",
+      "permanent": false
+    },
+    {
+      "source": "/thanks",
+      "destination": "/thank-you",
+      "permanent": false
     }
   ],
   "headers": [
+    {
+      "source": "/thank-you",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [
